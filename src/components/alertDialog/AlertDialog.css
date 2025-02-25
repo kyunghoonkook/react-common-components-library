@@ -4,7 +4,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -14,30 +14,59 @@
 .alert-dialog {
   background-color: white;
   border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 500px;
-  padding: 0;
+  max-width: 400px;
+  padding: 24px;
   overflow: hidden;
 }
 
 .alert-dialog-title {
-  padding: 16px 24px;
   font-size: 18px;
   font-weight: 600;
-  border-bottom: 1px solid #eee;
+  color: #000;
+  margin-bottom: 8px;
 }
 
-.alert-dialog-content {
-  padding: 24px;
-  font-size: 16px;
+.alert-dialog-description {
+  font-size: 14px;
   line-height: 1.5;
+  color: #6b7280;
+  margin-bottom: 24px;
 }
 
 .alert-dialog-actions {
-  padding: 16px 24px;
   display: flex;
   justify-content: flex-end;
   gap: 12px;
-  border-top: 1px solid #eee;
+}
+
+.alert-dialog-cancel {
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: #f3f4f6;
+  color: #374151;
+  border: none;
+  cursor: pointer;
+}
+
+.alert-dialog-confirm {
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: #000;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.alert-dialog-cancel:hover {
+  background-color: #e5e7eb;
+}
+
+.alert-dialog-confirm:hover {
+  background-color: #111;
 } 
