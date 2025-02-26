@@ -1,0 +1,148 @@
+.button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  border: none;
+  outline: none;
+}
+
+.button:focus-visible {
+  box-shadow: 0 0 0 2px rgba(66, 153, 225, 0.5);
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* 버튼 변형 */
+.button-primary {
+  background-color: #0f172a;
+  color: white;
+}
+
+.button-primary:hover:not(:disabled) {
+  background-color: #1e293b;
+}
+
+.button-primary:active:not(:disabled) {
+  background-color: #0f172a;
+}
+
+.button-secondary {
+  background-color: #e2e8f0;
+  color: #0f172a;
+}
+
+.button-secondary:hover:not(:disabled) {
+  background-color: #cbd5e1;
+}
+
+.button-secondary:active:not(:disabled) {
+  background-color: #e2e8f0;
+}
+
+.button-outline {
+  background-color: transparent;
+  color: #0f172a;
+  border: 1px solid #cbd5e1;
+}
+
+.button-outline:hover:not(:disabled) {
+  background-color: #f8fafc;
+}
+
+.button-outline:active:not(:disabled) {
+  background-color: #f1f5f9;
+}
+
+.button-ghost {
+  background-color: transparent;
+  color: #0f172a;
+}
+
+.button-ghost:hover:not(:disabled) {
+  background-color: #f1f5f9;
+}
+
+.button-ghost:active:not(:disabled) {
+  background-color: #e2e8f0;
+}
+
+.button-link {
+  background-color: transparent;
+  color: #2563eb;
+  padding: 0;
+}
+
+.button-link:hover:not(:disabled) {
+  text-decoration: underline;
+}
+
+/* 버튼 크기 */
+.button-sm {
+  height: 32px;
+  padding: 0 12px;
+  font-size: 14px;
+  gap: 4px;
+}
+
+.button-md {
+  height: 40px;
+  padding: 0 16px;
+  font-size: 14px;
+  gap: 6px;
+}
+
+.button-lg {
+  height: 48px;
+  padding: 0 20px;
+  font-size: 16px;
+  gap: 8px;
+}
+
+/* 너비 옵션 */
+.button-full-width {
+  width: 100%;
+}
+
+/* 로딩 상태 */
+.button-loading {
+  cursor: wait;
+}
+
+.button-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: currentColor;
+  animation: spin 0.8s linear infinite;
+  margin-right: 8px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 아이콘 */
+.button-icon {
+  display: flex;
+  align-items: center;
+}
+
+.button-left-icon {
+  margin-right: 4px;
+}
+
+.button-right-icon {
+  margin-left: 4px;
+} 

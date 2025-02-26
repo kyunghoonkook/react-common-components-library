@@ -15,6 +15,10 @@
 /src/stories
 /.storybook
 .cache
+# 컴포넌트 스토리북 파일
+**/*.stories.*
+**/*.story.*
+
 # misc
 .DS_Store
 .env.local
