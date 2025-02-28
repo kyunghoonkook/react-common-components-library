@@ -1,0 +1,131 @@
+.checkbox-wrapper {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  gap: 8px;
+}
+
+.checkbox-container {
+  position: relative;
+  display: inline-block;
+}
+
+.checkbox-input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkbox-checkmark {
+  position: relative;
+  display: inline-block;
+  border: 1px solid #cbd5e1;
+  background-color: #ffffff;
+  transition: all 0.2s ease-in-out;
+  border-radius: 4px;
+}
+
+/* 체크 표시 */
+.checkbox-checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+  left: 50%;
+  top: 40%;
+  width: 30%;
+  height: 60%;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+/* 체크된 상태 */
+.checkbox-input:checked ~ .checkbox-checkmark {
+  background-color: #0f172a;
+  border-color: #0f172a;
+}
+
+.checkbox-input:checked ~ .checkbox-checkmark:after {
+  display: block;
+}
+
+/* 인디터미네이트(부분 선택) 상태 */
+.checkbox-input:indeterminate ~ .checkbox-checkmark {
+  background-color: #0f172a;
+  border-color: #0f172a;
+}
+
+.checkbox-input:indeterminate ~ .checkbox-checkmark:after {
+  display: block;
+  transform: translate(-50%, -50%);
+  width: 60%;
+  height: 2px;
+  border: none;
+  background-color: white;
+}
+
+/* 호버 상태 */
+.checkbox-wrapper:hover .checkbox-checkmark {
+  border-color: #94a3b8;
+}
+
+/* 포커스 상태 */
+.checkbox-input:focus ~ .checkbox-checkmark {
+  box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.1);
+}
+
+/* 비활성화 상태 */
+.checkbox-disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.checkbox-disabled .checkbox-checkmark {
+  background-color: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.checkbox-disabled .checkbox-label {
+  color: #64748b;
+}
+
+/* 에러 상태 */
+.checkbox-input.checkbox-error ~ .checkbox-checkmark {
+  border-color: #ef4444;
+}
+
+.checkbox-input.checkbox-error:checked ~ .checkbox-checkmark {
+  background-color: #ef4444;
+  border-color: #ef4444;
+}
+
+/* 크기 */
+.checkbox-sm .checkbox-checkmark {
+  width: 14px;
+  height: 14px;
+}
+
+.checkbox-sm .checkbox-label {
+  font-size: 14px;
+}
+
+.checkbox-md .checkbox-checkmark {
+  width: 18px;
+  height: 18px;
+}
+
+.checkbox-md .checkbox-label {
+  font-size: 16px;
+}
+
+.checkbox-lg .checkbox-checkmark {
+  width: 22px;
+  height: 22px;
+}
+
+.checkbox-lg .checkbox-label {
+  font-size: 18px;
+} 

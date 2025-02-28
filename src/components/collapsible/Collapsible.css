@@ -1,0 +1,112 @@
+.collapsible {
+  width: 100%;
+}
+
+.collapsible-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  margin-bottom: 12px;
+}
+
+.collapsible-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+  color: #24292f;
+  padding-right: 24px;
+}
+
+.collapsible-toggle {
+  background: none;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  border-radius: 4px;
+  color: #57606a;
+  transition: background-color 0.2s;
+  margin-left: 16px;
+}
+
+.collapsible-toggle:hover {
+  background-color: #f6f8fa;
+}
+
+.collapsible-toggle:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(9, 105, 218, 0.3);
+}
+
+.collapsible-toggle-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.double-arrow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.arrow {
+  width: 12px;
+  height: 12px;
+  display: block;
+}
+
+.arrow-up {
+  margin-bottom: -1px;
+}
+
+.arrow-down {
+  margin-top: -1px;
+}
+
+.collapsible-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.collapsible-first-item {
+  padding: 12px 16px;
+  font-size: 15px;
+  color: #24292f;
+  background-color: #fff;
+  border: 1px solid #d0d7de;
+  border-radius: 6px;
+}
+
+.collapsible-rest-items {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: fadeIn 0.3s ease;
+}
+
+.collapsible-rest-items.no-animation {
+  animation: none;
+}
+
+.collapsible-item {
+  padding: 12px 16px;
+  font-size: 15px;
+  color: #24292f;
+  background-color: #fff;
+  border: 1px solid #d0d7de;
+  border-radius: 6px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+} 

@@ -17,6 +17,14 @@ export interface AlertDialogProps {
   cancelButtonStyle?: CSSProperties;
   confirmButtonStyle?: CSSProperties;
   overlayStyle?: CSSProperties;
+  /**
+   * 대화 상자에 적용할 추가 CSS 클래스
+   */
+  className?: string;
+  /**
+   * 오버레이에 적용할 추가 CSS 클래스
+   */
+  overlayClassName?: string;
 }
 
 const AlertDialog: React.FC<AlertDialogProps> = ({
@@ -35,6 +43,8 @@ const AlertDialog: React.FC<AlertDialogProps> = ({
   cancelButtonStyle,
   confirmButtonStyle,
   overlayStyle,
+  className = '',
+  overlayClassName = '',
 }) => {
   if (!isOpen) return null;
 
@@ -49,9 +59,9 @@ const AlertDialog: React.FC<AlertDialogProps> = ({
   };
 
   return (
-    <div className="alert-dialog-overlay" style={overlayStyle} onClick={onClose}>
+    <div className={`alert-dialog-overlay ${overlayClassName}`} style={overlayStyle} onClick={onClose}>
       <div 
-        className="alert-dialog" 
+        className={`alert-dialog ${className}`} 
         style={style}
         onClick={(e) => e.stopPropagation()}
       >
