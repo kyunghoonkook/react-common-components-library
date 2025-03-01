@@ -1,2 +1,0 @@
-import e,{useState as t}from"react";var n=function(n){var c=n.items,a=t(null),r=a[0],o=a[1];return e.createElement("div",{className:"accordion"},c.map((function(t,n){return e.createElement("div",{key:n,className:"accordion-item"},e.createElement("button",{className:"accordion-title",onClick:function(){return function(e){o(r===e?null:e)}(n)}},t.title),r===n&&e.createElement("div",{className:"accordion-content"},t.content))})))};export{n as Accordion};
-//# sourceMappingURL=index.esm.js.map
