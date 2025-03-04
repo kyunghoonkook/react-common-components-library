@@ -1,0 +1,118 @@
+.context-menu {
+  position: fixed;
+  min-width: 220px;
+  max-width: 280px;
+  background-color: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 8px 0;
+  z-index: 1000;
+  border: 1px solid #eaeaea;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 14px;
+  animation: fadeIn 0.1s ease-out;
+  overflow: hidden;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.context-menu-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.context-menu-section-title {
+  padding: 8px 16px;
+  color: #666;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.context-menu-section-separator {
+  height: 1px;
+  background-color: #f0f0f0;
+  margin: 5px 0;
+}
+
+.context-menu-items {
+  display: flex;
+  flex-direction: column;
+}
+
+.context-menu-item {
+  display: flex;
+  align-items: center;
+  padding: 9px 16px;
+  cursor: pointer;
+  color: #333;
+  position: relative;
+  user-select: none;
+}
+
+.context-menu-item:hover {
+  background-color: #f5f7fa;
+}
+
+.context-menu-item.disabled {
+  color: #aaa;
+  cursor: default;
+}
+
+.context-menu-item.disabled:hover {
+  background-color: transparent;
+}
+
+.context-menu-separator {
+  height: 1px;
+  background-color: #f0f0f0;
+  margin: 5px 16px;
+}
+
+.context-menu-item-icon {
+  margin-right: 12px;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.context-menu-item-checkbox {
+  width: 16px;
+  height: 16px;
+  margin-right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.context-menu-check {
+  color: #333;
+  font-weight: bold;
+}
+
+.context-menu-item-label {
+  flex: 1;
+}
+
+.context-menu-item-shortcut {
+  margin-left: 24px;
+  color: #777;
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.context-menu-item-arrow {
+  margin-left: 16px;
+  font-size: 16px;
+  color: #777;
+} 

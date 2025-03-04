@@ -1,0 +1,110 @@
+.command-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.25);
+  z-index: 1000;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 100px;
+}
+
+.command {
+  width: 560px;
+  max-width: 90vw;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  max-height: 70vh;
+}
+
+.command-input-wrapper {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.command-input-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+  margin-right: 8px;
+}
+
+.command-input {
+  flex: 1;
+  border: none;
+  background: none;
+  padding: 6px 0;
+  outline: none;
+  font-size: 16px;
+  color: #333;
+}
+
+.command-content {
+  max-height: calc(70vh - 60px);
+  overflow-y: auto;
+}
+
+.command-group {
+  padding: 8px 0;
+}
+
+.command-group-heading {
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+.command-group-items {
+  display: flex;
+  flex-direction: column;
+}
+
+.command-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.command-item:hover,
+.command-item.selected {
+  background-color: #f5f7fa;
+}
+
+.command-item-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  margin-right: 12px;
+}
+
+.command-item-label {
+  flex: 1;
+  font-size: 14px;
+  color: #333;
+}
+
+.command-item-shortcut {
+  font-size: 12px;
+  color: #888;
+  margin-left: 16px;
+}
+
+.command-empty {
+  padding: 20px 16px;
+  text-align: center;
+  color: #888;
+  font-size: 14px;
+}
