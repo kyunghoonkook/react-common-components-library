@@ -1,0 +1,220 @@
+.input-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: var(--spacing-lg);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.input-full-width {
+  width: 100%;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-field {
+  font-size: var(--font-size-md);
+  line-height: 1.5;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-radius: var(--border-radius-lg);
+  border: 1px solid var(--color-border-primary);
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-secondary);
+  transition: var(--transition-default);
+  width: 100%;
+  outline: none;
+}
+
+.input-field::placeholder {
+  color: var(--color-text-placeholder);
+}
+
+/* Size variants */
+.input-sm {
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: var(--font-size-sm);
+}
+
+.input-md {
+  padding: var(--spacing-md) var(--spacing-lg);
+  font-size: var(--font-size-md);
+}
+
+.input-lg {
+  padding: var(--spacing-lg) var(--spacing-xl);
+  font-size: var(--font-size-lg);
+}
+
+/* Variant styles */
+.input-outlined {
+  border: 1px solid var(--color-border-primary);
+  background-color: transparent;
+}
+
+.input-outlined:focus {
+  border-color: var(--color-primary);
+  box-shadow: var(--focus-ring);
+}
+
+.input-filled {
+  border: 1px solid transparent;
+  background-color: var(--color-bg-secondary);
+}
+
+.input-filled:focus {
+  background-color: var(--color-bg-tertiary);
+}
+
+.input-standard {
+  border: none;
+  border-bottom: 1px solid var(--color-border-primary);
+  border-radius: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.input-standard:focus {
+  border-bottom-color: var(--color-primary);
+}
+
+/* State styles */
+.input-error {
+  border-color: var(--color-error);
+}
+
+.input-error:focus {
+  border-color: var(--color-error);
+  box-shadow: var(--focus-ring-error);
+}
+
+.input-success {
+  border-color: var(--color-success);
+}
+
+.input-success:focus {
+  border-color: var(--color-success);
+  box-shadow: var(--focus-ring-success);
+}
+
+.input-disabled {
+  background-color: var(--color-bg-disabled);
+  border-color: var(--color-border-primary);
+  color: var(--color-text-disabled);
+  cursor: not-allowed;
+}
+
+/* Adornment styles */
+.input-adornment {
+  display: flex;
+  align-items: center;
+  color: var(--color-text-tertiary);
+}
+
+.input-start-adornment {
+  position: absolute;
+  left: var(--spacing-lg);
+}
+
+.input-end-adornment {
+  position: absolute;
+  right: var(--spacing-lg);
+}
+
+.with-start-adornment {
+  padding-left: 2.5rem;
+}
+
+.with-end-adornment {
+  padding-right: 2.5rem;
+}
+
+/* Label styles */
+.input-label {
+  margin-bottom: var(--spacing-sm);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.input-label-sm {
+  font-size: var(--font-size-xs);
+}
+
+.input-label-lg {
+  font-size: var(--font-size-md);
+}
+
+.input-label-disabled {
+  color: var(--color-text-disabled);
+}
+
+.input-label-error {
+  color: var(--color-error);
+}
+
+/* Helper text styles */
+.input-helper-text {
+  margin-top: var(--spacing-sm);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+}
+
+.input-error-text {
+  color: var(--color-error);
+}
+
+/* 이미지에서 보이는 구독 폼 스타일 */
+.subscribe-container {
+  display: flex;
+  width: 100%;
+  max-width: 36rem;
+  margin: 0 auto;
+}
+
+.subscribe-input {
+  flex: 1;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-right: none;
+  font-size: var(--font-size-lg);
+  color: var(--color-text-tertiary);
+}
+
+.subscribe-button {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  background-color: var(--color-button-primary);
+  color: var(--color-bg-primary);
+  font-weight: bold;
+  padding: 0 var(--spacing-xl);
+  font-size: var(--font-size-lg);
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.subscribe-button:hover {
+  background-color: var(--color-button-primary-hover);
+}
+
+@media (max-width: 640px) {
+  .subscribe-container {
+    flex-direction: column;
+  }
+  
+  .subscribe-input {
+    border-right: 1px solid var(--color-border-primary);
+    border-bottom: none;
+    border-bottom-left-radius: var(--border-radius-lg);
+    border-top-right-radius: var(--border-radius-lg);
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  .subscribe-button {
+    border-top-left-radius: var(--border-radius-lg);
+    border-top-right-radius: var(--border-radius-lg);
+  }
+} 

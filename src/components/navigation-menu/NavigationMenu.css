@@ -1,0 +1,168 @@
+/* NavigationMenu */
+.navigation-menu {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  z-index: 50;
+}
+
+.navigation-menu-items {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* NavigationItem */
+.navigation-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  user-select: none;
+  gap: 8px;
+  background-color: transparent;
+  color: #111827;
+}
+
+.navigation-item:hover {
+  background-color: #F3F4F6;
+}
+
+.navigation-item-active {
+  background-color: #F1F5F9;
+  font-weight: 600;
+}
+
+.navigation-item-caret {
+  font-size: 10px;
+  opacity: 0.6;
+  margin-left: 4px;
+}
+
+.navigation-item-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* NavigationContent */
+.navigation-content {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background-color: #FFFFFF;
+  border-radius: 8px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  z-index: 40;
+  overflow: hidden;
+  margin-top: 4px;
+  padding: 20px;
+  border: 1px solid #E5E7EB;
+}
+
+.navigation-content-inner {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.navigation-content-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 10px 0;
+  color: #111827;
+}
+
+.navigation-content-description {
+  font-size: 1rem;
+  margin: 0 0 20px 0;
+  color: #6B7280;
+  max-width: 600px;
+  line-height: 1.5;
+}
+
+.navigation-content-links {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 16px;
+}
+
+.navigation-content-link {
+  display: block;
+  padding: 12px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: inherit;
+  transition: background-color 0.2s ease;
+}
+
+.navigation-content-link:hover {
+  background-color: #F3F4F6;
+}
+
+.navigation-content-link-title {
+  font-weight: 500;
+  font-size: 16px;
+  margin-bottom: 4px;
+  color: #111827;
+}
+
+.navigation-content-link-description {
+  font-size: 14px;
+  color: #6B7280;
+  line-height: 1.4;
+}
+
+.navigation-content-custom {
+  margin-top: 20px;
+}
+
+/* 다크 모드 지원 */
+@media (prefers-color-scheme: dark) {
+  .navigation-item {
+    color: #F9FAFB;
+  }
+
+  .navigation-item:hover {
+    background-color: #374151;
+  }
+
+  .navigation-item-active {
+    background-color: #1F2937;
+  }
+
+  .navigation-content {
+    background-color: #1E293B;
+    border-color: #374151;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .navigation-content-title {
+    color: #F9FAFB;
+  }
+
+  .navigation-content-description {
+    color: #D1D5DB;
+  }
+
+  .navigation-content-link:hover {
+    background-color: #374151;
+  }
+
+  .navigation-content-link-title {
+    color: #F9FAFB;
+  }
+
+  .navigation-content-link-description {
+    color: #D1D5DB;
+  }
+} 

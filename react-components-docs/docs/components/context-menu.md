@@ -1,0 +1,342 @@
+---
+sidebar_position: 9
+---
+
+# ContextMenu
+
+마우스 우클릭 또는 길게 누르기 동작에 반응하여 컨텍스트 메뉴를 표시하는 컴포넌트입니다.
+
+## 기본 사용법
+
+```jsx
+import { 
+  ContextMenu,
+  ContextMenuTrigger,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuSeparator,
+  ContextMenuSub,
+  ContextMenuSubTrigger,
+  ContextMenuSubContent,
+  ContextMenuCheckboxItem,
+  ContextMenuRadioGroup,
+  ContextMenuRadioItem,
+  ContextMenuLabel
+} from 'react-common-components-library';
+
+function ContextMenuExample() {
+  return (
+    <ContextMenu>
+      <ContextMenuTrigger className="flex h-40 w-96 items-center justify-center rounded-md border border-dashed">
+        <span>우클릭하여 메뉴 열기</span>
+      </ContextMenuTrigger>
+      
+      <ContextMenuContent className="w-64">
+        <ContextMenuItem>
+          새로 만들기
+        </ContextMenuItem>
+        <ContextMenuItem>
+          새로고침
+        </ContextMenuItem>
+        <ContextMenuSeparator />
+        <ContextMenuItem>
+          복사
+        </ContextMenuItem>
+        <ContextMenuItem>
+          붙여넣기
+        </ContextMenuItem>
+        <ContextMenuSeparator />
+        <ContextMenuItem>
+          속성
+        </ContextMenuItem>
+      </ContextMenuContent>
+    </ContextMenu>
+  );
+}
+```
+
+## 서브메뉴 사용
+
+서브메뉴를 사용하여 계층적인 메뉴 구조를 만들 수 있습니다:
+
+```jsx
+import { 
+  ContextMenu,
+  ContextMenuTrigger,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuSeparator,
+  ContextMenuSub,
+  ContextMenuSubTrigger,
+  ContextMenuSubContent
+} from 'react-common-components-library';
+
+function ContextMenuWithSubmenuExample() {
+  return (
+    <ContextMenu>
+      <ContextMenuTrigger className="flex h-40 w-96 items-center justify-center rounded-md border border-dashed">
+        <span>우클릭하여 메뉴 열기</span>
+      </ContextMenuTrigger>
+      
+      <ContextMenuContent className="w-64">
+        <ContextMenuItem>
+          새로 만들기
+        </ContextMenuItem>
+        
+        <ContextMenuSub>
+          <ContextMenuSubTrigger>
+            정렬 기준
+          </ContextMenuSubTrigger>
+          <ContextMenuSubContent className="w-48">
+            <ContextMenuItem>
+              이름
+            </ContextMenuItem>
+            <ContextMenuItem>
+              날짜
+            </ContextMenuItem>
+            <ContextMenuItem>
+              크기
+            </ContextMenuItem>
+            <ContextMenuItem>
+              유형
+            </ContextMenuItem>
+          </ContextMenuSubContent>
+        </ContextMenuSub>
+        
+        <ContextMenuSeparator />
+        
+        <ContextMenuItem>
+          속성
+        </ContextMenuItem>
+      </ContextMenuContent>
+    </ContextMenu>
+  );
+}
+```
+
+## 체크박스 및 라디오 항목
+
+체크박스와 라디오 버튼 항목을 사용하여 선택 가능한 메뉴를 만들 수 있습니다:
+
+```jsx
+import { 
+  ContextMenu,
+  ContextMenuTrigger,
+  ContextMenuContent,
+  ContextMenuCheckboxItem,
+  ContextMenuRadioGroup,
+  ContextMenuRadioItem,
+  ContextMenuLabel,
+  ContextMenuSeparator
+} from 'react-common-components-library';
+import { useState } from 'react';
+
+function ContextMenuWithSelectionExample() {
+  const [showLineNumbers, setShowLineNumbers] = useState(true);
+  const [showMinimap, setShowMinimap] = useState(false);
+  const [theme, setTheme] = useState("light");
+  
+  return (
+    <ContextMenu>
+      <ContextMenuTrigger className="flex h-40 w-96 items-center justify-center rounded-md border border-dashed">
+        <span>우클릭하여 메뉴 열기</span>
+      </ContextMenuTrigger>
+      
+      <ContextMenuContent className="w-64">
+        <ContextMenuLabel>보기 옵션</ContextMenuLabel>
+        
+        <ContextMenuCheckboxItem 
+          checked={showLineNumbers}
+          onCheckedChange={setShowLineNumbers}
+        >
+          줄 번호 표시
+        </ContextMenuCheckboxItem>
+        
+        <ContextMenuCheckboxItem 
+          checked={showMinimap}
+          onCheckedChange={setShowMinimap}
+        >
+          미니맵 표시
+        </ContextMenuCheckboxItem>
+        
+        <ContextMenuSeparator />
+        
+        <ContextMenuLabel>테마</ContextMenuLabel>
+        <ContextMenuRadioGroup value={theme} onValueChange={setTheme}>
+          <ContextMenuRadioItem value="light">
+            라이트 모드
+          </ContextMenuRadioItem>
+          <ContextMenuRadioItem value="dark">
+            다크 모드
+          </ContextMenuRadioItem>
+          <ContextMenuRadioItem value="system">
+            시스템 설정 따르기
+          </ContextMenuRadioItem>
+        </ContextMenuRadioGroup>
+      </ContextMenuContent>
+    </ContextMenu>
+  );
+}
+```
+
+## 아이콘과 함께 사용
+
+아이콘을 추가하여 메뉴 항목을 더 직관적으로 표시할 수 있습니다:
+
+```jsx
+import { 
+  ContextMenu,
+  ContextMenuTrigger,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuSeparator
+} from 'react-common-components-library';
+import { 
+  CopyIcon, 
+  PasteIcon, 
+  CutIcon, 
+  TrashIcon 
+} from 'react-common-components-library/icons';
+
+function ContextMenuWithIconsExample() {
+  return (
+    <ContextMenu>
+      <ContextMenuTrigger className="flex h-40 w-96 items-center justify-center rounded-md border border-dashed">
+        <span>우클릭하여 메뉴 열기</span>
+      </ContextMenuTrigger>
+      
+      <ContextMenuContent className="w-64">
+        <ContextMenuItem>
+          <CopyIcon className="mr-2 h-4 w-4" />
+          <span>복사</span>
+        </ContextMenuItem>
+        
+        <ContextMenuItem>
+          <PasteIcon className="mr-2 h-4 w-4" />
+          <span>붙여넣기</span>
+        </ContextMenuItem>
+        
+        <ContextMenuItem>
+          <CutIcon className="mr-2 h-4 w-4" />
+          <span>잘라내기</span>
+        </ContextMenuItem>
+        
+        <ContextMenuSeparator />
+        
+        <ContextMenuItem className="text-red-500">
+          <TrashIcon className="mr-2 h-4 w-4" />
+          <span>삭제</span>
+        </ContextMenuItem>
+      </ContextMenuContent>
+    </ContextMenu>
+  );
+}
+```
+
+## API 참조
+
+### ContextMenu Props
+
+| 속성 | 타입 | 기본값 | 설명 |
+|------|------|--------|------|
+| `children` | `ReactNode` | 필수 | ContextMenu 컴포넌트의 자식 요소 |
+| `onOpenChange` | `(open: boolean) => void` | - | 메뉴 열림/닫힘 상태 변경 시 호출되는 함수 |
+| `modal` | `boolean` | true | 모달 모드로 동작할지 여부 |
+| `className` | `string` | '' | 컴포넌트에 적용할 추가 CSS 클래스 |
+| `style` | `CSSProperties` | - | 컴포넌트에 적용할 인라인 스타일 |
+
+### ContextMenuTrigger Props
+
+| 속성 | 타입 | 기본값 | 설명 |
+|------|------|--------|------|
+| `children` | `ReactNode` | 필수 | 트리거 요소의 자식 요소 |
+| `asChild` | `boolean` | false | 첫 번째 자식 요소로 렌더링할지 여부 |
+| `disabled` | `boolean` | false | 트리거 비활성화 여부 |
+| `className` | `string` | '' | 컴포넌트에 적용할 추가 CSS 클래스 |
+| `style` | `CSSProperties` | - | 컴포넌트에 적용할 인라인 스타일 |
+
+### ContextMenuContent Props
+
+| 속성 | 타입 | 기본값 | 설명 |
+|------|------|--------|------|
+| `children` | `ReactNode` | 필수 | 메뉴 콘텐츠의 자식 요소 |
+| `loop` | `boolean` | false | 메뉴 항목 탐색 시 처음/끝에서 순환할지 여부 |
+| `onEscapeKeyDown` | `(event: KeyboardEvent) => void` | - | Esc 키 누를 때 호출되는 함수 |
+| `onPointerDownOutside` | `(event: PointerEvent) => void` | - | 메뉴 외부 클릭 시 호출되는 함수 |
+| `onInteractOutside` | `(event: React.FocusEvent \| MouseEvent \| TouchEvent) => void` | - | 메뉴 외부 상호작용 시 호출되는 함수 |
+| `forceMount` | `boolean` | false | 닫혀 있을 때도 DOM에 마운트할지 여부 |
+| `className` | `string` | '' | 컴포넌트에 적용할 추가 CSS 클래스 |
+| `style` | `CSSProperties` | - | 컴포넌트에 적용할 인라인 스타일 |
+
+### ContextMenuItem Props
+
+| 속성 | 타입 | 기본값 | 설명 |
+|------|------|--------|------|
+| `children` | `ReactNode` | 필수 | 메뉴 항목의 자식 요소 |
+| `disabled` | `boolean` | false | 항목 비활성화 여부 |
+| `onSelect` | `(event: Event) => void` | - | 항목 선택 시 호출되는 함수 |
+| `inset` | `boolean` | false | 체크박스/라디오 항목과 정렬을 맞추기 위한 여백 추가 여부 |
+| `className` | `string` | '' | 컴포넌트에 적용할 추가 CSS 클래스 |
+| `style` | `CSSProperties` | - | 컴포넌트에 적용할 인라인 스타일 |
+
+### ContextMenuCheckboxItem Props
+
+| 속성 | 타입 | 기본값 | 설명 |
+|------|------|--------|------|
+| `children` | `ReactNode` | 필수 | 체크박스 항목의 자식 요소 |
+| `checked` | `boolean` | - | 체크 상태 (제어 컴포넌트) |
+| `onCheckedChange` | `(checked: boolean) => void` | - | 체크 상태 변경 시 호출되는 함수 |
+| `disabled` | `boolean` | false | 항목 비활성화 여부 |
+| `className` | `string` | '' | 컴포넌트에 적용할 추가 CSS 클래스 |
+| `style` | `CSSProperties` | - | 컴포넌트에 적용할 인라인 스타일 |
+
+### ContextMenuRadioGroup Props
+
+| 속성 | 타입 | 기본값 | 설명 |
+|------|------|--------|------|
+| `children` | `ReactNode` | 필수 | 라디오 그룹의 자식 요소 |
+| `value` | `string` | - | 선택된 라디오 항목의 값 (제어 컴포넌트) |
+| `onValueChange` | `(value: string) => void` | - | 선택된 값 변경 시 호출되는 함수 |
+| `className` | `string` | '' | 컴포넌트에 적용할 추가 CSS 클래스 |
+| `style` | `CSSProperties` | - | 컴포넌트에 적용할 인라인 스타일 |
+
+### ContextMenuRadioItem Props
+
+| 속성 | 타입 | 기본값 | 설명 |
+|------|------|--------|------|
+| `children` | `ReactNode` | 필수 | 라디오 항목의 자식 요소 |
+| `value` | `string` | 필수 | 라디오 항목의 값 |
+| `disabled` | `boolean` | false | 항목 비활성화 여부 |
+| `className` | `string` | '' | 컴포넌트에 적용할 추가 CSS 클래스 |
+| `style` | `CSSProperties` | - | 컴포넌트에 적용할 인라인 스타일 |
+
+### ContextMenuLabel Props
+
+| 속성 | 타입 | 기본값 | 설명 |
+|------|------|--------|------|
+| `children` | `ReactNode` | 필수 | 레이블의 자식 요소 |
+| `inset` | `boolean` | false | 체크박스/라디오 항목과 정렬을 맞추기 위한 여백 추가 여부 |
+| `className` | `string` | '' | 컴포넌트에 적용할 추가 CSS 클래스 |
+| `style` | `CSSProperties` | - | 컴포넌트에 적용할 인라인 스타일 |
+
+### ContextMenuSeparator Props
+
+| 속성 | 타입 | 기본값 | 설명 |
+|------|------|--------|------|
+| `className` | `string` | '' | 컴포넌트에 적용할 추가 CSS 클래스 |
+| `style` | `CSSProperties` | - | 컴포넌트에 적용할 인라인 스타일 |
+
+## 접근성
+
+ContextMenu 컴포넌트는 다음과 같은 접근성 기능을 제공합니다:
+
+- WAI-ARIA 메뉴 디자인 패턴을 준수하여 스크린 리더 호환성을 보장합니다.
+- 키보드 탐색을 완벽하게 지원합니다:
+  - 위/아래 화살표 키로 메뉴 항목 간 이동
+  - 오른쪽 화살표 키로 서브메뉴 열기
+  - 왼쪽 화살표 키로 서브메뉴 닫기
+  - Enter 또는 Space 키로 항목 선택
+  - Esc 키로 메뉴 닫기
+- 체크박스 항목은 `aria-checked` 속성을 사용하여 현재 상태를 스크린 리더에 알립니다.
+- 라디오 항목은 `role="menuitemradio"`와 `aria-checked` 속성을 사용하여 현재 상태를 스크린 리더에 알립니다.
+- 비활성화된 항목에는 `aria-disabled="true"`가 적용됩니다. 
