@@ -1,0 +1,136 @@
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.radio-item {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.radio-input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.radio-control {
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid #d1d5db;
+  background-color: white;
+  margin-right: 8px;
+  transition: all 0.2s ease;
+}
+
+.radio-input:checked + .radio-control {
+  border-color: #0f172a;
+}
+
+.radio-control::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #0f172a;
+  transform: scale(0);
+  transition: transform 0.1s ease-in-out;
+}
+
+.radio-input:checked + .radio-control::after {
+  transform: scale(1);
+}
+
+.radio-label {
+  font-size: 16px;
+  font-weight: 500;
+  color: #0f172a;
+}
+
+/* 포커스 스타일 */
+.radio-input:focus + .radio-control {
+  box-shadow: 0 0 0 2px rgba(15, 23, 42, 0.2);
+}
+
+/* 호버 스타일 */
+.radio-item:hover .radio-control {
+  border-color: #9ca3af;
+}
+
+/* 비활성화 스타일 */
+.radio-item.disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.radio-item.disabled .radio-label {
+  color: #9ca3af;
+}
+
+/* 크기 변형 */
+.radio-size-sm .radio-control {
+  width: 16px;
+  height: 16px;
+}
+
+.radio-size-sm .radio-control::after {
+  width: 8px;
+  height: 8px;
+}
+
+.radio-size-sm .radio-label {
+  font-size: 14px;
+}
+
+.radio-size-lg .radio-control {
+  width: 24px;
+  height: 24px;
+}
+
+.radio-size-lg .radio-control::after {
+  width: 12px;
+  height: 12px;
+}
+
+.radio-size-lg .radio-label {
+  font-size: 18px;
+}
+
+/* 방향 변형 */
+.radio-horizontal {
+  flex-direction: row;
+  gap: 16px;
+}
+
+/* 다크 모드 */
+@media (prefers-color-scheme: dark) {
+  .radio-control {
+    border-color: #4b5563;
+    background-color: #1f2937;
+  }
+  
+  .radio-input:checked + .radio-control {
+    border-color: #e2e8f0;
+  }
+  
+  .radio-control::after {
+    background-color: #e2e8f0;
+  }
+  
+  .radio-label {
+    color: #e2e8f0;
+  }
+  
+  .radio-item:hover .radio-control {
+    border-color: #9ca3af;
+  }
+} 

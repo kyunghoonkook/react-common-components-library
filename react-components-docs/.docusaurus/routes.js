@@ -4,15 +4,15 @@ import ComponentCreator from '@docusaurus/ComponentCreator';
 export default [
   {
     path: '/docs',
-    component: ComponentCreator('/docs', '962'),
+    component: ComponentCreator('/docs', '6d6'),
     routes: [
       {
         path: '/docs',
-        component: ComponentCreator('/docs', '623'),
+        component: ComponentCreator('/docs', '75f'),
         routes: [
           {
             path: '/docs',
-            component: ComponentCreator('/docs', 'e9d'),
+            component: ComponentCreator('/docs', '898'),
             routes: [
               {
                 path: '/docs/components/accordion',
@@ -77,6 +77,102 @@ export default [
               {
                 path: '/docs/components/dropdown-menu',
                 component: ComponentCreator('/docs/components/dropdown-menu', 'ed9'),
+                exact: true,
+                sidebar: "tutorialSidebar"
+              },
+              {
+                path: '/docs/components/hovercard',
+                component: ComponentCreator('/docs/components/hovercard', '5aa'),
+                exact: true,
+                sidebar: "tutorialSidebar"
+              },
+              {
+                path: '/docs/components/input',
+                component: ComponentCreator('/docs/components/input', 'f91'),
+                exact: true,
+                sidebar: "tutorialSidebar"
+              },
+              {
+                path: '/docs/components/label',
+                component: ComponentCreator('/docs/components/label', '1a0'),
+                exact: true,
+                sidebar: "tutorialSidebar"
+              },
+              {
+                path: '/docs/components/menubar',
+                component: ComponentCreator('/docs/components/menubar', 'afa'),
+                exact: true,
+                sidebar: "tutorialSidebar"
+              },
+              {
+                path: '/docs/components/navigation-menu',
+                component: ComponentCreator('/docs/components/navigation-menu', '6bb'),
+                exact: true,
+                sidebar: "tutorialSidebar"
+              },
+              {
+                path: '/docs/components/popover',
+                component: ComponentCreator('/docs/components/popover', 'c97'),
+                exact: true,
+                sidebar: "tutorialSidebar"
+              },
+              {
+                path: '/docs/components/progress',
+                component: ComponentCreator('/docs/components/progress', '6b9'),
+                exact: true,
+                sidebar: "tutorialSidebar"
+              },
+              {
+                path: '/docs/components/radio-group',
+                component: ComponentCreator('/docs/components/radio-group', 'a74'),
+                exact: true,
+                sidebar: "tutorialSidebar"
+              },
+              {
+                path: '/docs/components/scroll-area',
+                component: ComponentCreator('/docs/components/scroll-area', '538'),
+                exact: true,
+                sidebar: "tutorialSidebar"
+              },
+              {
+                path: '/docs/components/select',
+                component: ComponentCreator('/docs/components/select', '9a3'),
+                exact: true,
+                sidebar: "tutorialSidebar"
+              },
+              {
+                path: '/docs/components/separator',
+                component: ComponentCreator('/docs/components/separator', '274'),
+                exact: true,
+                sidebar: "tutorialSidebar"
+              },
+              {
+                path: '/docs/components/slider',
+                component: ComponentCreator('/docs/components/slider', 'ec5'),
+                exact: true,
+                sidebar: "tutorialSidebar"
+              },
+              {
+                path: '/docs/components/switch',
+                component: ComponentCreator('/docs/components/switch', 'd7d'),
+                exact: true,
+                sidebar: "tutorialSidebar"
+              },
+              {
+                path: '/docs/components/tabs',
+                component: ComponentCreator('/docs/components/tabs', '92d'),
+                exact: true,
+                sidebar: "tutorialSidebar"
+              },
+              {
+                path: '/docs/components/textarea',
+                component: ComponentCreator('/docs/components/textarea', '6ad'),
+                exact: true,
+                sidebar: "tutorialSidebar"
+              },
+              {
+                path: '/docs/components/tooltip',
+                component: ComponentCreator('/docs/components/tooltip', '5e5'),
                 exact: true,
                 sidebar: "tutorialSidebar"
               },

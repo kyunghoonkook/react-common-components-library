@@ -1,0 +1,129 @@
+/* Separator 기본 스타일 */
+.separator {
+  border: none;
+  margin: 0;
+  flex-shrink: 0;
+  background-color: var(--separator-color, rgba(0, 0, 0, 0.12));
+  transition: background-color 0.2s ease;
+}
+
+/* 수평 구분선 */
+.separator-horizontal {
+  height: 1px;
+  width: 100%;
+}
+
+/* 수직 구분선 */
+.separator-vertical {
+  height: 100%;
+  width: 1px;
+}
+
+/* 데코레이티브 구분선 (더 두껍게) */
+.separator-decorative {
+  background-color: var(--separator-decorative-color, rgba(0, 0, 0, 0.18));
+}
+
+/* 수평 데코레이티브 구분선 */
+.separator-horizontal.separator-decorative {
+  height: 2px;
+}
+
+/* 수직 데코레이티브 구분선 */
+.separator-vertical.separator-decorative {
+  width: 2px;
+}
+
+/* 다크 테마 */
+.separator.dark {
+  background-color: var(--separator-color-dark, rgba(255, 255, 255, 0.12));
+}
+
+.separator.dark.separator-decorative {
+  background-color: var(--separator-decorative-color-dark, rgba(255, 255, 255, 0.18));
+}
+
+/* 구분선 간격 */
+.separator-with-spacing {
+  margin: var(--separator-spacing, 16px) 0;
+}
+
+.separator-vertical.separator-with-spacing {
+  margin: 0 var(--separator-spacing, 16px);
+}
+
+/* 반응형 */
+@media (max-width: 640px) {
+  .separator-with-spacing {
+    margin: var(--separator-spacing-mobile, 12px) 0;
+  }
+  
+  .separator-vertical.separator-with-spacing {
+    margin: 0 var(--separator-spacing-mobile, 12px);
+  }
+}
+
+/* 커스텀 색상 */
+.separator-primary {
+  background-color: var(--separator-primary-color, #3b82f6);
+}
+
+.separator-secondary {
+  background-color: var(--separator-secondary-color, #6b7280);
+}
+
+.separator-success {
+  background-color: var(--separator-success-color, #10b981);
+}
+
+.separator-danger {
+  background-color: var(--separator-danger-color, #ef4444);
+}
+
+.separator-warning {
+  background-color: var(--separator-warning-color, #f59e0b);
+}
+
+/* 점선 스타일 */
+.separator-dashed {
+  background: repeating-linear-gradient(
+    to right,
+    var(--separator-color, rgba(0, 0, 0, 0.12)),
+    var(--separator-color, rgba(0, 0, 0, 0.12)) 4px,
+    transparent 4px,
+    transparent 8px
+  );
+  height: 1px;
+}
+
+.separator-vertical.separator-dashed {
+  background: repeating-linear-gradient(
+    to bottom,
+    var(--separator-color, rgba(0, 0, 0, 0.12)),
+    var(--separator-color, rgba(0, 0, 0, 0.12)) 4px,
+    transparent 4px,
+    transparent 8px
+  );
+  width: 1px;
+}
+
+/* 다크 테마에서 점선 스타일 */
+.separator-dashed.dark {
+  background: repeating-linear-gradient(
+    to right,
+    var(--separator-color-dark, rgba(255, 255, 255, 0.12)),
+    var(--separator-color-dark, rgba(255, 255, 255, 0.12)) 4px,
+    transparent 4px,
+    transparent 8px
+  );
+}
+
+.separator-vertical.separator-dashed.dark {
+  background: repeating-linear-gradient(
+    to bottom,
+    var(--separator-color-dark, rgba(255, 255, 255, 0.12)),
+    var(--separator-color-dark, rgba(255, 255, 255, 0.12)) 4px,
+    transparent 4px,
+    transparent 8px
+  );
+} 

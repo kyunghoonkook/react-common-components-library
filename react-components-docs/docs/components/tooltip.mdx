@@ -1,0 +1,293 @@
+---
+sidebar_position: 27
+---
+
+import { Tooltip, Button } from 'react-components-library';
+import TooltipExample from '../../../src/components/tooltip/TooltipExample';
+
+# Tooltip
+
+Tooltip은 요소에 마우스를 올리거나 클릭했을 때 추가 정보를 표시하는 작은 팝업 컴포넌트입니다.
+
+## 모든 예제
+
+<TooltipExample />
+
+## 가져오기
+
+```jsx
+import { Tooltip } from 'react-components-library';
+```
+
+## 기본 사용법
+
+<div className="component-preview">
+  <Tooltip content="도움말 텍스트">
+    <Button>마우스를 올려보세요</Button>
+  </Tooltip>
+</div>
+
+```jsx
+<Tooltip content="도움말 텍스트">
+  <Button>마우스를 올려보세요</Button>
+</Tooltip>
+```
+
+## 배치 위치
+
+Tooltip을 다양한 위치에 표시할 수 있습니다.
+
+<div className="component-preview" style={{ display: 'flex', flexDirection: 'column', gap: '20px', alignItems: 'center' }}>
+  <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+    <Tooltip content="상단 툴팁" placement="top">
+      <Button>상단</Button>
+    </Tooltip>
+  </div>
+  
+  <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between' }}>
+    <Tooltip content="좌측 툴팁" placement="left">
+      <Button>좌측</Button>
+    </Tooltip>
+    
+    <Tooltip content="우측 툴팁" placement="right">
+      <Button>우측</Button>
+    </Tooltip>
+  </div>
+  
+  <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+    <Tooltip content="하단 툴팁" placement="bottom">
+      <Button>하단</Button>
+    </Tooltip>
+  </div>
+</div>
+
+```jsx
+<Tooltip content="상단 툴팁" placement="top">
+  <Button>상단</Button>
+</Tooltip>
+
+<Tooltip content="우측 툴팁" placement="right">
+  <Button>우측</Button>
+</Tooltip>
+
+<Tooltip content="하단 툴팁" placement="bottom">
+  <Button>하단</Button>
+</Tooltip>
+
+<Tooltip content="좌측 툴팁" placement="left">
+  <Button>좌측</Button>
+</Tooltip>
+```
+
+## 크기 옵션
+
+세 가지 크기 옵션을 제공합니다.
+
+<div className="component-preview" style={{ display: 'flex', gap: '20px' }}>
+  <Tooltip content="작은 크기" size="sm">
+    <Button>Small</Button>
+  </Tooltip>
+
+  <Tooltip content="중간 크기" size="md">
+    <Button>Medium</Button>
+  </Tooltip>
+
+  <Tooltip content="큰 크기" size="lg">
+    <Button>Large</Button>
+  </Tooltip>
+</div>
+
+```jsx
+<Tooltip content="작은 크기" size="sm">
+  <Button>Small</Button>
+</Tooltip>
+
+<Tooltip content="중간 크기" size="md">
+  <Button>Medium</Button>
+</Tooltip>
+
+<Tooltip content="큰 크기" size="lg">
+  <Button>Large</Button>
+</Tooltip>
+```
+
+## 트리거 방식
+
+<div className="component-preview" style={{ display: 'flex', gap: '20px' }}>
+  <Tooltip content="호버 시 표시" trigger="hover">
+    <Button>Hover</Button>
+  </Tooltip>
+
+  <Tooltip content="클릭 시 표시" trigger="click">
+    <Button>Click</Button>
+  </Tooltip>
+</div>
+
+```jsx
+// 마우스 호버 시 표시 (기본값)
+<Tooltip content="호버 시 표시" trigger="hover">
+  <Button>Hover</Button>
+</Tooltip>
+
+// 클릭 시 표시
+<Tooltip content="클릭 시 표시" trigger="click">
+  <Button>Click</Button>
+</Tooltip>
+```
+
+## 화살표 옵션
+
+<div className="component-preview" style={{ display: 'flex', gap: '20px' }}>
+  <Tooltip content="화살표 있음" arrow={true}>
+    <Button>화살표 있음</Button>
+  </Tooltip>
+
+  <Tooltip content="화살표 없음" arrow={false}>
+    <Button>화살표 없음</Button>
+  </Tooltip>
+</div>
+
+```jsx
+// 화살표 표시 (기본값)
+<Tooltip content="화살표 있음" arrow={true}>
+  <Button>화살표 있음</Button>
+</Tooltip>
+
+// 화살표 숨김
+<Tooltip content="화살표 없음" arrow={false}>
+  <Button>화살표 없음</Button>
+</Tooltip>
+```
+
+## 딜레이 설정
+
+툴팁이 나타나고 사라지는 시간을 지연시킬 수 있습니다.
+
+<div className="component-preview">
+  <Tooltip 
+    content="표시 딜레이: 500ms / 숨김 딜레이: 200ms" 
+    delayShow={500} 
+    delayHide={200}
+  >
+    <Button>딜레이 옵션</Button>
+  </Tooltip>
+</div>
+
+```jsx
+<Tooltip 
+  content="표시 및 숨김 딜레이 적용" 
+  delayShow={500} 
+  delayHide={200}
+>
+  <Button>딜레이 옵션</Button>
+</Tooltip>
+```
+
+## 긴 텍스트 처리
+
+긴 텍스트는 자동으로 여러 줄로 표시됩니다.
+
+<div className="component-preview">
+  <Tooltip content="이것은 매우 긴 텍스트 내용입니다. 툴팁은 길이가 긴 텍스트를 표시할 때 자동으로 여러 줄로 나뉘어 표시됩니다. 텍스트가 충분히 길면 텍스트가 줄바꿈됩니다.">
+    <Button>긴 텍스트</Button>
+  </Tooltip>
+</div>
+
+```jsx
+<Tooltip content="이것은 매우 긴 텍스트 내용입니다. 툴팁은 길이가 긴 텍스트를 표시할 때 자동으로 여러 줄로 나뉘어 표시됩니다.">
+  <Button>긴 텍스트</Button>
+</Tooltip>
+```
+
+## 제어 모드
+
+툴팁의 표시 여부를 직접 제어할 수 있습니다.
+
+import { useState } from 'react';
+
+export const ControlledTooltipExample = () => {
+  const [visible, setVisible] = useState(false);
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+      <Button onClick={() => setVisible(!visible)}>
+        {visible ? '툴팁 숨기기' : '툴팁 표시하기'}
+      </Button>
+      
+      <div style={{ marginTop: '20px' }}>
+        <Tooltip
+          content="Controlled 모드 툴팁"
+          visible={visible}
+          onVisibleChange={setVisible}
+        >
+          <Button>Controlled 툴팁</Button>
+        </Tooltip>
+      </div>
+    </div>
+  );
+};
+
+<div className="component-preview">
+  <ControlledTooltipExample />
+</div>
+
+```jsx
+const [visible, setVisible] = useState(false);
+
+<>
+  <Button onClick={() => setVisible(!visible)}>
+    {visible ? '툴팁 숨기기' : '툴팁 표시하기'}
+  </Button>
+  
+  <Tooltip
+    content="제어 모드 툴팁"
+    visible={visible}
+    onVisibleChange={setVisible}
+  >
+    <Button>Controlled 툴팁</Button>
+  </Tooltip>
+</>
+```
+
+## 커스텀 스타일링
+
+<div className="component-preview">
+  <Tooltip
+    content="커스텀 스타일 툴팁"
+    contentClassName="custom-tooltip-content"
+    className="custom-tooltip"
+    style={{ zIndex: 1000 }}
+  >
+    <Button>커스텀 스타일</Button>
+  </Tooltip>
+</div>
+
+```jsx
+<Tooltip
+  content="커스텀 스타일 툴팁"
+  contentClassName="custom-tooltip-content"
+  className="custom-tooltip"
+  style={{ zIndex: 1000 }}
+>
+  <Button>커스텀 스타일</Button>
+</Tooltip>
+```
+
+## 속성
+
+| 속성 | 타입 | 기본값 | 설명 |
+|------|------|--------|------|
+| children | ReactNode | 필수 | 툴팁을 표시할 대상 요소 |
+| content | ReactNode | 필수 | 툴팁에 표시할 내용 |
+| placement | 'top' \| 'right' \| 'bottom' \| 'left' | 'top' | 툴팁 표시 위치 |
+| size | 'sm' \| 'md' \| 'lg' | 'md' | 툴팁 크기 |
+| trigger | 'hover' \| 'click' \| 'focus' | 'hover' | 툴팁 표시 트리거 방식 |
+| arrow | boolean | true | 화살표 표시 여부 |
+| delayShow | number | 0 | 툴팁 표시 지연 시간 (ms) |
+| delayHide | number | 0 | 툴팁 숨김 지연 시간 (ms) |
+| defaultVisible | boolean | false | 초기 표시 여부 (비제어 모드) |
+| visible | boolean | - | 툴팁 표시 여부 (제어 모드) |
+| onVisibleChange | (visible: boolean) => void | - | 툴팁 표시 상태 변경 시 호출되는 함수 |
+| className | string | - | 툴팁 컨테이너에 적용할 CSS 클래스 |
+| contentClassName | string | - | 툴팁 내용에 적용할 CSS 클래스 |
+| style | CSSProperties | - | 툴팁 컨테이너에 적용할 인라인 스타일 |
+| zIndex | number | 1000 | 툴팁의 z-index 값 | 

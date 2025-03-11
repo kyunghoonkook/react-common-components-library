@@ -18,5 +18,9 @@
   "previous": {
     "title": "Dialog",
     "permalink": "/docs/components/dialog"
+  },
+  "next": {
+    "title": "HoverCard",
+    "permalink": "/docs/components/hovercard"
   }
 }

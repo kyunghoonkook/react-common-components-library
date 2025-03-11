@@ -826,7 +826,7 @@ function App() {
 | `maxWidth` | `string` | '500px' | 다이얼로그 최대 너비 (px 또는 %) |
 | `style` | `CSSProperties` | - | 다이얼로그 컨테이너에 적용할 스타일 |
 
-### FormField Props
+#### FormField Props
 
 | 속성 | 타입 | 기본값 | 설명 |
 |------|------|--------|------|
@@ -884,7 +884,7 @@ function App() {
       <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
     </svg>
   );
-
+  
   return (
     <div>
       {/* 기본 사용법 */}
@@ -1182,7 +1182,7 @@ function App() {
 | `position` | `'top' \| 'bottom' \| 'left' \| 'right'` | 'bottom' | 카드 위치 |
 | `open` | `boolean` | - | 외부에서 제어할 때 사용하는 열림 상태 |
 | `onOpenChange` | `(open: boolean) => void` | - | 열림 상태가 변경될 때 호출되는 콜백 |
-| `width` | `string` | '250px' | 카드 너비 |
+| `width` | `string \| number` | - | 카드 너비 |
 | `style` | `CSSProperties` | - | 부모 요소 스타일 |
 | `cardStyle` | `CSSProperties` | - | 카드 스타일 |
 | `className` | `string` | '' | 부모 요소에 적용할 추가 CSS 클래스 |
@@ -1710,6 +1710,898 @@ function App() {
 | `description` | `string` | - | 콘텐츠 설명 |
 | `links` | `NavigationLink[]` | - | 콘텐츠 내 링크 목록 |
 | `customContent` | `React.ReactNode` | - | 커스텀 콘텐츠 |
+
+### 17. Popover
+
+Popover 컴포넌트는 특정 요소를 클릭했을 때 팝업 형태로 정보나 작업을 제공하는 컴포넌트입니다. 사용자에게 추가 정보를 표시하거나 설정을 변경할 수 있는 인터페이스를 제공합니다.
+
+#### 사용법
+
+```jsx
+import { Popover, PopoverField } from 'react-common-components-library';
+import { Button } from 'react-common-components-library';
+
+function App() {
+  // 기본 사용법
+  return (
+    <Popover
+      trigger={<Button>클릭하세요</Button>}
+      title="팝오버 제목"
+      description="팝오버에 대한 설명입니다."
+    >
+      <div>팝오버 내용을 여기에 넣을 수 있습니다.</div>
+    </Popover>
+  );
+}
+
+// 치수 설정 예제
+function DimensionsExample() {
+  const [width, setWidth] = useState('100%');
+  const [maxWidth, setMaxWidth] = useState('300px');
+  const [height, setHeight] = useState('25px');
+  const [maxHeight, setMaxHeight] = useState('none');
+  
+  return (
+    <Popover
+      trigger={<Button>치수 설정</Button>}
+      title="치수 설정"
+      description="Set the dimensions for the layer."
+      width={260}
+    >
+      <PopoverField
+        label="Width"
+        value={width}
+        onChange={setWidth}
+      />
+      <PopoverField
+        label="Max. width"
+        value={maxWidth}
+        onChange={setMaxWidth}
+      />
+      <PopoverField
+        label="Height"
+        value={height}
+        onChange={setHeight}
+      />
+      <PopoverField
+        label="Max. height"
+        value={maxHeight}
+        onChange={setMaxHeight}
+      />
+    </Popover>
+  );
+}
+```
+
+#### Props
+
+##### Popover
+
+| 속성 | 타입 | 기본값 | 설명 |
+|------|------|--------|------|
+| `trigger` | `ReactNode` | 필수 | Popover를 열기 위한 트리거 요소 |
+| `title` | `ReactNode` | - | Popover의 제목 |
+| `description` | `ReactNode` | - | Popover의 설명 |
+| `children` | `ReactNode` | 필수 | Popover의 내용 |
+| `defaultOpen` | `boolean` | false | Popover가 기본적으로 열려있는지 여부 |
+| `open` | `boolean` | - | 외부에서 제어하는 열림 상태 |
+| `onOpenChange` | `(open: boolean) => void` | - | 열림 상태가 변경될 때 호출되는 함수 |
+| `closeOnOutsideClick` | `boolean` | true | 클릭 외부에서 Popover를 닫을지 여부 |
+| `closeOnEscape` | `boolean` | true | ESC 키를 눌렀을 때 Popover를 닫을지 여부 |
+| `width` | `string \| number` | - | Popover 컨텐츠의 너비 |
+| `position` | `'top' \| 'right' \| 'bottom' \| 'left'` | 'bottom' | Popover가 열리는 위치 |
+| `triggerClassName` | `string` | - | Popover 트리거에 적용할 클래스 |
+| `contentClassName` | `string` | - | Popover 컨텐츠에 적용할 클래스 |
+| `titleClassName` | `string` | - | Popover 제목에 적용할 클래스 |
+| `descriptionClassName` | `string` | - | Popover 설명에 적용할 클래스 |
+| `triggerStyle` | `CSSProperties` | - | Popover 트리거에 적용할 스타일 |
+| `contentStyle` | `CSSProperties` | - | Popover 컨텐츠에 적용할 스타일 |
+
+##### PopoverField
+
+| 속성 | 타입 | 기본값 | 설명 |
+|------|------|--------|------|
+| `label` | `string` | 필수 | 필드 레이블 |
+| `type` | `string` | 'text' | 입력 타입 |
+| `value` | `string` | 필수 | 입력 값 |
+| `onChange` | `(value: string) => void` | 필수 | 값이 변경될 때 호출되는 함수 |
+| `placeholder` | `string` | - | 플레이스홀더 |
+| `className` | `string` | - | 필드 클래스 |
+
+### 18. Progress
+
+Progress 컴포넌트는 작업의 완료 상태나 프로세스의 진행 상황을 시각적으로 표시하는 데 사용됩니다. 사용자에게 작업이 얼마나 진행되었는지 직관적으로 보여줍니다.
+
+#### 사용법
+
+```jsx
+import { Progress } from 'react-common-components-library';
+
+function App() {
+  // 기본 사용법
+  return (
+    <Progress value={60} />
+  );
+  
+  // 레이블과 값 표시
+  return (
+    <Progress 
+      value={60} 
+      label="다운로드 진행률" 
+      showValue 
+    />
+  );
+  
+  // 다양한 크기와 색상
+  return (
+    <>
+      <Progress value={60} size="sm" color="primary" />
+      <Progress value={60} size="md" color="success" />
+      <Progress value={60} size="lg" color="danger" />
+    </>
+  );
+  
+  // 애니메이션 효과
+  return (
+    <Progress value={60} animated />
+  );
+}
+```
+
+#### Props
+
+| 속성 | 타입 | 기본값 | 설명 |
+|------|------|--------|------|
+| `value` | `number` | 필수 | 진행률 (0-100) |
+| `max` | `number` | 100 | 최대값 |
+| `label` | `string` | - | 진행 바 위에 표시될 레이블 |
+| `showValue` | `boolean` | false | 진행률 텍스트 표시 여부 |
+| `valueFormat` | `string` | '{value}%' | 진행률 텍스트 형식 |
+| `animated` | `boolean` | false | 애니메이션 효과 적용 여부 |
+| `size` | `'sm' \| 'md' \| 'lg'` | 'md' | 진행 바 크기 |
+| `color` | `'primary' \| 'secondary' \| 'success' \| 'danger' \| 'warning' \| 'info'` | 'primary' | 진행 바 색상 |
+| `className` | `string` | - | 컴포넌트에 적용할 추가 CSS 클래스 |
+| `style` | `CSSProperties` | - | 컴포넌트에 적용할 인라인 스타일 |
+| `containerClassName` | `string` | - | 진행 바 배경에 적용할 추가 CSS 클래스 |
+| `indicatorClassName` | `string` | - | 진행 바 인디케이터에 적용할 추가 CSS 클래스 |
+| `valueClassName` | `string` | - | 진행률 표시 텍스트에 적용할 추가 CSS 클래스 |
+| `labelClassName` | `string` | - | 레이블에 적용할 추가 CSS 클래스 |
+
+### 19. RadioGroup
+
+RadioGroup 컴포넌트는 사용자가 여러 옵션 중 하나를 선택할 수 있는 라디오 버튼 그룹을 제공합니다. 각 옵션은 상호 배타적이며, 한 번에 하나의 옵션만 선택할 수 있습니다.
+
+#### 사용법
+
+```jsx
+import { RadioGroup } from 'react-common-components-library';
+
+function App() {
+  // 기본 사용법
+  const [value, setValue] = React.useState('default');
+  
+  return (
+    <RadioGroup value={value} onChange={setValue}>
+      <RadioGroup.Item value="default">Default</RadioGroup.Item>
+      <RadioGroup.Item value="comfortable">Comfortable</RadioGroup.Item>
+      <RadioGroup.Item value="compact">Compact</RadioGroup.Item>
+    </RadioGroup>
+  );
+  
+  // 가로 방향 라디오 그룹
+  return (
+    <RadioGroup value={value} onChange={setValue} orientation="horizontal">
+      <RadioGroup.Item value="option1">Option 1</RadioGroup.Item>
+      <RadioGroup.Item value="option2">Option 2</RadioGroup.Item>
+      <RadioGroup.Item value="option3">Option 3</RadioGroup.Item>
+    </RadioGroup>
+  );
+  
+  // 다양한 크기
+  return (
+    <>
+      <RadioGroup value="small" size="sm">
+        <RadioGroup.Item value="small">Small</RadioGroup.Item>
+      </RadioGroup>
+      
+      <RadioGroup value="medium" size="md">
+        <RadioGroup.Item value="medium">Medium (Default)</RadioGroup.Item>
+      </RadioGroup>
+      
+      <RadioGroup value="large" size="lg">
+        <RadioGroup.Item value="large">Large</RadioGroup.Item>
+      </RadioGroup>
+    </>
+  );
+  
+  // 비활성화
+  return (
+    <RadioGroup value="option1" disabled>
+      <RadioGroup.Item value="option1">Option 1</RadioGroup.Item>
+      <RadioGroup.Item value="option2">Option 2</RadioGroup.Item>
+    </RadioGroup>
+  );
+}
+```
+
+#### Props
+
+##### RadioGroup
+
+| 속성 | 타입 | 기본값 | 설명 |
+|------|------|--------|------|
+| `value` | `string` | - | 선택된 라디오 버튼의 값 |
+| `defaultValue` | `string` | - | 기본 선택값 |
+| `onChange` | `(value: string) => void` | - | 값이 변경될 때 호출되는 함수 |
+| `name` | `string` | 자동 생성 | 라디오 그룹의 이름 |
+| `children` | `ReactNode` | 필수 | 라디오 버튼들 |
+| `disabled` | `boolean` | false | 모든 라디오 버튼 비활성화 여부 |
+| `size` | `'sm' \| 'md' \| 'lg'` | 'md' | 라디오 버튼 크기 |
+| `orientation` | `'horizontal' \| 'vertical'` | 'vertical' | 라디오 버튼 방향 |
+| `className` | `string` | - | 라디오 그룹에 적용할 CSS 클래스 |
+| `style` | `CSSProperties` | - | 라디오 그룹에 적용할 스타일 |
+
+##### RadioGroup.Item
+
+| 속성 | 타입 | 기본값 | 설명 |
+|------|------|--------|------|
+| `value` | `string` | 필수 | 라디오 아이템의 값 |
+| `children` | `ReactNode` | 필수 | 라디오 아이템 레이블 |
+| `disabled` | `boolean` | false | 비활성화 여부 |
+| `className` | `string` | - | 라디오 아이템에 적용할 CSS 클래스 |
+| `labelClassName` | `string` | - | 라벨에 적용할 CSS 클래스 |
+
+### 20. ScrollArea
+
+ScrollArea 컴포넌트는 제한된 공간 내에서 콘텐츠를 스크롤할 수 있게 해주며, 사용자 정의 스크롤바를 제공합니다. 기본 브라우저 스크롤바를 대체하여 더 일관되고 시각적으로 매력적인 UI를 구현할 수 있습니다.
+
+#### 사용법
+
+```jsx
+import { ScrollArea } from 'react-common-components-library';
+
+function App() {
+  // 기본 사용법 (세로 스크롤)
+  return (
+    <ScrollArea 
+      height={300} 
+      width="100%"
+    >
+      {/* 스크롤될 내용 */}
+      <div>
+        {Array.from({ length: 50 }).map((_, i) => (
+          <p key={i}>항목 {i + 1}</p>
+        ))}
+      </div>
+    </ScrollArea>
+  );
+  
+  // 가로 스크롤
+  return (
+    <ScrollArea 
+      height={300} 
+      width="100%" 
+      orientation="horizontal"
+    >
+      <div style={{ display: 'flex', gap: '20px', whiteSpace: 'nowrap' }}>
+        {Array.from({ length: 20 }).map((_, i) => (
+          <div 
+            key={i} 
+            style={{ 
+              minWidth: '150px', 
+              height: '150px',
+              background: `hsl(${i * 20}, 70%, 70%)`,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          >
+            항목 {i + 1}
+          </div>
+        ))}
+      </div>
+    </ScrollArea>
+  );
+  
+  // 양방향 스크롤
+  return (
+    <ScrollArea 
+      height={300} 
+      width="100%" 
+      orientation="both"
+    >
+      <div style={{ width: '1000px', height: '1000px' }}>
+        {/* 넓은 콘텐츠 */}
+      </div>
+    </ScrollArea>
+  );
+  
+  // 스크롤바 항상 표시
+  return (
+    <ScrollArea 
+      height={300} 
+      width="100%" 
+      autoHide={false}
+    >
+      {/* 스크롤될 내용 */}
+    </ScrollArea>
+  );
+}
+```
+
+#### Props
+
+| 속성 | 타입 | 기본값 | 설명 |
+|------|------|--------|------|
+| `children` | `ReactNode` | 필수 | 스크롤 영역 내부에 들어갈 컨텐츠 |
+| `orientation` | `'vertical' \| 'horizontal' \| 'both'` | 'vertical' | 스크롤 방향 |
+| `autoHide` | `boolean` | true | 스크롤바 자동 숨김 여부 |
+| `width` | `string \| number` | - | 스크롤 영역 너비 |
+| `height` | `string \| number` | - | 스크롤 영역 높이 |
+| `maxWidth` | `string \| number` | - | 스크롤 영역 최대 너비 |
+| `maxHeight` | `string \| number` | - | 스크롤 영역 최대 높이 |
+| `className` | `string` | - | 루트 요소에 적용할 CSS 클래스 |
+| `viewportClassName` | `string` | - | 뷰포트(스크롤 영역)에 적용할 CSS 클래스 |
+| `style` | `CSSProperties` | - | 루트 요소에 적용할 인라인 스타일 |
+| `viewportStyle` | `CSSProperties` | - | 뷰포트에 적용할 인라인 스타일 |
+| `scrollbarClassName` | `string` | - | 스크롤바에 적용할 CSS 클래스 |
+| `trackClassName` | `string` | - | 스크롤바 트랙에 적용할 CSS 클래스 |
+| `thumbClassName` | `string` | - | 스크롤바 썸(핸들)에 적용할 CSS 클래스 |
+
+### 21. Select
+
+사용자가 미리 정의된 옵션 목록에서 선택할 수 있는 드롭다운 선택 인터페이스를 제공하는 컴포넌트입니다.
+
+#### 사용법
+
+```jsx
+import { Select } from 'react-common-components-library';
+
+function App() {
+  // 기본 사용법
+  return (
+    <div style={{ width: '300px' }}>
+      {/* 기본 사용법 */}
+      <Select
+        placeholder="옵션 선택"
+        options={[
+          { value: 'option1', label: '옵션 1' },
+          { value: 'option2', label: '옵션 2' },
+          { value: 'option3', label: '옵션 3' },
+        ]}
+        onChange={(value) => console.log('선택된 값:', value)}
+      />
+      
+      {/* 그룹화된 옵션 예시 */}
+      <Select
+        placeholder="카테고리 선택"
+        options={[
+          {
+            label: '과일',
+            options: [
+              { value: 'apple', label: '사과' },
+              { value: 'banana', label: '바나나' },
+              { value: 'orange', label: '오렌지' },
+            ],
+          },
+          {
+            label: '채소',
+            options: [
+              { value: 'carrot', label: '당근' },
+              { value: 'broccoli', label: '브로콜리', disabled: true },
+              { value: 'cucumber', label: '오이' },
+            ],
+          },
+        ]}
+        onChange={(value) => console.log('선택된 값:', value)}
+      />
+      
+      {/* 다크 테마 예시 */}
+      <Select
+        placeholder="다크 테마"
+        theme="dark"
+        options={[
+          { value: 'option1', label: '옵션 1' },
+          { value: 'option2', label: '옵션 2' },
+          { value: 'option3', label: '옵션 3' },
+        ]}
+      />
+    </div>
+  );
+}
+```
+
+#### Props
+
+| 속성 | 타입 | 기본값 | 설명 |
+|------|------|--------|------|
+| `placeholder` | `string` | '옵션 선택' | 기본적으로 표시할 플레이스홀더 텍스트 |
+| `value` | `string` | - | 현재 선택된 값 (제어 컴포넌트로 사용 시) |
+| `defaultValue` | `string` | - | 기본 선택 값 (비제어 컴포넌트로 사용 시) |
+| `options` | `(SelectOption \| SelectGroup)[]` | [] | 선택 가능한 옵션 목록 또는 그룹화된 옵션 목록 |
+| `disabled` | `boolean` | false | 컴포넌트 비활성화 여부 |
+| `size` | `'sm' \| 'md' \| 'lg'` | 'md' | 컴포넌트의 크기 |
+| `theme` | `'light' \| 'dark' \| 'auto'` | 'light' | 테마 모드 |
+| `onChange` | `(value: string) => void` | - | 선택 시 호출될 콜백 함수 |
+| `onOpenChange` | `(open: boolean) => void` | - | 드롭다운 열림/닫힘 시 호출될 콜백 함수 |
+| `className` | `string` | - | 컴포넌트에 적용할 추가 CSS 클래스 |
+| `style` | `React.CSSProperties` | - | 컴포넌트에 적용할 인라인 스타일 |
+| `required` | `boolean` | false | 선택 필수 여부 |
+| `id` | `string` | - | 컴포넌트 ID |
+| `name` | `string` | - | 컴포넌트 이름 (폼 제출용) |
+| `maxDropdownHeight` | `number` | - | 최대 드롭다운 높이 (px) |
+
+#### 타입
+
+```typescript
+interface SelectOption {
+  value: string;
+  label: string;
+  disabled?: boolean;
+}
+
+interface SelectGroup {
+  label: string;
+  options: SelectOption[];
+}
+```
+
+### 22. Separator
+
+콘텐츠 영역을 시각적으로 구분하는 수평 또는 수직 구분선을 제공하는 컴포넌트입니다.
+
+#### 사용법
+
+```jsx
+import { Separator } from 'react-common-components-library';
+
+function App() {
+  return (
+    <div>
+      {/* 기본 수평 구분선 */}
+      <div>상단 콘텐츠</div>
+      <Separator />
+      <div>하단 콘텐츠</div>
+      
+      {/* 수직 구분선 */}
+      <div style={{ display: 'flex', alignItems: 'center', height: '100px' }}>
+        <div>왼쪽 콘텐츠</div>
+        <Separator orientation="vertical" style={{ height: '80%', margin: '0 16px' }} />
+        <div>오른쪽 콘텐츠</div>
+      </div>
+      
+      {/* 데코레이티브 구분선 */}
+      <div>
+        <h1>제목</h1>
+        <p>부제목</p>
+        <Separator decorative />
+        <div>본문 내용</div>
+      </div>
+      
+      {/* 다양한 스타일 옵션 */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+        <Separator variant="primary" />
+        <Separator dashed />
+        <Separator withSpacing spacing={24} />
+        <Separator theme="dark" />
+      </div>
+    </div>
+  );
+}
+```
+
+#### Props
+
+| 속성 | 타입 | 기본값 | 설명 |
+|------|------|--------|------|
+| `orientation` | `'horizontal' \| 'vertical'` | `'horizontal'` | 구분선 방향 |
+| `decorative` | `boolean` | `false` | 데코레이티브 여부 (더 두껍게 표시) |
+| `variant` | `'default' \| 'primary' \| 'secondary' \| 'success' \| 'danger' \| 'warning'` | `'default'` | 구분선 색상 변형 |
+| `dashed` | `boolean` | `false` | 점선 스타일 사용 여부 |
+| `theme` | `'light' \| 'dark' \| 'auto'` | `'light'` | 테마 모드 |
+| `withSpacing` | `boolean` | `false` | 구분선 위아래(또는 좌우) 간격 추가 여부 |
+| `spacing` | `number` | `16` | 간격 크기 (px) |
+| `className` | `string` | - | 컴포넌트에 적용할 추가 CSS 클래스 |
+| `style` | `React.CSSProperties` | - | 컴포넌트에 적용할 인라인 스타일 |
+
+### 23. Slider
+
+사용자가 특정 범위 내에서 값을 선택할 수 있게 해주는 수평 또는 수직 슬라이더 컴포넌트입니다.
+
+#### 사용법
+
+```jsx
+import { Slider } from 'react-common-components-library';
+
+function App() {
+  return (
+    <div>
+      {/* 기본 슬라이더 */}
+      <Slider defaultValue={30} />
+      
+      {/* 수직 슬라이더 */}
+      <div style={{ height: '200px' }}>
+        <Slider orientation="vertical" defaultValue={50} />
+      </div>
+      
+      {/* 값 레이블 표시 */}
+      <Slider defaultValue={40} showValueLabel />
+      
+      {/* 제어 컴포넌트로 사용 */}
+      const [value, setValue] = useState(50);
+      
+      <Slider 
+        value={value} 
+        onChange={setValue} 
+        onChangeComplete={(val) => console.log('완료:', val)} 
+      />
+      
+      {/* 커스텀 범위 및 단계 */}
+      <Slider 
+        min={-50} 
+        max={50} 
+        step={10} 
+        defaultValue={0} 
+        showValueLabel 
+      />
+      
+      {/* 다양한 스타일 옵션 */}
+      <Slider variant="primary" size="lg" thumbSize="lg" />
+      <Slider variant="success" theme="dark" />
+      <Slider variant="danger" disabled />
+    </div>
+  );
+}
+```
+
+#### Props
+
+| 속성 | 타입 | 기본값 | 설명 |
+|------|------|--------|------|
+| `value` | `number` | - | 현재 슬라이더 값 (제어 컴포넌트로 사용 시) |
+| `defaultValue` | `number` | `0` | 기본 슬라이더 값 (비제어 컴포넌트로 사용 시) |
+| `min` | `number` | `0` | 최솟값 |
+| `max` | `number` | `100` | 최댓값 |
+| `step` | `number` | `1` | 단계 |
+| `disabled` | `boolean` | `false` | 비활성화 여부 |
+| `orientation` | `'horizontal' \| 'vertical'` | `'horizontal'` | 슬라이더의 방향 |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | 슬라이더의 크기 |
+| `showValueLabel` | `boolean` | `false` | 값 레이블 표시 여부 |
+| `formatLabel` | `(value: number) => string` | `(value) => \`${value}\`` | 값 레이블 포맷 함수 |
+| `theme` | `'light' \| 'dark' \| 'auto'` | `'light'` | 테마 모드 |
+| `variant` | `'default' \| 'primary' \| 'secondary' \| 'success' \| 'danger' \| 'warning'` | `'primary'` | 슬라이더의 색상 변형 |
+| `className` | `string` | `''` | 추가 CSS 클래스 |
+| `trackClickable` | `boolean` | `true` | 슬라이더 트랙 클릭 가능 여부 |
+| `thumbSize` | `'sm' \| 'md' \| 'lg'` | `'md'` | 슬라이더 썸(핸들) 크기 |
+| `onChange` | `(value: number) => void` | - | 값 변경 시 호출될 함수 |
+| `onChangeComplete` | `(value: number) => void` | - | 슬라이더 조작이 완료되었을 때 호출될 함수 |
+
+### 24. Switch
+
+사용자가 설정을 켜거나 끄는 상태를 토글할 수 있게 하는 컴포넌트입니다.
+
+#### 사용법
+
+```jsx
+import { Switch } from 'react-common-components-library';
+
+function App() {
+  const [airplaneMode, setAirplaneMode] = React.useState(false);
+  
+  return (
+    <div>
+      {/* 기본 사용법 */}
+      <Switch>비행기 모드</Switch>
+      
+      {/* 제어 컴포넌트로 사용 */}
+      <Switch
+        checked={airplaneMode}
+        onChange={(e) => setAirplaneMode(e.target.checked)}
+      >
+        비행기 모드 {airplaneMode ? '켜짐' : '꺼짐'}
+      </Switch>
+      
+      {/* 비활성화 상태 */}
+      <Switch disabled>비활성화된 스위치</Switch>
+      
+      {/* 크기 변형 */}
+      <Switch size="sm">작은 크기</Switch>
+      <Switch size="md">중간 크기</Switch>
+      <Switch size="lg">큰 크기</Switch>
+    </div>
+  );
+}
+```
+
+#### Props
+
+| 속성 | 타입 | 기본값 | 설명 |
+|------|------|--------|------|
+| `children` | `ReactNode` | - | 스위치 레이블 |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | 스위치 크기 |
+| `error` | `boolean` | `false` | 에러 상태 표시 |
+| `checked` | `boolean` | - | 스위치 체크 상태 (제어 컴포넌트로 사용할 때) |
+| `defaultChecked` | `boolean` | - | 스위치 기본 체크 상태 (비제어 컴포넌트로 사용할 때) |
+| `disabled` | `boolean` | `false` | 스위치 비활성화 여부 |
+| `onChange` | `(event: ChangeEvent<HTMLInputElement>) => void` | - | 스위치 상태 변경 시 호출될 콜백 함수 |
+| `className` | `string` | - | 루트 요소에 적용할 CSS 클래스 |
+| `wrapperClassName` | `string` | - | 스위치 컨테이너에 적용할 CSS 클래스 |
+
+### 25. Tabs
+
+여러 컨텐츠 영역을 동일한 공간에서 전환하여 표시할 수 있는 탭 인터페이스 컴포넌트입니다.
+
+#### 사용법
+
+```jsx
+import { Tabs, TabsList, TabsTrigger, TabsContent } from 'react-common-components-library';
+// 또는 중첩 구조로 사용
+import { Tabs } from 'react-common-components-library';
+
+function App() {
+  return (
+    <Tabs defaultValue="account">
+      <Tabs.List>
+        <Tabs.Trigger value="account">Account</Tabs.Trigger>
+        <Tabs.Trigger value="password">Password</Tabs.Trigger>
+      </Tabs.List>
+      <Tabs.Content value="account">
+        <div style={{ padding: '16px 0' }}>
+          <p>Make changes to your account here. Click save when you're done.</p>
+          
+          <div style={{ marginBottom: '16px' }}>
+            <label htmlFor="name">Name</label>
+            <input
+              id="name"
+              defaultValue="Pietro Schirano"
+              style={{ width: '100%' }}
+            />
+          </div>
+          
+          <div style={{ marginBottom: '24px' }}>
+            <label htmlFor="username">Username</label>
+            <input
+              id="username"
+              defaultValue="@skirano"
+              style={{ width: '100%' }}
+            />
+          </div>
+          
+          <button>Save changes</button>
+        </div>
+      </Tabs.Content>
+      <Tabs.Content value="password">
+        <p>Password settings content</p>
+      </Tabs.Content>
+    </Tabs>
+  );
+}
+```
+
+#### Props
+
+##### Tabs
+
+| 속성 | 타입 | 기본값 | 설명 |
+|------|------|--------|------|
+| `defaultValue` | `string` | - | 초기에 활성화된 탭의 ID |
+| `value` | `string` | - | 현재 선택된 탭의 ID (제어 컴포넌트로 사용할 때) |
+| `onValueChange` | `(value: string) => void` | - | 탭 변경 시 호출되는 콜백 함수 |
+| `className` | `string` | - | 루트 요소에 적용할 CSS 클래스 |
+
+##### TabsList / Tabs.List
+
+| 속성 | 타입 | 기본값 | 설명 |
+|------|------|--------|------|
+| `className` | `string` | - | 탭 리스트에 적용할 CSS 클래스 |
+
+##### TabsTrigger / Tabs.Trigger
+
+| 속성 | 타입 | 기본값 | 설명 |
+|------|------|--------|------|
+| `value` | `string` | - | 탭의 고유 식별자 |
+| `className` | `string` | - | 탭 버튼에 적용할 CSS 클래스 |
+| `disabled` | `boolean` | `false` | 탭 버튼의 비활성화 여부 |
+
+##### TabsContent / Tabs.Content
+
+| 속성 | 타입 | 기본값 | 설명 |
+|------|------|--------|------|
+| `value` | `string` | - | 연결된 탭의 고유 식별자 |
+| `className` | `string` | - | 탭 컨텐츠에 적용할 CSS 클래스 |
+| `forceMount` | `boolean` | `false` | 탭이 비활성화되었을 때 DOM에서 제거할지 여부 |
+
+### 26. Textarea
+
+사용자가 여러 줄의 텍스트를 입력할 수 있는 텍스트 영역 컴포넌트입니다.
+
+#### 사용법
+
+```jsx
+import { Textarea } from 'react-common-components-library';
+
+function App() {
+  return (
+    <div>
+      {/* 기본 사용법 */}
+      <Textarea 
+        placeholder="텍스트를 입력하세요..." 
+        rows={3}
+      />
+      
+      {/* 레이블 및 설명 추가 */}
+      <Textarea
+        label="자기 소개"
+        description="간단한 자기 소개를 작성해 주세요."
+        placeholder="자기 소개를 입력하세요..."
+      />
+      
+      {/* 에러 상태 */}
+      <Textarea
+        label="바이오"
+        error={true}
+        errorMessage="바이오는 필수 입력 항목입니다."
+        placeholder="자기 소개를 입력하세요..."
+      />
+      
+      {/* 자동 크기 조절 */}
+      <Textarea
+        label="자동 크기 조절"
+        autoResize
+        placeholder="텍스트를 입력하면 높이가 자동으로 조절됩니다..."
+        maxHeight={200}
+      />
+      
+      {/* 크기 변형 */}
+      <Textarea size="sm" placeholder="작은 크기..." />
+      <Textarea size="md" placeholder="중간 크기..." />
+      <Textarea size="lg" placeholder="큰 크기..." />
+      
+      {/* 제어 컴포넌트로 사용 */}
+      const [value, setValue] = useState('');
+      
+      <Textarea
+        label="코멘트"
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        placeholder="코멘트를 입력하세요..."
+      />
+    </div>
+  );
+}
+```
+
+#### Props
+
+| 속성 | 타입 | 기본값 | 설명 |
+|------|------|--------|------|
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | 텍스트 영역 크기 |
+| `error` | `boolean` | `false` | 에러 상태 표시 |
+| `errorMessage` | `string` | - | 에러 메시지 |
+| `label` | `string` | - | 레이블 |
+| `description` | `string` | - | 설명 텍스트 |
+| `className` | `string` | - | 텍스트 영역에 적용할 CSS 클래스 |
+| `containerClassName` | `string` | - | 컨테이너에 적용할 CSS 클래스 |
+| `maxHeight` | `number` | - | 최대 높이 (px) |
+| `autoResize` | `boolean` | `false` | 자동 크기 조절 여부 |
+| `rows` | `number` | `3` | 표시할 줄 수 |
+| `value` | `string` | - | 텍스트 영역 값 (제어 컴포넌트로 사용 시) |
+| `defaultValue` | `string` | - | 초기 값 (비제어 컴포넌트로 사용 시) |
+| `placeholder` | `string` | - | 플레이스홀더 텍스트 |
+| `disabled` | `boolean` | `false` | 비활성화 여부 |
+| `onChange` | `(e: ChangeEvent<HTMLTextAreaElement>) => void` | - | 값 변경 시 호출될 함수 |
+
+### 27. Tooltip
+
+요소에 마우스를 올리거나 클릭했을 때 추가 정보를 표시하는 작은 팝업 컴포넌트입니다.
+
+#### 사용법
+
+```jsx
+import { Tooltip, Button } from 'react-common-components-library';
+
+function App() {
+  return (
+    <div>
+      {/* 기본 사용법 */}
+      <Tooltip content="툴팁 내용입니다">
+        <Button>마우스를 올려보세요</Button>
+      </Tooltip>
+      
+      {/* 다양한 위치 */}
+      <Tooltip content="상단에 표시" placement="top">
+        <Button>상단</Button>
+      </Tooltip>
+      
+      <Tooltip content="우측에 표시" placement="right">
+        <Button>우측</Button>
+      </Tooltip>
+      
+      <Tooltip content="하단에 표시" placement="bottom">
+        <Button>하단</Button>
+      </Tooltip>
+      
+      <Tooltip content="좌측에 표시" placement="left">
+        <Button>좌측</Button>
+      </Tooltip>
+      
+      {/* 크기 옵션 */}
+      <Tooltip content="작은 툴팁" size="sm">
+        <Button>작은 크기</Button>
+      </Tooltip>
+      
+      <Tooltip content="중간 크기 툴팁" size="md">
+        <Button>중간 크기</Button>
+      </Tooltip>
+      
+      <Tooltip content="큰 크기 툴팁" size="lg">
+        <Button>큰 크기</Button>
+      </Tooltip>
+      
+      {/* 화살표 옵션 */}
+      <Tooltip content="화살표 없음" arrow={false}>
+        <Button>화살표 없음</Button>
+      </Tooltip>
+      
+      {/* 트리거 방식 */}
+      <Tooltip content="클릭하면 표시" trigger="click">
+        <Button>클릭하세요</Button>
+      </Tooltip>
+      
+      {/* 긴 텍스트 */}
+      <Tooltip content="이것은 매우 긴 텍스트 내용입니다. 툴팁은 길이가 긴 텍스트를 표시할 때 자동으로 여러 줄로 나뉘어 표시됩니다.">
+        <Button>긴 텍스트</Button>
+      </Tooltip>
+      
+      {/* 지연 시간 설정 */}
+      <Tooltip
+        content="마우스를 올리고 0.5초 후 표시됩니다"
+        delayShow={500}
+        delayHide={200}
+      >
+        <Button>지연 시간</Button>
+      </Tooltip>
+      
+      {/* 제어 컴포넌트 */}
+      const [visible, setVisible] = useState(false);
+      
+      <>
+        <Button onClick={() => setVisible(!visible)}>
+          {visible ? '툴팁 숨기기' : '툴팁 표시하기'}
+        </Button>
+        
+        <Tooltip
+          content="제어 모드 툴팁"
+          visible={visible}
+          onVisibleChange={setVisible}
+        >
+          <Button>Controlled 툴팁</Button>
+        </Tooltip>
+      </>
+    </div>
+  );
+}
+```
+
+#### Props
+
+| 속성 | 타입 | 기본값 | 설명 |
+|------|------|--------|------|
+| `content` | `ReactNode` | 필수 | 툴팁에 표시할 내용 |
+| `children` | `ReactElement` | 필수 | 툴팁을 표시할 대상 요소 |
+| `placement` | `'top' \| 'right' \| 'bottom' \| 'left'` | `'top'` | 툴팁 표시 위치 |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | 툴팁 크기 |
+| `trigger` | `'hover' \| 'click' \| 'focus'` | `'hover'` | 툴팁 표시 트리거 방식 |
+| `arrow` | `boolean` | `true` | 화살표 표시 여부 |
+| `delayShow` | `number` | `0` | 툴팁 표시 지연 시간 (ms) |
+| `delayHide` | `number` | `0` | 툴팁 숨김 지연 시간 (ms) |
+| `defaultVisible` | `boolean` | `false` | 초기 표시 여부 (비제어 모드) |
+| `visible` | `boolean` | - | 툴팁 표시 여부 (제어 모드) |
+| `onVisibleChange` | `(visible: boolean) => void` | - | 툴팁 표시 상태 변경 시 호출되는 함수 |
+| `className` | `string` | - | 툴팁에 적용할 CSS 클래스 |
+| `contentClassName` | `string` | - | 툴팁 내용에 적용할 CSS 클래스 |
+| `zIndex` | `number` | `1000` | z-index 값 |
+| `style` | `CSSProperties` | - | 툴팁에 적용할 인라인 스타일 |
 
 ## TypeScript 지원
 

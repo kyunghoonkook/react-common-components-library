@@ -1,0 +1,93 @@
+.tabs {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.tabs-list {
+  display: flex;
+  border-bottom: 1px solid #e2e8f0;
+  background-color: #f8fafc;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  overflow: hidden;
+}
+
+.tabs-trigger {
+  flex: 1;
+  padding: 12px 16px;
+  background-color: transparent;
+  border: none;
+  font-size: 16px;
+  font-weight: 500;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+  position: relative;
+  border-bottom: 2px solid transparent;
+}
+
+.tabs-trigger:hover {
+  color: #334155;
+  background-color: rgba(241, 245, 249, 0.8);
+}
+
+.tabs-trigger-active {
+  color: #0f172a;
+  background-color: #ffffff;
+  border-bottom-color: #6366f1;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.tabs-content {
+  padding: 24px;
+  background-color: #ffffff;
+  border-radius: 0 0 8px 8px;
+  border: 1px solid #e2e8f0;
+  border-top: none;
+}
+
+/* 크기 변형 */
+.tabs-size-sm .tabs-trigger {
+  padding: 8px 12px;
+  font-size: 14px;
+}
+
+.tabs-size-lg .tabs-trigger {
+  padding: 16px 24px;
+  font-size: 18px;
+}
+
+/* 애니메이션 */
+.tabs-content {
+  animation: tabFadeIn 0.2s ease;
+}
+
+@keyframes tabFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 반응형 스타일 */
+@media (max-width: 640px) {
+  .tabs-list {
+    flex-direction: column;
+  }
+  
+  .tabs-trigger {
+    border-bottom: 1px solid #e2e8f0;
+    border-left: 2px solid transparent;
+  }
+  
+  .tabs-trigger-active {
+    border-left-color: #6366f1;
+    border-bottom-color: transparent;
+  }
+} 

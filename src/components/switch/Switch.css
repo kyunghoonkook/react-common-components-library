@@ -1,0 +1,119 @@
+.switch-wrapper {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  gap: var(--spacing-md, 0.75rem);
+}
+
+.switch-container {
+  position: relative;
+  display: inline-block;
+}
+
+.switch-input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  margin: 0;
+}
+
+.switch-track {
+  display: inline-block;
+  position: relative;
+  width: calc(var(--switch-width));
+  height: calc(var(--switch-height));
+  background-color: #cbd5e1;
+  border: 1px solid #e2e8f0;
+  border-radius: 9999px;
+  transition: all 0.2s ease-in-out;
+}
+
+.switch-thumb {
+  position: absolute;
+  left: 2px;
+  top: 50%;
+  width: calc(var(--switch-thumb-size));
+  height: calc(var(--switch-thumb-size));
+  background-color: #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  transform: translateY(-50%);
+  transition: all 0.2s ease-in-out;
+}
+
+/* 체크된 상태 */
+.switch-input:checked ~ .switch-track {
+  background-color: #6366f1;
+  border-color: #4f46e5;
+}
+
+.switch-input:checked ~ .switch-track .switch-thumb {
+  left: calc(var(--switch-width) - var(--switch-thumb-size) - 2px);
+}
+
+/* 호버 상태 */
+.switch-wrapper:hover .switch-track {
+  opacity: 0.9;
+}
+
+/* 포커스 상태 */
+.switch-input:focus ~ .switch-track {
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+/* 비활성화 상태 */
+.switch-disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.switch-disabled .switch-track {
+  background-color: #f1f5f9;
+}
+
+.switch-disabled .switch-label {
+  color: #94a3b8;
+}
+
+/* 에러 상태 */
+.switch-input.switch-error ~ .switch-track {
+  background-color: rgba(239, 68, 68, 0.2);
+  border-color: #ef4444;
+}
+
+.switch-input.switch-error:checked ~ .switch-track {
+  background-color: #ef4444;
+}
+
+/* 크기 변수 정의 */
+.switch-sm {
+  --switch-width: 32px;
+  --switch-height: 18px;
+  --switch-thumb-size: 14px;
+}
+
+.switch-sm .switch-label {
+  font-size: 0.875rem;
+}
+
+.switch-md {
+  --switch-width: 44px;
+  --switch-height: 24px;
+  --switch-thumb-size: 20px;
+}
+
+.switch-md .switch-label {
+  font-size: 1rem;
+}
+
+.switch-lg {
+  --switch-width: 56px;
+  --switch-height: 30px;
+  --switch-thumb-size: 26px;
+}
+
+.switch-lg .switch-label {
+  font-size: 1.125rem;
+} 

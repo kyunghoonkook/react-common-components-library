@@ -66,6 +66,86 @@
               "sidebar": "tutorialSidebar"
             },
             {
+              "id": "components/hovercard",
+              "path": "/docs/components/hovercard",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "components/input",
+              "path": "/docs/components/input",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "components/label",
+              "path": "/docs/components/label",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "components/menubar",
+              "path": "/docs/components/menubar",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "components/navigation-menu",
+              "path": "/docs/components/navigation-menu",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "components/popover",
+              "path": "/docs/components/popover",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "components/progress",
+              "path": "/docs/components/progress",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "components/radio-group",
+              "path": "/docs/components/radio-group",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "components/scroll-area",
+              "path": "/docs/components/scroll-area",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "components/select",
+              "path": "/docs/components/select",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "components/separator",
+              "path": "/docs/components/separator",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "components/slider",
+              "path": "/docs/components/slider",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "components/switch",
+              "path": "/docs/components/switch",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "components/tabs",
+              "path": "/docs/components/tabs",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "components/textarea",
+              "path": "/docs/components/textarea",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "components/tooltip",
+              "path": "/docs/components/tooltip",
+              "sidebar": "tutorialSidebar"
+            },
+            {
               "id": "installation",
               "path": "/docs/installation",
               "sidebar": "tutorialSidebar"
