@@ -1,0 +1,26 @@
+{
+  "id": "components/avatar",
+  "title": "Avatar",
+  "description": "사용자 프로필 이미지 또는 이니셜을 표시하는 컴포넌트입니다. 다양한 크기와 상태를 지원합니다.",
+  "source": "@site/docs/components/avatar.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/avatar",
+  "permalink": "/docs/components/avatar",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 4,
+  "frontMatter": {
+    "sidebar_position": 4
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "AspectRatio",
+    "permalink": "/docs/components/aspect-ratio"
+  },
+  "next": {
+    "title": "Button",
+    "permalink": "/docs/components/button"
+  }
+}

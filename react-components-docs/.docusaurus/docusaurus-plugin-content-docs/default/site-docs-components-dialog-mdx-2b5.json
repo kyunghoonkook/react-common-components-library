@@ -1,0 +1,26 @@
+{
+  "id": "components/dialog",
+  "title": "Dialog",
+  "description": "사용자를 중요한 내용으로 중단시키고 응답을 기대하는 모달 다이얼로그입니다. 주의를 필요로 하는 중요한 정보를 표시하거나 사용자의 결정이 필요한 상황에서 사용합니다. 폼 레이아웃을 포함할 수 있어 프로필 편집과 같은 작업에도 적합합니다.",
+  "source": "@site/docs/components/dialog.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/dialog",
+  "permalink": "/docs/components/dialog",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 10,
+  "frontMatter": {
+    "sidebar_position": 10
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "ContextMenu",
+    "permalink": "/docs/components/context-menu"
+  },
+  "next": {
+    "title": "DropdownMenu",
+    "permalink": "/docs/components/dropdown-menu"
+  }
+}

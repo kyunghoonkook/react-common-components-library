@@ -1,0 +1,26 @@
+{
+  "id": "components/progress",
+  "title": "Progress",
+  "description": "Progress 컴포넌트는 작업의 완료 상태나 프로세스의 진행 상황을 시각적으로 표시하는 데 사용됩니다. 사용자에게 작업이 얼마나 진행되었는지 직관적으로 보여줍니다.",
+  "source": "@site/docs/components/progress.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/progress",
+  "permalink": "/docs/components/progress",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 18,
+  "frontMatter": {
+    "sidebar_position": 18
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Popover",
+    "permalink": "/docs/components/popover"
+  },
+  "next": {
+    "title": "RadioGroup",
+    "permalink": "/docs/components/radio-group"
+  }
+}

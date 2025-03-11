@@ -1,0 +1,26 @@
+{
+  "id": "components/alert-dialog",
+  "title": "AlertDialog",
+  "description": "중요한 의사 결정을 위한 모달 대화상자입니다. 사용자에게 정보를 제공하고 확인이나 취소 같은 선택을 요구합니다.",
+  "source": "@site/docs/components/alert-dialog.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/alert-dialog",
+  "permalink": "/docs/components/alert-dialog",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 2,
+  "frontMatter": {
+    "sidebar_position": 2
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Accordion",
+    "permalink": "/docs/components/accordion"
+  },
+  "next": {
+    "title": "AspectRatio",
+    "permalink": "/docs/components/aspect-ratio"
+  }
+}

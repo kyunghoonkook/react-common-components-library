@@ -1,0 +1,460 @@
+---
+sidebar_position: 17
+---
+
+import { Popover, PopoverField, Button } from 'react-components-library';
+import { useState } from 'react';
+
+# Popover
+
+Popover 컴포넌트는 특정 요소를 클릭했을 때 팝업 형태로 정보나 작업을 제공하는 컴포넌트입니다. 사용자에게 추가 정보를 표시하거나 설정을 변경할 수 있는 인터페이스를 제공합니다.
+
+## 가져오기
+
+```jsx
+import { Popover, PopoverField } from 'react-components-library';
+```
+
+## 기본 사용법
+
+Popover는 트리거 요소를 클릭했을 때 열리는 팝업 내용을 제공합니다. 제목, 설명 및 내용을 포함할 수 있습니다.
+
+<div className="component-preview">
+  <Popover
+    trigger={<Button>클릭하세요</Button>}
+    title="팝오버 제목"
+    description="팝오버 컴포넌트에 대한 설명입니다."
+  >
+    <div>
+      <p>팝오버 내용을 여기에 넣을 수 있습니다.</p>
+      <p>다양한 콘텐츠를 포함할 수 있습니다.</p>
+    </div>
+  </Popover>
+</div>
+
+```jsx
+<Popover
+  trigger={<Button>클릭하세요</Button>}
+  title="팝오버 제목"
+  description="팝오버 컴포넌트에 대한 설명입니다."
+>
+  <div>
+    <p>팝오버 내용을 여기에 넣을 수 있습니다.</p>
+    <p>다양한 콘텐츠를 포함할 수 있습니다.</p>
+  </div>
+</Popover>
+```
+
+## 위치 옵션
+
+Popover는 트리거 요소를 기준으로 다양한 위치에 표시될 수 있습니다. `position` 속성을 사용하여 위치를 지정할 수 있습니다.
+
+<div className="component-preview">
+  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '50px' }}>
+    <Popover
+      trigger={<Button>상단</Button>}
+      title="상단 팝오버"
+      position="top"
+    >
+      <div>
+        상단에 표시되는 팝오버입니다.
+      </div>
+    </Popover>
+    
+    <Popover
+      trigger={<Button>우측</Button>}
+      title="우측 팝오버"
+      position="right"
+    >
+      <div>
+        우측에 표시되는 팝오버입니다.
+      </div>
+    </Popover>
+    
+    <Popover
+      trigger={<Button>하단</Button>}
+      title="하단 팝오버"
+      position="bottom"
+    >
+      <div>
+        하단에 표시되는 팝오버입니다.
+      </div>
+    </Popover>
+    
+    <Popover
+      trigger={<Button>좌측</Button>}
+      title="좌측 팝오버"
+      position="left"
+    >
+      <div>
+        좌측에 표시되는 팝오버입니다.
+      </div>
+    </Popover>
+  </div>
+</div>
+
+```jsx
+<div style={{ display: 'flex', flexWrap: 'wrap', gap: '50px' }}>
+  <Popover
+    trigger={<Button>상단</Button>}
+    title="상단 팝오버"
+    position="top"
+  >
+    <div>
+      상단에 표시되는 팝오버입니다.
+    </div>
+  </Popover>
+  
+  <Popover
+    trigger={<Button>우측</Button>}
+    title="우측 팝오버"
+    position="right"
+  >
+    <div>
+      우측에 표시되는 팝오버입니다.
+    </div>
+  </Popover>
+  
+  <Popover
+    trigger={<Button>하단</Button>}
+    title="하단 팝오버"
+    position="bottom"
+  >
+    <div>
+      하단에 표시되는 팝오버입니다.
+    </div>
+  </Popover>
+  
+  <Popover
+    trigger={<Button>좌측</Button>}
+    title="좌측 팝오버"
+    position="left"
+  >
+    <div>
+      좌측에 표시되는 팝오버입니다.
+    </div>
+  </Popover>
+</div>
+```
+
+## 치수 설정 예제
+
+Popover와 함께 제공되는 `PopoverField` 컴포넌트를 사용하여 사용자 입력 필드를 쉽게 구현할 수 있습니다. 다음은 치수를 설정하는 예제입니다.
+
+export const DimensionsDemo = () => {
+  const [width, setWidth] = useState('100%');
+  const [maxWidth, setMaxWidth] = useState('300px');
+  const [height, setHeight] = useState('25px');
+  const [maxHeight, setMaxHeight] = useState('none');
+  
+  return (
+    <div>
+      <div 
+        style={{ 
+          width: width, 
+          maxWidth: maxWidth, 
+          height: height, 
+          maxHeight: maxHeight,
+          backgroundColor: '#f0f0f0',
+          border: '1px solid #ccc',
+          margin: '0 auto 20px auto',
+          padding: '10px',
+          boxSizing: 'border-box'
+        }}
+      >
+        조정 가능한 박스
+      </div>
+      
+      <Popover
+        trigger={<Button>치수 설정</Button>}
+        title="치수 설정"
+        description="요소의 크기를 조정합니다."
+        width={260}
+      >
+        <PopoverField
+          label="Width"
+          value={width}
+          onChange={setWidth}
+        />
+        <PopoverField
+          label="Max. width"
+          value={maxWidth}
+          onChange={setMaxWidth}
+        />
+        <PopoverField
+          label="Height"
+          value={height}
+          onChange={setHeight}
+        />
+        <PopoverField
+          label="Max. height"
+          value={maxHeight}
+          onChange={setMaxHeight}
+        />
+      </Popover>
+    </div>
+  );
+};
+
+<div className="component-preview">
+  <DimensionsDemo />
+</div>
+
+```jsx
+function DimensionsDemo() {
+  const [width, setWidth] = useState('100%');
+  const [maxWidth, setMaxWidth] = useState('300px');
+  const [height, setHeight] = useState('25px');
+  const [maxHeight, setMaxHeight] = useState('none');
+  
+  return (
+    <div>
+      <div 
+        style={{ 
+          width: width, 
+          maxWidth: maxWidth, 
+          height: height, 
+          maxHeight: maxHeight,
+          backgroundColor: '#f0f0f0',
+          border: '1px solid #ccc'
+        }}
+      >
+        조정 가능한 박스
+      </div>
+      
+      <Popover
+        trigger={<Button>치수 설정</Button>}
+        title="치수 설정"
+        description="요소의 크기를 조정합니다."
+        width={260}
+      >
+        <PopoverField
+          label="Width"
+          value={width}
+          onChange={setWidth}
+        />
+        <PopoverField
+          label="Max. width"
+          value={maxWidth}
+          onChange={setMaxWidth}
+        />
+        <PopoverField
+          label="Height"
+          value={height}
+          onChange={setHeight}
+        />
+        <PopoverField
+          label="Max. height"
+          value={maxHeight}
+          onChange={setMaxHeight}
+        />
+      </Popover>
+    </div>
+  );
+}
+```
+
+## 제어 컴포넌트 방식
+
+Popover를 외부 상태로 제어할 수 있습니다. 이를 통해 다른 UI 요소와 상태를 공유하거나 프로그래밍 방식으로 Popover를 제어할 수 있습니다.
+
+export const ControlledPopoverDemo = () => {
+  const [open, setOpen] = useState(false);
+  
+  return (
+    <div>
+      <div style={{ marginBottom: '20px' }}>
+        <Button onClick={() => setOpen(!open)}>
+          {open ? '팝오버 닫기' : '팝오버 열기'}
+        </Button>
+      </div>
+      
+      <Popover
+        trigger={<Button>팝오버 트리거</Button>}
+        title="제어 컴포넌트"
+        description="외부 상태로 열림/닫힘을 제어할 수 있습니다."
+        open={open}
+        onOpenChange={setOpen}
+      >
+        <div>
+          <p>이 팝오버는 외부 상태에 의해 제어됩니다.</p>
+          <p>위의 버튼으로 열고 닫을 수 있습니다.</p>
+        </div>
+      </Popover>
+    </div>
+  );
+};
+
+<div className="component-preview">
+  <ControlledPopoverDemo />
+</div>
+
+```jsx
+function ControlledPopoverDemo() {
+  const [open, setOpen] = useState(false);
+  
+  return (
+    <div>
+      <div style={{ marginBottom: '20px' }}>
+        <Button onClick={() => setOpen(!open)}>
+          {open ? '팝오버 닫기' : '팝오버 열기'}
+        </Button>
+      </div>
+      
+      <Popover
+        trigger={<Button>팝오버 트리거</Button>}
+        title="제어 컴포넌트"
+        description="외부 상태로 열림/닫힘을 제어할 수 있습니다."
+        open={open}
+        onOpenChange={setOpen}
+      >
+        <div>
+          <p>이 팝오버는 외부 상태에 의해 제어됩니다.</p>
+          <p>위의 버튼으로 열고 닫을 수 있습니다.</p>
+        </div>
+      </Popover>
+    </div>
+  );
+}
+```
+
+## 복잡한 컨텐츠
+
+Popover는 다양한 형태의 컨텐츠를 포함할 수 있습니다. 다음은 색상, 불투명도, 블러 효과를 조정하는 예제입니다.
+
+export const ComplexContentDemo = () => {
+  const [color, setColor] = useState('#6366F1');
+  const [opacity, setOpacity] = useState('100');
+  const [blur, setBlur] = useState('0');
+  
+  return (
+    <div>
+      <div style={{ 
+        width: '100px', 
+        height: '100px', 
+        backgroundColor: color,
+        opacity: parseInt(opacity) / 100,
+        filter: `blur(${blur}px)`,
+        borderRadius: '8px',
+        marginBottom: '20px'
+      }} />
+      
+      <Popover
+        trigger={<Button>스타일 설정</Button>}
+        title="스타일 수정"
+        description="박스의 스타일을 수정할 수 있습니다."
+        width={260}
+      >
+        <PopoverField
+          label="색상"
+          type="color"
+          value={color}
+          onChange={setColor}
+        />
+        <PopoverField
+          label="불투명도"
+          type="range"
+          value={opacity}
+          onChange={setOpacity}
+        />
+        <PopoverField
+          label="블러"
+          type="range"
+          value={blur}
+          onChange={setBlur}
+        />
+      </Popover>
+    </div>
+  );
+};
+
+<div className="component-preview">
+  <ComplexContentDemo />
+</div>
+
+```jsx
+function ComplexContentDemo() {
+  const [color, setColor] = useState('#6366F1');
+  const [opacity, setOpacity] = useState('100');
+  const [blur, setBlur] = useState('0');
+  
+  return (
+    <div>
+      <div style={{ 
+        width: '100px', 
+        height: '100px', 
+        backgroundColor: color,
+        opacity: parseInt(opacity) / 100,
+        filter: `blur(${blur}px)`,
+        borderRadius: '8px',
+        marginBottom: '20px'
+      }} />
+      
+      <Popover
+        trigger={<Button>스타일 설정</Button>}
+        title="스타일 수정"
+        description="박스의 스타일을 수정할 수 있습니다."
+        width={260}
+      >
+        <PopoverField
+          label="색상"
+          type="color"
+          value={color}
+          onChange={setColor}
+        />
+        <PopoverField
+          label="불투명도"
+          type="range"
+          value={opacity}
+          onChange={setOpacity}
+        />
+        <PopoverField
+          label="블러"
+          type="range"
+          value={blur}
+          onChange={setBlur}
+        />
+      </Popover>
+    </div>
+  );
+}
+```
+
+## API 참조
+
+### Popover
+
+| 속성 | 타입 | 기본값 | 설명 |
+|------|------|--------|------|
+| `trigger` | `ReactNode` | 필수 | Popover를 열기 위한 트리거 요소 |
+| `title` | `ReactNode` | - | Popover의 제목 |
+| `description` | `ReactNode` | - | Popover의 설명 |
+| `children` | `ReactNode` | 필수 | Popover의 내용 |
+| `defaultOpen` | `boolean` | `false` | Popover가 기본적으로 열려있는지 여부 |
+| `open` | `boolean` | - | 외부에서 제어하는 열림 상태 |
+| `onOpenChange` | `(open: boolean) => void` | - | 열림 상태가 변경될 때 호출되는 함수 |
+| `closeOnOutsideClick` | `boolean` | `true` | 클릭 외부에서 Popover를 닫을지 여부 |
+| `closeOnEscape` | `boolean` | `true` | ESC 키를 눌렀을 때 Popover를 닫을지 여부 |
+| `width` | `string \| number` | - | Popover 컨텐츠의 너비 |
+| `position` | `'top' \| 'right' \| 'bottom' \| 'left'` | `'bottom'` | Popover가 열리는 위치 |
+| `triggerClassName` | `string` | - | Popover 트리거에 적용할 클래스 |
+| `contentClassName` | `string` | - | Popover 컨텐츠에 적용할 클래스 |
+| `titleClassName` | `string` | - | Popover 제목에 적용할 클래스 |
+| `descriptionClassName` | `string` | - | Popover 설명에 적용할 클래스 |
+| `triggerStyle` | `CSSProperties` | - | Popover 트리거에 적용할 스타일 |
+| `contentStyle` | `CSSProperties` | - | Popover 컨텐츠에 적용할 스타일 |
+
+### PopoverField
+
+| 속성 | 타입 | 기본값 | 설명 |
+|------|------|--------|------|
+| `label` | `string` | 필수 | 필드 레이블 |
+| `value` | `string` | - | 필드 값 |
+| `type` | `'text' \| 'number' \| 'color' \| 'range'` | `'text'` | 입력 필드 타입 |
+| `onChange` | `(value: string) => void` | - | 값이 변경될 때 호출되는 함수 |
+| `min` | `number` | - | 숫자 또는 범위 입력의 최소값 |
+| `max` | `number` | - | 숫자 또는 범위 입력의 최대값 |
+| `step` | `number` | - | 숫자 또는 범위 입력의 단계 |
+| `disabled` | `boolean` | `false` | 필드 비활성화 여부 |
+| `className` | `string` | - | 필드에 적용할 클래스 |
+| `style` | `CSSProperties` | - | 필드에 적용할 스타일 | 

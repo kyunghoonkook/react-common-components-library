@@ -36,6 +36,9 @@ export default {
       }
     ]
   ],
+  "plugins": [
+    null
+  ],
   "themeConfig": {
     "navbar": {
       "title": "React Common Components",
@@ -335,7 +338,6 @@ export default {
     "static"
   ],
   "customFields": {},
-  "plugins": [],
   "themes": [],
   "scripts": [],
   "headTags": [],
