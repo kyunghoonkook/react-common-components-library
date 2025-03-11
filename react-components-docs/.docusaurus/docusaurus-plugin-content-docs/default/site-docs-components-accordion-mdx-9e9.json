@@ -1,0 +1,26 @@
+{
+  "id": "components/accordion",
+  "title": "Accordion",
+  "description": "접을 수 있는 콘텐츠 패널을 제공하는 컴포넌트입니다.",
+  "source": "@site/docs/components/accordion.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/accordion",
+  "permalink": "/docs/components/accordion",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 1,
+  "frontMatter": {
+    "sidebar_position": 1
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "설치 및 시작하기",
+    "permalink": "/docs/installation"
+  },
+  "next": {
+    "title": "AlertDialog",
+    "permalink": "/docs/components/alert-dialog"
+  }
+}

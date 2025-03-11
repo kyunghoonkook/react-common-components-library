@@ -31,6 +31,9 @@
       "type": "package",
       "name": "@docusaurus/theme-classic",
       "version": "3.7.0"
+    },
+    "custom-webpack-config-plugin": {
+      "type": "local"
     }
   }
 }

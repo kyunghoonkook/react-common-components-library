@@ -1,8 +1,8 @@
 {
   "id": "components/slider",
   "title": "Slider",
-  "description": "사용자가 특정 범위 내에서 값을 선택할 수 있게 해주는 수평 또는 수직 슬라이더 컴포넌트입니다. 슬라이더는 사용자가 볼륨, 밝기, 필터 등 숫자 값을 직관적으로 조절할 수 있게 해줍니다.",
-  "source": "@site/docs/components/slider.md",
+  "description": "사용자가 특정 범위 내에서 값을 선택할 수 있게 해주는 수평 또는 수직 슬라이더 컴포넌트입니다.",
+  "source": "@site/docs/components/slider.mdx",
   "sourceDirName": "components",
   "slug": "/components/slider",
   "permalink": "/docs/components/slider",

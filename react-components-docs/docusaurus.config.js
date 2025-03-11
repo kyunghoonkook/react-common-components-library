@@ -1,4 +1,5 @@
 // @ts-check
+const path = require('path');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -41,6 +42,25 @@ const config = {
         },
       }),
     ],
+  ],
+
+  // Docusaurus에 내장된 webpack 설정 확장하기
+  plugins: [
+    function customWebpackConfigPlugin(context, options) {
+      return {
+        name: 'custom-webpack-config-plugin',
+        configureWebpack(config, isServer, utils) {
+          return {
+            resolve: {
+              alias: {
+                'react-common-components-library': path.resolve(__dirname, 'src/mock-components'),
+                'react-components-library': path.resolve(__dirname, 'src/mock-components'),
+              },
+            },
+          };
+        },
+      };
+    },
   ],
 
   themeConfig:

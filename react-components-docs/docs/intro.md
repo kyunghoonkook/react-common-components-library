@@ -31,6 +31,22 @@ sidebar_position: 1
 9. [ContextMenu](/docs/components/context-menu) - 우클릭 메뉴
 10. [Dialog](/docs/components/dialog) - 모달 다이얼로그
 11. [DropdownMenu](/docs/components/dropdown-menu) - 드롭다운 메뉴
+12. [HoverCard](/docs/components/hovercard) - 호버 시 표시되는 카드 컴포넌트
+13. [Input](/docs/components/input) - 다양한 형태의 입력 필드
+14. [Label](/docs/components/label) - 접근성 높은 폼 레이블
+15. [Menubar](/docs/components/menubar) - 메뉴바 네비게이션
+16. [NavigationMenu](/docs/components/navigation-menu) - 내비게이션 메뉴 컴포넌트
+17. [Popover](/docs/components/popover) - 팝오버 대화상자
+18. [Progress](/docs/components/progress) - 진행 상태 표시 컴포넌트
+19. [RadioGroup](/docs/components/radio-group) - 라디오 버튼 그룹
+20. [ScrollArea](/docs/components/scroll-area) - 사용자 정의 스크롤바를 갖춘 영역
+21. [Select](/docs/components/select) - 드롭다운 선택 컴포넌트
+22. [Separator](/docs/components/separator) - 콘텐츠 구분선
+23. [Slider](/docs/components/slider) - 범위 선택 슬라이더
+24. [Switch](/docs/components/switch) - 토글 스위치
+25. [Tabs](/docs/components/tabs) - 탭 인터페이스
+26. [Textarea](/docs/components/textarea) - 멀티라인 텍스트 입력 영역
+27. [Tooltip](/docs/components/tooltip) - 요소에 대한 추가 정보 표시
 
 ## 시작하기
 

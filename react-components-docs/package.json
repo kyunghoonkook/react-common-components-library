@@ -20,6 +20,7 @@
     "clsx": "^2.0.0",
     "prism-react-renderer": "^2.2.0",
     "react": "^18.0.0",
+    "react-common-components-library": "^1.0.1",
     "react-dom": "^18.0.0"
   },
   "devDependencies": {
@@ -41,4 +42,4 @@
   "engines": {
     "node": ">=18.0"
   }
-} 
+}

@@ -1,124 +1,124 @@
 {
-  "/docs-6d6": {
+  "/docs-286": {
     "__comp": "5e95c892",
     "__context": {
       "plugin": "aba21aa0"
     }
   },
-  "/docs-75f": {
+  "/docs-a61": {
     "__comp": "a7bd4aaa",
     "__props": "0058b4c6"
   },
-  "/docs-898": {
+  "/docs-180": {
     "__comp": "a94703ab"
   },
-  "/docs/components/accordion-922": {
+  "/docs/components/accordion-061": {
     "__comp": "17896441",
-    "content": "326d05d8"
+    "content": "9e9c7a31"
   },
-  "/docs/components/alert-dialog-296": {
+  "/docs/components/alert-dialog-647": {
     "__comp": "17896441",
-    "content": "e835e8ad"
+    "content": "3fc772ac"
   },
-  "/docs/components/aspect-ratio-6cf": {
+  "/docs/components/aspect-ratio-c0a": {
     "__comp": "17896441",
-    "content": "2fd02f20"
+    "content": "a9ba727c"
   },
-  "/docs/components/avatar-dc5": {
+  "/docs/components/avatar-73d": {
     "__comp": "17896441",
-    "content": "b5eb131b"
+    "content": "b6cc6644"
   },
-  "/docs/components/button-d2e": {
+  "/docs/components/button-494": {
     "__comp": "17896441",
-    "content": "9eb89d33"
+    "content": "0743e332"
   },
-  "/docs/components/checkbox-54f": {
+  "/docs/components/checkbox-42d": {
     "__comp": "17896441",
-    "content": "87878b99"
+    "content": "1c72337b"
   },
-  "/docs/components/collapsible-5fa": {
+  "/docs/components/collapsible-6ea": {
     "__comp": "17896441",
-    "content": "f4436d4c"
+    "content": "0a3f6426"
   },
-  "/docs/components/command-5bb": {
+  "/docs/components/command-9d2": {
     "__comp": "17896441",
-    "content": "961d0d28"
+    "content": "d53acd27"
   },
-  "/docs/components/context-menu-146": {
+  "/docs/components/context-menu-943": {
     "__comp": "17896441",
-    "content": "9f7489fe"
+    "content": "ea51b127"
   },
-  "/docs/components/dialog-11e": {
+  "/docs/components/dialog-9b7": {
     "__comp": "17896441",
-    "content": "c58736f6"
+    "content": "2b590c9b"
   },
-  "/docs/components/dropdown-menu-ed9": {
+  "/docs/components/dropdown-menu-96e": {
     "__comp": "17896441",
-    "content": "d5395b50"
+    "content": "d7a5af78"
   },
-  "/docs/components/hovercard-5aa": {
+  "/docs/components/hovercard-1e2": {
     "__comp": "17896441",
-    "content": "acf323b9"
+    "content": "32644c6e"
   },
-  "/docs/components/input-f91": {
+  "/docs/components/input-59b": {
     "__comp": "17896441",
-    "content": "fff5a06e"
+    "content": "4cc0eadb"
   },
-  "/docs/components/label-1a0": {
+  "/docs/components/label-90d": {
     "__comp": "17896441",
-    "content": "56ad8461"
+    "content": "6d0dd831"
   },
-  "/docs/components/menubar-afa": {
+  "/docs/components/menubar-44b": {
     "__comp": "17896441",
-    "content": "92d4243c"
+    "content": "13ac73f3"
   },
-  "/docs/components/navigation-menu-6bb": {
+  "/docs/components/navigation-menu-1e4": {
     "__comp": "17896441",
-    "content": "e28db2cc"
+    "content": "aea6dd58"
   },
-  "/docs/components/popover-c97": {
+  "/docs/components/popover-ac2": {
     "__comp": "17896441",
-    "content": "86797727"
+    "content": "17d2afbc"
   },
-  "/docs/components/progress-6b9": {
+  "/docs/components/progress-8be": {
     "__comp": "17896441",
-    "content": "aff2d128"
+    "content": "67ae37b9"
   },
-  "/docs/components/radio-group-a74": {
+  "/docs/components/radio-group-c04": {
     "__comp": "17896441",
-    "content": "700cec1a"
+    "content": "d9e1d16f"
   },
-  "/docs/components/scroll-area-538": {
+  "/docs/components/scroll-area-b50": {
     "__comp": "17896441",
-    "content": "31a5cb43"
+    "content": "d2643080"
   },
-  "/docs/components/select-9a3": {
+  "/docs/components/select-41a": {
     "__comp": "17896441",
-    "content": "49928cf1"
+    "content": "af10bb7a"
   },
-  "/docs/components/separator-274": {
+  "/docs/components/separator-98e": {
     "__comp": "17896441",
-    "content": "9dcf257f"
+    "content": "b4e54dc2"
   },
   "/docs/components/slider-ec5": {
     "__comp": "17896441",
     "content": "e97f9a74"
   },
-  "/docs/components/switch-d7d": {
+  "/docs/components/switch-ea5": {
     "__comp": "17896441",
-    "content": "6f7b2bff"
+    "content": "af245bf1"
   },
-  "/docs/components/tabs-92d": {
+  "/docs/components/tabs-656": {
     "__comp": "17896441",
-    "content": "00a19709"
+    "content": "1a63ac3d"
   },
-  "/docs/components/textarea-6ad": {
+  "/docs/components/textarea-7c8": {
     "__comp": "17896441",
-    "content": "05694904"
+    "content": "8469219d"
   },
-  "/docs/components/tooltip-5e5": {
+  "/docs/components/tooltip-85f": {
     "__comp": "17896441",
-    "content": "5afe8a11"
+    "content": "1e883308"
   },
   "/docs/installation-b74": {
     "__comp": "17896441",

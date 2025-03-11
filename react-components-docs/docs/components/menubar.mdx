@@ -1,0 +1,504 @@
+---
+sidebar_position: 15
+---
+
+import { MenuBar } from 'react-common-components-library';
+
+# MenuBar
+
+MenuBar 컴포넌트는 데스크톱 애플리케이션 스타일의 메뉴 인터페이스를 제공합니다. 수평으로 배치된 메뉴 항목과 드롭다운 메뉴, 키보드 단축키 등을 지원합니다.
+
+## 기본 사용법
+
+기본적인 메뉴바 구현 예시입니다.
+
+```jsx
+import { MenuBar } from 'react-common-components-library';
+
+function BasicExample() {
+  return (
+    <MenuBar
+      items={[
+        {
+          id: 'file',
+          label: '파일',
+          items: [
+            {
+              id: 'new-file',
+              label: '새 파일',
+              shortcut: '⌘N',
+              onClick: () => console.log('새 파일 클릭됨'),
+            },
+            {
+              id: 'open',
+              label: '열기',
+              shortcut: '⌘O',
+              onClick: () => console.log('열기 클릭됨'),
+            },
+            {
+              id: 'separator-1',
+              isSeparator: true,
+            },
+            {
+              id: 'save',
+              label: '저장',
+              shortcut: '⌘S',
+              onClick: () => console.log('저장 클릭됨'),
+            },
+          ],
+        },
+        {
+          id: 'edit',
+          label: '편집',
+          items: [
+            {
+              id: 'undo',
+              label: '실행 취소',
+              shortcut: '⌘Z',
+              onClick: () => console.log('실행 취소 클릭됨'),
+            },
+            {
+              id: 'redo',
+              label: '다시 실행',
+              shortcut: '⌘⇧Z',
+              onClick: () => console.log('다시 실행 클릭됨'),
+            },
+          ],
+        },
+        {
+          id: 'view',
+          label: '보기',
+          items: [
+            {
+              id: 'zoom-in',
+              label: '확대',
+              shortcut: '⌘+',
+              onClick: () => console.log('확대 클릭됨'),
+            },
+            {
+              id: 'zoom-out',
+              label: '축소',
+              shortcut: '⌘-',
+              onClick: () => console.log('축소 클릭됨'),
+            },
+          ],
+        },
+      ]}
+    />
+  );
+}
+```
+
+<MenuBar
+  items={[
+    {
+      id: 'file',
+      label: '파일',
+      items: [
+        {
+          id: 'new-file',
+          label: '새 파일',
+          shortcut: '⌘N',
+          onClick: () => console.log('새 파일 클릭됨'),
+        },
+        {
+          id: 'open',
+          label: '열기',
+          shortcut: '⌘O',
+          onClick: () => console.log('열기 클릭됨'),
+        },
+        {
+          id: 'separator-1',
+          isSeparator: true,
+        },
+        {
+          id: 'save',
+          label: '저장',
+          shortcut: '⌘S',
+          onClick: () => console.log('저장 클릭됨'),
+        },
+      ],
+    },
+    {
+      id: 'edit',
+      label: '편집',
+      items: [
+        {
+          id: 'undo',
+          label: '실행 취소',
+          shortcut: '⌘Z',
+          onClick: () => console.log('실행 취소 클릭됨'),
+        },
+        {
+          id: 'redo',
+          label: '다시 실행',
+          shortcut: '⌘⇧Z',
+          onClick: () => console.log('다시 실행 클릭됨'),
+        },
+      ],
+    },
+    {
+      id: 'view',
+      label: '보기',
+      items: [
+        {
+          id: 'zoom-in',
+          label: '확대',
+          shortcut: '⌘+',
+          onClick: () => console.log('확대 클릭됨'),
+        },
+        {
+          id: 'zoom-out',
+          label: '축소',
+          shortcut: '⌘-',
+          onClick: () => console.log('축소 클릭됨'),
+        },
+      ],
+    },
+  ]}
+/>
+
+## 아이콘 사용
+
+메뉴 항목에 아이콘을 추가하여 시각적으로 구분할 수 있습니다.
+
+```jsx
+import { MenuBar } from 'react-common-components-library';
+
+// 아이콘 컴포넌트
+const FileIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+    <polyline points="14 2 14 8 20 8"></polyline>
+  </svg>
+);
+
+const PrintIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <polyline points="6 9 6 2 18 2 18 9"></polyline>
+    <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+    <rect x="6" y="14" width="12" height="8"></rect>
+  </svg>
+);
+
+function IconExample() {
+  return (
+    <MenuBar
+      items={[
+        {
+          id: 'file',
+          label: '파일',
+          items: [
+            {
+              id: 'new-file',
+              label: '새 파일',
+              icon: <FileIcon />,
+              onClick: () => console.log('새 파일 클릭됨'),
+            },
+            {
+              id: 'separator-1',
+              isSeparator: true,
+            },
+            {
+              id: 'print',
+              label: '인쇄',
+              icon: <PrintIcon />,
+              shortcut: '⌘P',
+              onClick: () => console.log('인쇄 클릭됨'),
+            },
+          ],
+        },
+      ]}
+    />
+  );
+}
+```
+
+export const FileIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+    <polyline points="14 2 14 8 20 8"></polyline>
+  </svg>
+);
+
+export const PrintIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <polyline points="6 9 6 2 18 2 18 9"></polyline>
+    <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+    <rect x="6" y="14" width="12" height="8"></rect>
+  </svg>
+);
+
+<MenuBar
+  items={[
+    {
+      id: 'file',
+      label: '파일',
+      items: [
+        {
+          id: 'new-file',
+          label: '새 파일',
+          icon: <FileIcon />,
+          onClick: () => console.log('새 파일 클릭됨'),
+        },
+        {
+          id: 'separator-1',
+          isSeparator: true,
+        },
+        {
+          id: 'print',
+          label: '인쇄',
+          icon: <PrintIcon />,
+          shortcut: '⌘P',
+          onClick: () => console.log('인쇄 클릭됨'),
+        },
+      ],
+    },
+  ]}
+/>
+
+## 서브메뉴 사용
+
+메뉴 항목에 하위 메뉴를 추가할 수 있습니다.
+
+```jsx
+import { MenuBar } from 'react-common-components-library';
+
+function SubmenuExample() {
+  return (
+    <MenuBar
+      items={[
+        {
+          id: 'file',
+          label: '파일',
+          items: [
+            {
+              id: 'new',
+              label: '새로 만들기',
+              items: [
+                {
+                  id: 'text-file',
+                  label: '텍스트 파일',
+                  onClick: () => console.log('텍스트 파일 클릭됨'),
+                },
+                {
+                  id: 'image-file',
+                  label: '이미지 파일',
+                  onClick: () => console.log('이미지 파일 클릭됨'),
+                },
+              ],
+            },
+            {
+              id: 'open',
+              label: '열기',
+              onClick: () => console.log('열기 클릭됨'),
+            },
+          ],
+        },
+        {
+          id: 'view',
+          label: '보기',
+          items: [
+            {
+              id: 'tools',
+              label: '도구',
+              items: [
+                {
+                  id: 'inspector',
+                  label: '검사기',
+                  onClick: () => console.log('검사기 클릭됨'),
+                },
+                {
+                  id: 'console',
+                  label: '콘솔',
+                  onClick: () => console.log('콘솔 클릭됨'),
+                },
+              ],
+            },
+          ],
+        },
+      ]}
+    />
+  );
+}
+```
+
+<MenuBar
+  items={[
+    {
+      id: 'file',
+      label: '파일',
+      items: [
+        {
+          id: 'new',
+          label: '새로 만들기',
+          items: [
+            {
+              id: 'text-file',
+              label: '텍스트 파일',
+              onClick: () => console.log('텍스트 파일 클릭됨'),
+            },
+            {
+              id: 'image-file',
+              label: '이미지 파일',
+              onClick: () => console.log('이미지 파일 클릭됨'),
+            },
+          ],
+        },
+        {
+          id: 'open',
+          label: '열기',
+          onClick: () => console.log('열기 클릭됨'),
+        },
+      ],
+    },
+    {
+      id: 'view',
+      label: '보기',
+      items: [
+        {
+          id: 'tools',
+          label: '도구',
+          items: [
+            {
+              id: 'inspector',
+              label: '검사기',
+              onClick: () => console.log('검사기 클릭됨'),
+            },
+            {
+              id: 'console',
+              label: '콘솔',
+              onClick: () => console.log('콘솔 클릭됨'),
+            },
+          ],
+        },
+      ],
+    },
+  ]}
+/>
+
+## 비활성화된 항목
+
+특정 메뉴 항목이나 전체 메뉴를 비활성화할 수 있습니다.
+
+```jsx
+import { MenuBar } from 'react-common-components-library';
+
+function DisabledItemsExample() {
+  return (
+    <MenuBar
+      items={[
+        {
+          id: 'file',
+          label: '파일',
+          items: [
+            {
+              id: 'new-tab',
+              label: '새 탭',
+              onClick: () => console.log('새 탭 클릭됨'),
+            },
+            {
+              id: 'incognito-window',
+              label: '시크릿 창',
+              disabled: true, // 개별 항목 비활성화
+            },
+          ],
+        },
+        {
+          id: 'edit',
+          label: '편집',
+          disabled: true, // 전체 메뉴 비활성화
+          items: [],
+        },
+      ]}
+    />
+  );
+}
+```
+
+<MenuBar
+  items={[
+    {
+      id: 'file',
+      label: '파일',
+      items: [
+        {
+          id: 'new-tab',
+          label: '새 탭',
+          onClick: () => console.log('새 탭 클릭됨'),
+        },
+        {
+          id: 'incognito-window',
+          label: '시크릿 창',
+          disabled: true, // 개별 항목 비활성화
+        },
+      ],
+    },
+    {
+      id: 'edit',
+      label: '편집',
+      disabled: true, // 전체 메뉴 비활성화
+      items: [],
+    },
+  ]}
+/>
+
+## API 참조
+
+### MenuBar
+
+| 속성 | 타입 | 기본값 | 설명 |
+|------|------|--------|------|
+| `items` | `MenuBarItemProps[]` | 필수 | 메뉴바 아이템 배열 |
+| `className` | `string` | '' | 메뉴바에 적용할 추가 CSS 클래스 |
+| `style` | `React.CSSProperties` | - | 메뉴바에 적용할 스타일 |
+| `width` | `string` | 'max-content' | 메뉴바의 너비. '100%', '300px' 등 CSS 너비 값 사용 가능 |
+
+### MenuBarItemProps
+
+| 속성 | 타입 | 기본값 | 설명 |
+|------|------|--------|------|
+| `id` | `string` | 필수 | 메뉴 아이템 ID |
+| `label` | `string` | 필수 | 메뉴 아이템 레이블 |
+| `disabled` | `boolean` | false | 메뉴 아이템 비활성화 여부 |
+| `items` | `MenuItemProps[]` | - | 서브메뉴 항목 |
+| `className` | `string` | '' | 메뉴 아이템에 적용할 추가 CSS 클래스 |
+
+### MenuItemProps
+
+메뉴 항목은 일반 메뉴 항목과 구분선 두 가지 타입이 있습니다.
+
+#### 일반 메뉴 항목
+
+| 속성 | 타입 | 기본값 | 설명 |
+|------|------|--------|------|
+| `id` | `string` | 필수 | 메뉴 항목 ID |
+| `label` | `React.ReactNode` | 필수 | 메뉴 항목 레이블 |
+| `onClick` | `() => void` | - | 메뉴 항목 클릭 핸들러 |
+| `disabled` | `boolean` | false | 메뉴 항목 비활성화 여부 |
+| `shortcut` | `string` | - | 단축키 |
+| `icon` | `React.ReactNode` | - | 아이콘 |
+| `items` | `MenuItemProps[]` | - | 서브메뉴 항목 |
+| `className` | `string` | '' | 메뉴 항목에 적용할 추가 CSS 클래스 |
+
+#### 구분선
+
+| 속성 | 타입 | 기본값 | 설명 |
+|------|------|--------|------|
+| `id` | `string` | 필수 | 항목 ID |
+| `isSeparator` | `true` | 필수 | 구분선임을 나타내는 값 |
+| `className` | `string` | '' | 구분선에 적용할 추가 CSS 클래스 |
+
+## 접근성
+
+MenuBar 컴포넌트는 ARIA 디자인 패턴을 준수하여 접근성을 보장합니다:
+
+1. **키보드 접근성**: 메뉴 항목은 탭 키로 접근할 수 있으며, 스페이스바 또는 엔터 키로 활성화할 수 있습니다.
+
+2. **ARIA 속성**: 적절한 `role`, `aria-haspopup`, `aria-expanded`, `aria-disabled` 속성을 사용하여 스크린 리더가 메뉴 구조를 인식할 수 있도록 합니다.
+
+3. **포커스 관리**: 메뉴가 열릴 때 첫 번째 메뉴 항목으로 포커스가 이동하고, 메뉴가 닫힐 때 이전 포커스된 요소로 되돌아갑니다.
+
+4. **화면 판독기 지원**: 메뉴 항목과 단축키는 화면 판독기에 의해 올바르게 해석됩니다.
+
+5. **콘텐츠의 위치**: 메뉴가 화면을 벗어나는 것을 방지하여 모든 콘텐츠에 접근할 수 있도록 보장합니다. 

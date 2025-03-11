@@ -1,0 +1,26 @@
+{
+  "id": "components/navigation-menu",
+  "title": "NavigationMenu",
+  "description": "NavigationMenu 컴포넌트는 웹사이트의 주요 네비게이션 영역을 구성하는 데 사용됩니다. 드롭다운 메뉴와 링크 목록을 포함할 수 있으며, 사용자가 웹사이트의 다양한 섹션으로 쉽게 이동할 수 있도록 도와줍니다.",
+  "source": "@site/docs/components/navigation-menu.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/navigation-menu",
+  "permalink": "/docs/components/navigation-menu",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 16,
+  "frontMatter": {
+    "sidebar_position": 16
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "MenuBar",
+    "permalink": "/docs/components/menubar"
+  },
+  "next": {
+    "title": "Popover",
+    "permalink": "/docs/components/popover"
+  }
+}

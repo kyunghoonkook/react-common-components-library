@@ -1,0 +1,26 @@
+{
+  "id": "components/radio-group",
+  "title": "RadioGroup",
+  "description": "RadioGroup 컴포넌트는 상호 배타적인 옵션 중 하나를 선택할 수 있는 라디오 버튼 그룹을 제공합니다. 사용자가 여러 옵션 중 하나만 선택해야 하는 경우에 적합합니다.",
+  "source": "@site/docs/components/radio-group.mdx",
+  "sourceDirName": "components",
+  "slug": "/components/radio-group",
+  "permalink": "/docs/components/radio-group",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 19,
+  "frontMatter": {
+    "sidebar_position": 19
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Progress",
+    "permalink": "/docs/components/progress"
+  },
+  "next": {
+    "title": "ScrollArea",
+    "permalink": "/docs/components/scroll-area"
+  }
+}
