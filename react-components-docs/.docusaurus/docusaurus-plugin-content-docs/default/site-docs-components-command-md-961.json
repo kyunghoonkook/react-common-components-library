@@ -1,0 +1,26 @@
+{
+  "id": "components/command",
+  "title": "Command",
+  "description": "키보드 중심의 명령 팔레트 컴포넌트입니다. 검색 기능과 키보드 단축키를 통해 빠르게 명령을 실행할 수 있습니다.",
+  "source": "@site/docs/components/command.md",
+  "sourceDirName": "components",
+  "slug": "/components/command",
+  "permalink": "/docs/components/command",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 8,
+  "frontMatter": {
+    "sidebar_position": 8
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Collapsible",
+    "permalink": "/docs/components/collapsible"
+  },
+  "next": {
+    "title": "ContextMenu",
+    "permalink": "/docs/components/context-menu"
+  }
+}

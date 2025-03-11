@@ -1,0 +1,259 @@
+/* ScrollArea 기본 스타일 */
+.scroll-area {
+  --track-color: transparent;
+  --thumb-color: rgba(0, 0, 0, 0.2);
+  --thumb-hover-color: rgba(0, 0, 0, 0.3);
+  --thumb-drag-color: rgba(0, 0, 0, 0.4);
+  --scrollbar-size: 4px;
+  --scrollbar-radius: 4px;
+  --border-color: rgba(229, 231, 235, 0.5);
+  --shadow-color: rgba(0, 0, 0, 0.03);
+
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 1px 2px var(--shadow-color);
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+}
+
+/* 다크 테마 변수 */
+.theme-dark {
+  --track-color: transparent;
+  --thumb-color: rgba(255, 255, 255, 0.15);
+  --thumb-hover-color: rgba(255, 255, 255, 0.25);
+  --thumb-drag-color: rgba(255, 255, 255, 0.35);
+  --border-color: rgba(55, 65, 81, 0.5);
+  --shadow-color: rgba(0, 0, 0, 0.12);
+  background-color: #1f2937;
+  color: #f3f4f6;
+}
+
+.scroll-area-viewport {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  padding: 1rem; /* 내부 컨텐츠와 보더 사이 간격 증가 */
+}
+
+/* Chrome, Safari 브라우저에서 기본 스크롤바 숨김 */
+.scroll-area-viewport::-webkit-scrollbar {
+  display: none;
+}
+
+/* 사용자 스크롤 비활성화 */
+.scroll-area-viewport--no-user-scroll {
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* 커스텀 스크롤바 컨테이너 */
+.scroll-area-scrollbar {
+  position: absolute;
+  display: flex;
+  touch-action: none;
+  user-select: none;
+  transition: opacity 160ms ease-out, background-color 160ms ease-out;
+  padding: 0;
+  opacity: 0;
+}
+
+/* 세로 스크롤바 위치 */
+.scroll-area-scrollbar[data-orientation="vertical"] {
+  width: var(--scrollbar-size);
+  height: calc(100% - 16px);
+  top: 8px;
+  right: 4px;
+}
+
+/* 가로 스크롤바 위치 */
+.scroll-area-scrollbar[data-orientation="horizontal"] {
+  width: calc(100% - 16px);
+  height: var(--scrollbar-size);
+  bottom: 4px;
+  left: 8px;
+}
+
+/* 스크롤바 트랙 */
+.scroll-area-track {
+  position: relative;
+  flex-grow: 1;
+  border-radius: var(--scrollbar-radius);
+  background-color: var(--track-color);
+}
+
+/* 스크롤바 썸(스크롤 핸들) */
+.scroll-area-thumb {
+  position: absolute;
+  background-color: var(--thumb-color);
+  border-radius: var(--scrollbar-radius);
+  transition: background-color 160ms ease-out;
+  touch-action: none;
+}
+
+/* 세로 스크롤바 썸 위치 */
+.scroll-area-scrollbar[data-orientation="vertical"] .scroll-area-thumb {
+  width: var(--scrollbar-size);
+  left: 0;
+  transform: none;
+}
+
+/* 가로 스크롤바 썸 위치 */
+.scroll-area-scrollbar[data-orientation="horizontal"] .scroll-area-thumb {
+  height: var(--scrollbar-size);
+  top: 0;
+  transform: none;
+}
+
+/* 스크롤바 호버 시 색상 변경 */
+.scroll-area-scrollbar:hover .scroll-area-thumb {
+  background-color: var(--thumb-hover-color);
+}
+
+/* 스크롤바 드래그 시 색상 변경 */
+.scroll-area-scrollbar[data-state="dragging"] .scroll-area-thumb {
+  background-color: var(--thumb-drag-color);
+}
+
+/* 스크롤바 상태 (hidden/visible) */
+.scroll-area-scrollbar[data-state="hidden"] {
+  opacity: 0;
+}
+
+.scroll-area-scrollbar[data-state="visible"] {
+  opacity: 1;
+}
+
+/* 스크롤바 위치 - 외부에 위치 */
+.scroll-area--outside .scroll-area-scrollbar[data-orientation="vertical"] {
+  right: -10px;
+  padding-right: 0;
+  height: 100%;
+}
+
+.scroll-area--outside:hover .scroll-area-scrollbar[data-orientation="vertical"] {
+  right: 4px;
+}
+
+.scroll-area--outside .scroll-area-scrollbar[data-orientation="horizontal"] {
+  bottom: -10px;
+  padding-bottom: 0;
+  width: 100%;
+}
+
+.scroll-area--outside:hover .scroll-area-scrollbar[data-orientation="horizontal"] {
+  bottom: 4px;
+}
+
+/* 스크롤바는 스크롤 중 또는 영역 호버 시에만 표시 */
+.scroll-area:hover .scroll-area-scrollbar {
+  opacity: 1;
+}
+
+/* 애니메이션 효과 */
+.scroll-area:not(.scroll-area--no-animation) .scroll-area-scrollbar {
+  transition: opacity 200ms ease, right 200ms ease, bottom 200ms ease, background-color 200ms ease;
+}
+
+.scroll-area:not(.scroll-area--no-animation) .scroll-area-thumb {
+  transition: background-color 200ms ease;
+}
+
+/* 부드러운 스크롤 효과 */
+.scroll-area:not(.scroll-area--no-animation) .scroll-area-viewport {
+  scroll-behavior: smooth;
+}
+
+.scroll-area--no-animation .scroll-area-viewport {
+  scroll-behavior: auto;
+}
+
+/* 태그 목록 스타일 */
+.tag-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.tag-item {
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 1rem;
+  color: #111827;
+  transition: background-color 150ms ease;
+}
+
+.tag-item:hover {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.tag-item:last-child {
+  border-bottom: none;
+}
+
+/* 미디어 쿼리: 터치 디바이스 */
+@media (hover: none) {
+  .scroll-area-scrollbar {
+    opacity: 0;
+    background-color: transparent;
+  }
+  
+  .scroll-area--outside .scroll-area-scrollbar[data-orientation="vertical"] {
+    right: 4px;
+  }
+  
+  .scroll-area--outside .scroll-area-scrollbar[data-orientation="horizontal"] {
+    bottom: 4px;
+  }
+  
+  .scroll-area:hover .scroll-area-scrollbar {
+    opacity: 1;
+  }
+}
+
+/* 미디어 쿼리: reduced-motion 선호 설정 */
+@media (prefers-reduced-motion) {
+  .scroll-area .scroll-area-scrollbar,
+  .scroll-area .scroll-area-thumb,
+  .scroll-area .scroll-area-viewport {
+    transition: none !important;
+  }
+}
+
+/* 다크 모드 */
+@media (prefers-color-scheme: dark) {
+  .scroll-area {
+    background-color: #1f2937;
+    color: #f3f4f6;
+  }
+  
+  .tag-item {
+    color: #f3f4f6;
+    border-color: rgba(75, 85, 99, 0.4);
+  }
+  
+  .tag-item:hover {
+    background-color: rgba(255, 255, 255, 0.03);
+  }
+  
+  .scroll-area-track {
+    background-color: var(--track-color);
+  }
+  
+  .scroll-area-thumb {
+    background-color: var(--thumb-color);
+  }
+  
+  .scroll-area-scrollbar:hover .scroll-area-thumb {
+    background-color: var(--thumb-hover-color);
+  }
+  
+  .scroll-area-scrollbar[data-state="dragging"] .scroll-area-thumb {
+    background-color: var(--thumb-drag-color);
+  }
+} 

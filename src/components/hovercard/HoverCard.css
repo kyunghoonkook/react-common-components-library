@@ -1,0 +1,102 @@
+.hover-card-root {
+  position: relative;
+  display: inline-block;
+}
+
+.hover-card-trigger {
+  display: inline-block;
+}
+
+.hover-card {
+  z-index: 1000;
+  background-color: white;
+  border-radius: 6px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  border: 1px solid #e2e8f0;
+  animation: fadeIn 0.2s ease;
+}
+
+.hover-card-content {
+  position: relative;
+  z-index: 1;
+}
+
+.hover-card-arrow {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background-color: white;
+  z-index: 0;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hover-card-top {
+  animation: slideDownFade 0.2s ease-out;
+}
+
+.hover-card-bottom {
+  animation: slideUpFade 0.2s ease-out;
+}
+
+.hover-card-left {
+  animation: slideRightFade 0.2s ease-out;
+}
+
+.hover-card-right {
+  animation: slideLeftFade 0.2s ease-out;
+}
+
+@keyframes slideUpFade {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDownFade {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideLeftFade {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideRightFade {
+  from {
+    opacity: 0;
+    transform: translateX(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+} 

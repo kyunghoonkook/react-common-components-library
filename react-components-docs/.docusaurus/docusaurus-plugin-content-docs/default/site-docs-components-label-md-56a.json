@@ -1,0 +1,26 @@
+{
+  "id": "components/label",
+  "title": "Label",
+  "description": "레이블 컴포넌트는 입력 필드나 체크박스 같은 사용자 인터페이스 요소에 설명을 제공합니다.",
+  "source": "@site/docs/components/label.md",
+  "sourceDirName": "components",
+  "slug": "/components/label",
+  "permalink": "/docs/components/label",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 14,
+  "frontMatter": {
+    "sidebar_position": 14
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Input",
+    "permalink": "/docs/components/input"
+  },
+  "next": {
+    "title": "MenuBar",
+    "permalink": "/docs/components/menubar"
+  }
+}

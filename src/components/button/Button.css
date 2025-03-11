@@ -3,17 +3,17 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 6px;
+  border-radius: var(--border-radius-md);
   font-weight: 500;
   text-align: center;
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
+  transition: var(--transition-default);
   border: none;
   outline: none;
 }
 
 .button:focus-visible {
-  box-shadow: 0 0 0 2px rgba(66, 153, 225, 0.5);
+  box-shadow: var(--focus-ring);
 }
 
 .button:disabled {
@@ -23,61 +23,61 @@
 
 /* 버튼 변형 */
 .button-primary {
-  background-color: #0f172a;
-  color: white;
+  background-color: var(--color-button-primary);
+  color: var(--color-bg-primary);
 }
 
 .button-primary:hover:not(:disabled) {
-  background-color: #1e293b;
+  background-color: var(--color-button-primary-hover);
 }
 
 .button-primary:active:not(:disabled) {
-  background-color: #0f172a;
+  background-color: var(--color-button-primary);
 }
 
 .button-secondary {
-  background-color: #e2e8f0;
-  color: #0f172a;
+  background-color: var(--color-button-secondary);
+  color: var(--color-text-primary);
 }
 
 .button-secondary:hover:not(:disabled) {
-  background-color: #cbd5e1;
+  background-color: var(--color-button-secondary-hover);
 }
 
 .button-secondary:active:not(:disabled) {
-  background-color: #e2e8f0;
+  background-color: var(--color-button-secondary);
 }
 
 .button-outline {
   background-color: transparent;
-  color: #0f172a;
-  border: 1px solid #cbd5e1;
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border-secondary);
 }
 
 .button-outline:hover:not(:disabled) {
-  background-color: #f8fafc;
+  background-color: var(--color-bg-secondary);
 }
 
 .button-outline:active:not(:disabled) {
-  background-color: #f1f5f9;
+  background-color: var(--color-bg-tertiary);
 }
 
 .button-ghost {
   background-color: transparent;
-  color: #0f172a;
+  color: var(--color-text-primary);
 }
 
 .button-ghost:hover:not(:disabled) {
-  background-color: #f1f5f9;
+  background-color: var(--color-bg-tertiary);
 }
 
 .button-ghost:active:not(:disabled) {
-  background-color: #e2e8f0;
+  background-color: var(--color-button-secondary);
 }
 
 .button-link {
   background-color: transparent;
-  color: #2563eb;
+  color: var(--color-button-link);
   padding: 0;
 }
 
@@ -87,24 +87,24 @@
 
 /* 버튼 크기 */
 .button-sm {
-  height: 32px;
-  padding: 0 12px;
-  font-size: 14px;
-  gap: 4px;
+  height: var(--height-button-sm);
+  padding: 0 var(--spacing-md);
+  font-size: var(--font-size-sm);
+  gap: var(--spacing-xs);
 }
 
 .button-md {
-  height: 40px;
-  padding: 0 16px;
-  font-size: 14px;
-  gap: 6px;
+  height: var(--height-button-md);
+  padding: 0 var(--spacing-lg);
+  font-size: var(--font-size-sm);
+  gap: var(--spacing-sm);
 }
 
 .button-lg {
-  height: 48px;
-  padding: 0 20px;
-  font-size: 16px;
-  gap: 8px;
+  height: var(--height-button-lg);
+  padding: 0 var(--spacing-xl);
+  font-size: var(--font-size-md);
+  gap: var(--spacing-md);
 }
 
 /* 너비 옵션 */
@@ -124,7 +124,7 @@
   border-radius: 50%;
   border-top-color: currentColor;
   animation: spin 0.8s linear infinite;
-  margin-right: 8px;
+  margin-right: var(--spacing-md);
 }
 
 @keyframes spin {
@@ -140,9 +140,9 @@
 }
 
 .button-left-icon {
-  margin-right: 4px;
+  margin-right: var(--spacing-xs);
 }
 
 .button-right-icon {
-  margin-left: 4px;
+  margin-left: var(--spacing-xs);
 } 

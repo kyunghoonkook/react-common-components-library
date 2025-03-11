@@ -1,0 +1,26 @@
+{
+  "id": "components/switch",
+  "title": "Switch",
+  "description": "Switch 컴포넌트는 사용자가 설정을 켜거나 끄는 상태를 토글할 수 있게 합니다.",
+  "source": "@site/docs/components/switch.md",
+  "sourceDirName": "components",
+  "slug": "/components/switch",
+  "permalink": "/docs/components/switch",
+  "draft": false,
+  "unlisted": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 23,
+  "frontMatter": {
+    "sidebar_position": 23
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Slider",
+    "permalink": "/docs/components/slider"
+  },
+  "next": {
+    "title": "Tabs",
+    "permalink": "/docs/components/tabs"
+  }
+}

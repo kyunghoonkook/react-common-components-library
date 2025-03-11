@@ -1,0 +1,338 @@
+---
+sidebar_position: 13
+---
+
+# Input
+
+사용자로부터 텍스트 입력을 받기 위한 컴포넌트입니다.
+
+## 기본 사용법
+
+기본적인 입력 필드를 제공합니다.
+
+```jsx
+import { Input } from 'react-common-components-library';
+
+function BasicExample() {
+  return (
+    <Input placeholder="이름을 입력하세요" />
+  );
+}
+```
+
+## 레이블 및 도움말 텍스트
+
+레이블과 도움말 텍스트를 함께 사용할 수 있습니다.
+
+```jsx
+import { Input } from 'react-common-components-library';
+
+function LabelExample() {
+  return (
+    <Input 
+      label="이메일"
+      placeholder="example@mail.com"
+      helperText="업무용 이메일을 입력해주세요"
+    />
+  );
+}
+```
+
+## 다양한 크기
+
+Input 컴포넌트는 세 가지 크기를 제공합니다.
+
+```jsx
+import { Input } from 'react-common-components-library';
+
+function SizesExample() {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+      <Input size="sm" placeholder="작은 크기" />
+      <Input size="md" placeholder="중간 크기" />
+      <Input size="lg" placeholder="큰 크기" />
+    </div>
+  );
+}
+```
+
+## 변형
+
+세 가지 변형 스타일을 지원합니다.
+
+```jsx
+import { Input } from 'react-common-components-library';
+
+function VariantsExample() {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+      <Input variant="outlined" placeholder="외곽선 스타일" />
+      <Input variant="filled" placeholder="채워진 스타일" />
+      <Input variant="standard" placeholder="기본 스타일" />
+    </div>
+  );
+}
+```
+
+## 상태
+
+Input 컴포넌트는 에러, 성공, 비활성화 상태를 지원합니다.
+
+```jsx
+import { Input } from 'react-common-components-library';
+
+function StatesExample() {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+      <Input
+        label="이메일"
+        placeholder="email@example.com"
+        error="올바른 이메일 형식이 아닙니다"
+      />
+      
+      <Input
+        label="사용자명"
+        placeholder="username"
+        value="johndoe"
+        success
+        helperText="사용 가능한 사용자명입니다"
+      />
+      
+      <Input
+        label="비밀번호"
+        placeholder="비활성화된 입력"
+        disabled
+      />
+    </div>
+  );
+}
+```
+
+## 어도먼트 사용하기
+
+입력 필드의 시작 또는 끝에 아이콘이나 버튼 등을 추가할 수 있습니다.
+
+```jsx
+import { Input } from 'react-common-components-library';
+
+// 아이콘 컴포넌트 예시
+const SearchIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+  </svg>
+);
+
+function AdornmentsExample() {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+      <Input
+        startAdornment={<SearchIcon />}
+        placeholder="검색어를 입력하세요"
+      />
+      
+      <Input
+        label="금액"
+        startAdornment="₩"
+        placeholder="0"
+      />
+      
+      <Input
+        label="웹사이트"
+        endAdornment=".com"
+        placeholder="example"
+      />
+    </div>
+  );
+}
+```
+
+## 이메일 구독 양식 예제
+
+이메일 구독 양식을 구현한 예제입니다.
+
+```jsx
+import { Input } from 'react-common-components-library';
+import { Button } from 'react-common-components-library';
+
+function SubscribeFormExample() {
+  return (
+    <div>
+      <h2 style={{ marginBottom: '1rem' }}>Email</h2>
+      <div className="subscribe-container" style={{ display: 'flex' }}>
+        <Input
+          placeholder="Email"
+          className="subscribe-input"
+          fullWidth
+          aria-label="이메일 구독"
+          style={{
+            borderTopRightRadius: 0,
+            borderBottomRightRadius: 0,
+            borderRight: 'none'
+          }}
+        />
+        <Button
+          style={{
+            borderTopLeftRadius: 0,
+            borderBottomLeftRadius: 0,
+            backgroundColor: '#0f172a',
+            color: 'white'
+          }}
+        >
+          Subscribe
+        </Button>
+      </div>
+      <p style={{ marginTop: '0.5rem', color: '#64748b' }}>
+        Enter your email address
+      </p>
+    </div>
+  );
+}
+```
+
+## 폼 사용 예제
+
+React 폼에서 상태와 함께 Input 컴포넌트를 사용하는 예제입니다.
+
+```jsx
+import { Input } from 'react-common-components-library';
+import { useState } from 'react';
+
+function FormExample() {
+  const [formData, setFormData] = useState({
+    username: '',
+    email: '',
+    password: ''
+  });
+  
+  const [errors, setErrors] = useState({
+    username: '',
+    email: '',
+    password: ''
+  });
+  
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+    
+    // 입력값 검증 예시
+    if (name === 'email' && value && !value.includes('@')) {
+      setErrors({
+        ...errors,
+        email: '올바른 이메일 형식이 아닙니다'
+      });
+    } else {
+      setErrors({
+        ...errors,
+        [name]: ''
+      });
+    }
+  };
+  
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('폼 데이터:', formData);
+  };
+  
+  return (
+    <form onSubmit={handleSubmit} style={{ maxWidth: '400px' }}>
+      <Input
+        label="사용자명"
+        name="username"
+        value={formData.username}
+        onChange={handleChange}
+        error={errors.username}
+        fullWidth
+        style={{ marginBottom: '1rem' }}
+      />
+      
+      <Input
+        label="이메일"
+        name="email"
+        type="email"
+        value={formData.email}
+        onChange={handleChange}
+        error={errors.email}
+        fullWidth
+        style={{ marginBottom: '1rem' }}
+      />
+      
+      <Input
+        label="비밀번호"
+        name="password"
+        type="password"
+        value={formData.password}
+        onChange={handleChange}
+        error={errors.password}
+        fullWidth
+        style={{ marginBottom: '1.5rem' }}
+      />
+      
+      <button 
+        type="submit" 
+        style={{
+          background: '#6366f1',
+          color: 'white',
+          padding: '0.5rem 1rem',
+          borderRadius: '0.25rem',
+          border: 'none',
+          cursor: 'pointer'
+        }}
+      >
+        가입하기
+      </button>
+    </form>
+  );
+}
+```
+
+## API 참조
+
+### Input
+
+| 속성 | 타입 | 기본값 | 설명 |
+|------|------|--------|------|
+| `label` | `ReactNode` | - | Input에 나타날 레이블 |
+| `error` | `string` | - | 에러 메시지 |
+| `success` | `boolean` | false | 성공 상태 |
+| `helperText` | `ReactNode` | - | 힌트 텍스트 |
+| `startAdornment` | `ReactNode` | - | 입력 필드 앞에 표시할 아이콘이나 요소 |
+| `endAdornment` | `ReactNode` | - | 입력 필드 뒤에 표시할 아이콘이나 요소 |
+| `size` | `'sm' \| 'md' \| 'lg'` | 'md' | Input의 크기 |
+| `variant` | `'outlined' \| 'filled' \| 'standard'` | 'outlined' | Input의 변형 |
+| `fullWidth` | `boolean` | false | 가득 채우는 너비로 설정할지 여부 |
+| `containerClassName` | `string` | '' | 컨테이너에 적용할 CSS 클래스 |
+| `inputClassName` | `string` | '' | 입력 요소에 적용할 CSS 클래스 |
+| `labelClassName` | `string` | '' | 레이블에 적용할 CSS 클래스 |
+| `containerStyle` | `CSSProperties` | - | 컨테이너에 적용할 스타일 |
+| `id` | `string` | - | 폼 ID 연결용 (레이블의 for 속성) |
+
+Input 컴포넌트는 표준 HTML input 요소의 모든 속성도 지원합니다:
+
+- `value`
+- `defaultValue`
+- `placeholder`
+- `type`
+- `disabled`
+- `readOnly`
+- `required`
+- `onFocus`
+- `onBlur`
+- `onChange`
+- `onKeyDown`
+- 기타 표준 HTML input 속성
+
+## 접근성
+
+Input 컴포넌트는 다음과 같은 접근성 기능을 제공합니다:
+
+1. **레이블 연결**: 각 Input에는 적절한 `label` 요소가 연결되어 있어 스크린 리더가 필드의 목적을 인식할 수 있습니다.
+
+2. **에러 상태**: 에러가 있는 경우 `aria-invalid` 속성이 자동으로 설정되어 스크린 리더가 유효하지 않은 입력임을 알립니다.
+
+3. **도움말 텍스트 연결**: 도움말 텍스트가 있는 경우 `aria-describedby`를 통해 입력 필드와 연결되어 스크린 리더가 추가 설명을 제공할 수 있습니다.
+
+4. **키보드 접근성**: 모든 입력 필드는 키보드로 탐색하고 조작할 수 있습니다. 

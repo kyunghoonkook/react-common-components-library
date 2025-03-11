@@ -1,0 +1,173 @@
+{
+  "docusaurus-plugin-content-docs": {
+    "default": {
+      "path": "/docs",
+      "versions": [
+        {
+          "name": "current",
+          "label": "Next",
+          "isLast": true,
+          "path": "/docs",
+          "mainDocId": "intro",
+          "docs": [
+            {
+              "id": "components/accordion",
+              "path": "/docs/components/accordion",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "components/alert-dialog",
+              "path": "/docs/components/alert-dialog",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "components/aspect-ratio",
+              "path": "/docs/components/aspect-ratio",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "components/avatar",
+              "path": "/docs/components/avatar",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "components/button",
+              "path": "/docs/components/button",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "components/checkbox",
+              "path": "/docs/components/checkbox",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "components/collapsible",
+              "path": "/docs/components/collapsible",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "components/command",
+              "path": "/docs/components/command",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "components/context-menu",
+              "path": "/docs/components/context-menu",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "components/dialog",
+              "path": "/docs/components/dialog",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "components/dropdown-menu",
+              "path": "/docs/components/dropdown-menu",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "components/hovercard",
+              "path": "/docs/components/hovercard",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "components/input",
+              "path": "/docs/components/input",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "components/label",
+              "path": "/docs/components/label",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "components/menubar",
+              "path": "/docs/components/menubar",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "components/navigation-menu",
+              "path": "/docs/components/navigation-menu",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "components/popover",
+              "path": "/docs/components/popover",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "components/progress",
+              "path": "/docs/components/progress",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "components/radio-group",
+              "path": "/docs/components/radio-group",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "components/scroll-area",
+              "path": "/docs/components/scroll-area",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "components/select",
+              "path": "/docs/components/select",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "components/separator",
+              "path": "/docs/components/separator",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "components/slider",
+              "path": "/docs/components/slider",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "components/switch",
+              "path": "/docs/components/switch",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "components/tabs",
+              "path": "/docs/components/tabs",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "components/textarea",
+              "path": "/docs/components/textarea",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "components/tooltip",
+              "path": "/docs/components/tooltip",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "installation",
+              "path": "/docs/installation",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "intro",
+              "path": "/docs/intro",
+              "sidebar": "tutorialSidebar"
+            }
+          ],
+          "draftIds": [],
+          "sidebars": {
+            "tutorialSidebar": {
+              "link": {
+                "path": "/docs/intro",
+                "label": "intro"
+              }
+            }
+          }
+        }
+      ],
+      "breadcrumbs": true
+    }
+  }
+}

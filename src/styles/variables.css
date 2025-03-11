@@ -1,0 +1,160 @@
+:root {
+  /* 색상 시스템 */
+  --color-primary: #6366f1;
+  --color-primary-light: rgba(99, 102, 241, 0.2);
+  --color-primary-dark: #4f46e5;
+  
+  /* 중립 색상 */
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #1e293b;
+  --color-text-tertiary: #64748b;
+  --color-text-placeholder: #94a3b8;
+  --color-text-disabled: #94a3b8;
+  
+  /* 배경 색상 */
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f8fafc;
+  --color-bg-tertiary: #f1f5f9;
+  --color-bg-disabled: #f8fafc;
+  
+  /* 테두리 색상 */
+  --color-border-primary: #e2e8f0;
+  --color-border-secondary: #cbd5e1;
+  --color-border-hover: #94a3b8;
+  
+  /* 상태 색상 */
+  --color-error: #ef4444;
+  --color-error-light: rgba(239, 68, 68, 0.2);
+  --color-success: #10b981;
+  --color-success-light: rgba(16, 185, 129, 0.2);
+  --color-warning: #f59e0b;
+  --color-warning-light: rgba(245, 158, 11, 0.2);
+  
+  /* 버튼 색상 */
+  --color-button-primary: #0f172a;
+  --color-button-primary-hover: #1e293b;
+  --color-button-secondary: #e2e8f0;
+  --color-button-secondary-hover: #cbd5e1;
+  --color-button-link: #2563eb;
+  
+  /* 폰트 크기 */
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  
+  /* 간격 */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 0.75rem;
+  --spacing-lg: 1rem;
+  --spacing-xl: 1.5rem;
+  --spacing-2xl: 2rem;
+  
+  /* 컴포넌트 크기 */
+  --height-button-sm: 32px;
+  --height-button-md: 40px;
+  --height-button-lg: 48px;
+  
+  --height-input-sm: 32px;
+  --height-input-md: 40px;
+  --height-input-lg: 48px;
+  
+  --checkbox-size-sm: 14px;
+  --checkbox-size-md: 18px;
+  --checkbox-size-lg: 22px;
+  
+  /* 테두리 반경 */
+  --border-radius-sm: 4px;
+  --border-radius-md: 6px;
+  --border-radius-lg: 8px;
+  --border-radius-full: 9999px;
+  
+  /* 애니메이션 */
+  --transition-default: all 0.2s ease-in-out;
+  
+  /* 포커스 효과 */
+  --focus-ring: 0 0 0 3px rgba(99, 102, 241, 0.2);
+  --focus-ring-error: 0 0 0 3px rgba(239, 68, 68, 0.2);
+  --focus-ring-success: 0 0 0 3px rgba(16, 185, 129, 0.2);
+  
+  /* 그림자 */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* 다크 모드 테마 */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* 색상 시스템 */
+    --color-primary: #818cf8;
+    --color-primary-light: rgba(129, 140, 248, 0.2);
+    --color-primary-dark: #6366f1;
+    
+    /* 중립 색상 */
+    --color-text-primary: #f8fafc;
+    --color-text-secondary: #e2e8f0;
+    --color-text-tertiary: #94a3b8;
+    --color-text-placeholder: #64748b;
+    --color-text-disabled: #475569;
+    
+    /* 배경 색상 */
+    --color-bg-primary: #0f172a;
+    --color-bg-secondary: #1e293b;
+    --color-bg-tertiary: #334155;
+    --color-bg-disabled: #1e293b;
+    
+    /* 테두리 색상 */
+    --color-border-primary: #334155;
+    --color-border-secondary: #475569;
+    --color-border-hover: #64748b;
+    
+    /* 버튼 색상 */
+    --color-button-primary: #e2e8f0;
+    --color-button-primary-hover: #f8fafc;
+    --color-button-secondary: #334155;
+    --color-button-secondary-hover: #475569;
+    --color-button-link: #818cf8;
+    
+    /* 포커스 효과 */
+    --focus-ring: 0 0 0 3px rgba(129, 140, 248, 0.2);
+  }
+}
+
+/* 명시적 다크 테마 클래스 (다크 모드 토글용) */
+.dark-theme {
+  /* 색상 시스템 */
+  --color-primary: #818cf8;
+  --color-primary-light: rgba(129, 140, 248, 0.2);
+  --color-primary-dark: #6366f1;
+  
+  /* 중립 색상 */
+  --color-text-primary: #f8fafc;
+  --color-text-secondary: #e2e8f0;
+  --color-text-tertiary: #94a3b8;
+  --color-text-placeholder: #64748b;
+  --color-text-disabled: #475569;
+  
+  /* 배경 색상 */
+  --color-bg-primary: #0f172a;
+  --color-bg-secondary: #1e293b;
+  --color-bg-tertiary: #334155;
+  --color-bg-disabled: #1e293b;
+  
+  /* 테두리 색상 */
+  --color-border-primary: #334155;
+  --color-border-secondary: #475569;
+  --color-border-hover: #64748b;
+  
+  /* 버튼 색상 */
+  --color-button-primary: #e2e8f0;
+  --color-button-primary-hover: #f8fafc;
+  --color-button-secondary: #334155;
+  --color-button-secondary-hover: #475569;
+  --color-button-link: #818cf8;
+  
+  /* 포커스 효과 */
+  --focus-ring: 0 0 0 3px rgba(129, 140, 248, 0.2);
+} 

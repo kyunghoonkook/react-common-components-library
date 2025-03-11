@@ -1,0 +1,169 @@
+/* MenuBar */
+.menubar {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 14px;
+  padding: 0;
+  width: max-content;
+  margin: 0;
+  position: relative;
+}
+
+/* MenuBarItem */
+.menubar-item {
+  padding: 10px 16px;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  font-weight: 500;
+  color: #000000;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.2s;
+  text-align: center;
+  justify-content: center;
+}
+
+.menubar-item:hover {
+  background-color: #f5f5f5;
+}
+
+.menubar-item-active {
+  background-color: #f0f0f0;
+}
+
+.menubar-item-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* MenuContent */
+.menu-content {
+  position: fixed;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+  width: 220px;
+  max-height: 80vh;
+  overflow-y: auto;
+  z-index: 100;
+  padding: 6px;
+}
+
+.menu-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* MenuItem */
+.menu-item {
+  position: relative;
+  padding: 0;
+  margin: 0;
+  border-radius: 4px;
+}
+
+.menu-item-container {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  gap: 8px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.menu-item:hover > .menu-item-container {
+  background-color: #f5f5f5;
+}
+
+.menu-item-disabled .menu-item-container {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.menu-item-icon {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6c757d;
+}
+
+.menu-item-label {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.menu-item-chevron {
+  margin-left: auto;
+  color: #6c757d;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* MenuSeparator */
+.menu-separator {
+  height: 1px;
+  background-color: #e5e5e5;
+  margin: 6px 0;
+}
+
+/* MenuShortcut */
+.menu-shortcut {
+  margin-left: 16px;
+  font-size: 12px;
+  opacity: 0.7;
+  color: #6c757d;
+  white-space: nowrap;
+}
+
+/* 다크 모드 지원 */
+@media (prefers-color-scheme: dark) {
+  .menubar {
+    background-color: #1e1e1e;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  }
+
+  .menubar-item {
+    color: #ffffff;
+  }
+
+  .menubar-item:hover {
+    background-color: #2a2a2a;
+  }
+
+  .menubar-item-active {
+    background-color: #333333;
+  }
+
+  .menu-content {
+    background: #1e1e1e;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.3);
+  }
+
+  .menu-item:hover > .menu-item-container {
+    background-color: #2a2a2a;
+  }
+
+  .menu-item-icon, 
+  .menu-item-chevron,
+  .menu-shortcut {
+    color: #a0a0a0;
+  }
+
+  .menu-separator {
+    background-color: #444444;
+  }
+} 
