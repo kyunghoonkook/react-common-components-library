@@ -126,6 +126,11 @@
               "sidebar": "tutorialSidebar"
             },
             {
+              "id": "components/slider",
+              "path": "/docs/components/slider",
+              "sidebar": "tutorialSidebar"
+            },
+            {
               "id": "components/switch",
               "path": "/docs/components/switch",
               "sidebar": "tutorialSidebar"

@@ -4,15 +4,15 @@ import ComponentCreator from '@docusaurus/ComponentCreator';
 export default [
   {
     path: '/docs',
-    component: ComponentCreator('/docs', '286'),
+    component: ComponentCreator('/docs', 'cd3'),
     routes: [
       {
         path: '/docs',
-        component: ComponentCreator('/docs', 'a61'),
+        component: ComponentCreator('/docs', '100'),
         routes: [
           {
             path: '/docs',
-            component: ComponentCreator('/docs', '180'),
+            component: ComponentCreator('/docs', '673'),
             routes: [
               {
                 path: '/docs/components/accordion',
@@ -149,6 +149,12 @@ export default [
               {
                 path: '/docs/components/slider',
                 component: ComponentCreator('/docs/components/slider', 'ec5'),
+                exact: true,
+                sidebar: "tutorialSidebar"
+              },
+              {
+                path: '/docs/components/slider',
+                component: ComponentCreator('/docs/components/slider', 'e31'),
                 exact: true,
                 sidebar: "tutorialSidebar"
               },

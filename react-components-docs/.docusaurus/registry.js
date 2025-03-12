@@ -12,6 +12,7 @@ export default {
   "2b590c9b": [() => import(/* webpackChunkName: "2b590c9b" */ "@site/docs/components/dialog.mdx"), "@site/docs/components/dialog.mdx", require.resolveWeak("@site/docs/components/dialog.mdx")],
   "32644c6e": [() => import(/* webpackChunkName: "32644c6e" */ "@site/docs/components/hovercard.mdx"), "@site/docs/components/hovercard.mdx", require.resolveWeak("@site/docs/components/hovercard.mdx")],
   "3b8c55ea": [() => import(/* webpackChunkName: "3b8c55ea" */ "@site/docs/installation.md"), "@site/docs/installation.md", require.resolveWeak("@site/docs/installation.md")],
+  "3bd42b97": [() => import(/* webpackChunkName: "3bd42b97" */ "@site/docs/components/slider.mdx"), "@site/docs/components/slider.mdx", require.resolveWeak("@site/docs/components/slider.mdx")],
   "3fc772ac": [() => import(/* webpackChunkName: "3fc772ac" */ "@site/docs/components/alert-dialog.mdx"), "@site/docs/components/alert-dialog.mdx", require.resolveWeak("@site/docs/components/alert-dialog.mdx")],
   "4cc0eadb": [() => import(/* webpackChunkName: "4cc0eadb" */ "@site/docs/components/input.mdx"), "@site/docs/components/input.mdx", require.resolveWeak("@site/docs/components/input.mdx")],
   "5e95c892": [() => import(/* webpackChunkName: "5e95c892" */ "@theme/DocsRoot"), "@theme/DocsRoot", require.resolveWeak("@theme/DocsRoot")],
