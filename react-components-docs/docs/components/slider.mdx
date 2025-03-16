@@ -11,7 +11,7 @@ title: Slider
 
 Slider 컴포넌트를 사용하여 기본 슬라이더를 만들 수 있습니다. defaultValue 속성을 사용하여 초기값을 설정할 수 있습니다.
 
-```
+```jsx
 // 기본 슬라이더 예제
 import { Slider } from 'react-common-components-library';
 
@@ -30,7 +30,7 @@ function Example() {
 
 orientation 속성을 "vertical"로 설정하여 수직 슬라이더를 만들 수 있습니다. 이때 컨테이너에 높이를 지정해주어야 합니다.
 
-```
+```jsx
 // 수직 슬라이더 예제
 import { Slider } from 'react-common-components-library';
 
@@ -52,7 +52,7 @@ function VerticalExample() {
 
 showValueLabel 속성을 true로 설정하여 값 레이블을 표시할 수 있습니다. 또한 formatLabel 함수를 사용하여 레이블 형식을 커스터마이징할 수 있습니다.
 
-```
+```jsx
 // 값 레이블 표시 예제
 import { Slider } from 'react-common-components-library';
 
@@ -82,7 +82,7 @@ function LabeledExample() {
 
 useState와 같은 상태 관리 훅을 사용하여 제어 컴포넌트로 사용할 수 있습니다. value와 onChange 속성을 설정하면 됩니다. 또한 onChangeComplete 속성을 사용하여 슬라이더 조작이 완료되었을 때 콜백을 설정할 수 있습니다.
 
-```
+```jsx
 // 제어 컴포넌트 예제
 import React, { useState } from 'react';
 import { Slider } from 'react-common-components-library';
@@ -125,7 +125,7 @@ function ControlledExample() {
 
 min, max 속성으로 범위를 설정하고 step 속성으로 단계를 설정할 수 있습니다.
 
-```
+```jsx
 // 커스텀 범위 및 단계 예제
 import { Slider } from 'react-common-components-library';
 
@@ -173,7 +173,7 @@ function CustomRangeExample() {
 
 variant, size, thumbSize, theme 등의 속성을 사용하여 다양한 스타일을 적용할 수 있습니다. disabled 속성으로 슬라이더를 비활성화할 수도 있습니다.
 
-```
+```jsx
 // 스타일 옵션 예제
 import { Slider } from 'react-common-components-library';
 
@@ -219,7 +219,7 @@ Slider 컴포넌트는 다음과 같은 접근성 기능을 지원합니다:
 
 접근성을 향상시키기 위해 aria-label이나 aria-labelledby 속성을 추가하는 것이 좋습니다:
 
-```
+```jsx
 // 접근성 향상 예제
 import { Slider } from 'react-common-components-library';
 
@@ -256,22 +256,20 @@ function AccessibleExample() {
 | `orientation` | `'horizontal' \| 'vertical'` | `'horizontal'` | 슬라이더의 방향 |
 | `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | 슬라이더의 크기 |
 | `showValueLabel` | `boolean` | `false` | 값 레이블 표시 여부 |
-| `formatLabel` | `(value: number) => string` | 기본 함수 | 값 레이블 포맷 함수 |
+| `formatLabel` | `(value: number) => string` | `(value) => \`${value}\`` | 값 레이블 포맷 함수 |
 | `theme` | `'light' \| 'dark' \| 'auto'` | `'light'` | 테마 모드 |
 | `variant` | `'default' \| 'primary' \| 'secondary' \| 'success' \| 'danger' \| 'warning'` | `'primary'` | 슬라이더의 색상 변형 |
 | `className` | `string` | `''` | 추가 CSS 클래스 |
 | `trackClickable` | `boolean` | `true` | 슬라이더 트랙 클릭 가능 여부 |
 | `thumbSize` | `'sm' \| 'md' \| 'lg'` | `'md'` | 슬라이더 썸(핸들) 크기 |
-| `onChange` | `(sliderValue: number) => void` | - | 값 변경 시 호출될 함수 |
-| `onChangeComplete` | `(sliderValue: number) => void` | - | 슬라이더 조작이 완료되었을 때 호출될 함수 |
-| `aria-label` | `string` | - | 슬라이더의 접근성 레이블 |
-| `aria-labelledby` | `string` | - | 슬라이더를 설명하는 요소의 ID |
+| `onChange` | `(value: number) => void` | - | 값 변경 시 호출될 함수 |
+| `onChangeComplete` | `(value: number) => void` | - | 슬라이더 조작이 완료되었을 때 호출될 함수 |
 
 ## 응용 예제
 
 ### 이미지 편집기의 필터 강도 조절
 
-```
+```jsx
 // 이미지 필터 예제
 import React, { useState } from 'react';
 import { Slider } from 'react-common-components-library';
@@ -332,7 +330,7 @@ function ImageFilterExample() {
 
 ### 가격 범위 필터
 
-```
+```jsx
 // 가격 범위 필터 예제
 import React, { useState } from 'react';
 import { Slider } from 'react-common-components-library';
