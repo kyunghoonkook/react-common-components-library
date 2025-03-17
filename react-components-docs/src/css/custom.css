@@ -15,6 +15,15 @@
   --ifm-color-primary-lightest: #3cad6e;
   --ifm-code-font-size: 95%;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+
+  /* 컴포넌트 테마용 변수 추가 */
+  --component-bg: #ffffff;
+  --component-border: #e5e7eb;
+  --component-text: #1f2937;
+  --component-text-secondary: #6b7280;
+  --component-primary: #2e8555;
+  --component-primary-light: #33925d;
+  --component-primary-hover: #205d3b;
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
@@ -27,6 +36,15 @@
   --ifm-color-primary-lighter: #32d8b4;
   --ifm-color-primary-lightest: #4fddbf;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+
+  /* 다크모드 컴포넌트 테마용 변수 오버라이드 */
+  --component-bg: #1e1e1e;
+  --component-border: #3e3e3e;
+  --component-text: #e6e6e6;
+  --component-text-secondary: #a0a0a0;
+  --component-primary: #25c2a0;
+  --component-primary-light: #29d5b0;
+  --component-primary-hover: #1fa588;
 }
 
 .component-example {
@@ -53,9 +71,9 @@
 .component-preview {
   margin: 20px 0;
   padding: 24px;
-  border: 1px solid var(--ifm-color-emphasis-300);
+  border: 1px solid var(--component-border);
   border-radius: 8px;
-  background-color: var(--ifm-background-color);
+  background-color: var(--component-bg);
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -63,11 +81,12 @@
   position: relative;
   overflow: visible;
   min-height: 100px;
+  transition: background-color 0.2s, border-color 0.2s;
 }
 
-/* 다크 모드 지원 */
-[data-theme='dark'] .component-preview {
-  background-color: var(--ifm-background-surface-color);
+/* 다크 모드 호버 효과 */
+.component-preview:hover {
+  border-color: var(--ifm-color-primary);
 }
 
 /* 툴팁 컨테이너 스타일링 */
@@ -84,4 +103,19 @@
 [data-theme='light'] {
   --tooltip-background: #0f172a;
   --tooltip-color: #ffffff;
+}
+
+/* 버튼 컴포넌트 스타일 강화 */
+.component-preview button {
+  transition: all 0.2s;
+}
+
+/* 다크모드에서 컴포넌트 스타일 강화 */
+[data-theme='dark'] .component-preview {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+/* 라이트모드에서 컴포넌트 스타일 강화 */
+[data-theme='light'] .component-preview {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.03);
 } 

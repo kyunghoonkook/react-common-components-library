@@ -6,7 +6,7 @@ import { Avatar, AvatarGroup } from 'react-common-components-library';
 
 # Avatar
 
-사용자 프로필 이미지 또는 이니셜을 표시하는 컴포넌트입니다. 다양한 크기와 상태를 지원합니다.
+사용자 프로필 이미지 또는 이니셜을 표시하는 컴포넌트입니다. 다양한 크기와 상태를 지원합니다. 라이트/다크 테마를 자동으로 지원합니다.
 
 ## 기본 사용법
 
@@ -40,33 +40,29 @@ function AvatarExample() {
 }
 ```
 
-export const AvatarExample = () => {
-  return (
-    <div style={{ display: 'flex', gap: '16px' }}>
-      {/* 이미지 아바타 */}
-      <Avatar 
-        src="https://i.pravatar.cc/150?img=1" 
-        alt="Jane Doe" 
-        size="md" 
-      />
-      
-      {/* 이미지가 없을 때 이니셜 사용 */}
-      <Avatar 
-        name="John Smith" 
-        size="md" 
-      />
-      
-      {/* 색상 지정 */}
-      <Avatar 
-        name="Alex Johnson" 
-        size="md"
-        color="#6366F1"
-      />
-    </div>
-  );
-};
-
-<AvatarExample />
+<div className="component-preview">
+  <div style={{ display: 'flex', gap: '16px' }}>
+    {/* 이미지 아바타 */}
+    <Avatar 
+      src="https://i.pravatar.cc/150?img=1" 
+      alt="Jane Doe" 
+      size="md" 
+    />
+    
+    {/* 이미지가 없을 때 이니셜 사용 */}
+    <Avatar 
+      name="John Smith" 
+      size="md" 
+    />
+    
+    {/* 색상 지정 */}
+    <Avatar 
+      name="Alex Johnson" 
+      size="md"
+      color="#6366F1"
+    />
+  </div>
+</div>
 
 ## 다양한 크기
 
@@ -89,28 +85,23 @@ function AvatarSizesExample() {
 }
 ```
 
-export const AvatarSizesExample = () => {
-  return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-      <Avatar size="xs" name="XS" />
-      <Avatar size="sm" name="SM" />
-      <Avatar size="md" name="MD" />
-      <Avatar size="lg" name="LG" />
-      <Avatar size="xl" name="XL" />
-      <Avatar size="2xl" name="2XL" />
-    </div>
-  );
-};
-
-<AvatarSizesExample />
+<div className="component-preview">
+  <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+    <Avatar size="xs" name="XS" />
+    <Avatar size="sm" name="SM" />
+    <Avatar size="md" name="MD" />
+    <Avatar size="lg" name="LG" />
+    <Avatar size="xl" name="XL" />
+    <Avatar size="2xl" name="2XL" />
+  </div>
+</div>
 
 ## 그룹 아바타
 
 여러 아바타를 겹쳐서 표시할 수 있습니다:
 
 ```jsx
-import { AvatarGroup } from 'react-common-components-library';
-import { Avatar } from 'react-common-components-library';
+import { AvatarGroup, Avatar } from 'react-common-components-library';
 
 function AvatarGroupExample() {
   return (
@@ -125,19 +116,15 @@ function AvatarGroupExample() {
 }
 ```
 
-export const AvatarGroupExample = () => {
-  return (
-    <AvatarGroup max={3}>
-      <Avatar src="https://i.pravatar.cc/150?img=1" alt="사용자 1" />
-      <Avatar src="https://i.pravatar.cc/150?img=2" alt="사용자 2" />
-      <Avatar src="https://i.pravatar.cc/150?img=3" alt="사용자 3" />
-      <Avatar src="https://i.pravatar.cc/150?img=4" alt="사용자 4" />
-      <Avatar src="https://i.pravatar.cc/150?img=5" alt="사용자 5" />
-    </AvatarGroup>
-  );
-};
-
-<AvatarGroupExample />
+<div className="component-preview">
+  <AvatarGroup max={3}>
+    <Avatar src="https://i.pravatar.cc/150?img=1" alt="사용자 1" />
+    <Avatar src="https://i.pravatar.cc/150?img=2" alt="사용자 2" />
+    <Avatar src="https://i.pravatar.cc/150?img=3" alt="사용자 3" />
+    <Avatar src="https://i.pravatar.cc/150?img=4" alt="사용자 4" />
+    <Avatar src="https://i.pravatar.cc/150?img=5" alt="사용자 5" />
+  </AvatarGroup>
+</div>
 
 ## 상태 표시기
 
@@ -152,62 +139,60 @@ function AvatarStatusExample() {
       <Avatar 
         src="https://i.pravatar.cc/150?img=1" 
         alt="온라인 사용자" 
-        status="online" 
+        size="lg"
+        status="online"
       />
-      
       <Avatar 
         src="https://i.pravatar.cc/150?img=2" 
-        alt="오프라인 사용자" 
-        status="offline" 
+        alt="자리비움 사용자" 
+        size="lg"
+        status="away"
       />
-      
       <Avatar 
         src="https://i.pravatar.cc/150?img=3" 
-        alt="자리비움 사용자" 
-        status="away" 
+        alt="바쁜 사용자" 
+        size="lg"
+        status="busy"
       />
-      
       <Avatar 
         src="https://i.pravatar.cc/150?img=4" 
-        alt="다른 용무중 사용자" 
-        status="busy" 
+        alt="오프라인 사용자" 
+        size="lg"
+        status="offline"
       />
     </div>
   );
 }
 ```
 
-export const AvatarStatusExample = () => {
-  return (
-    <div style={{ display: 'flex', gap: '16px' }}>
-      <Avatar 
-        src="https://i.pravatar.cc/150?img=1" 
-        alt="온라인 사용자" 
-        status="online" 
-      />
-      
-      <Avatar 
-        src="https://i.pravatar.cc/150?img=2" 
-        alt="오프라인 사용자" 
-        status="offline" 
-      />
-      
-      <Avatar 
-        src="https://i.pravatar.cc/150?img=3" 
-        alt="자리비움 사용자" 
-        status="away" 
-      />
-      
-      <Avatar 
-        src="https://i.pravatar.cc/150?img=4" 
-        alt="다른 용무중 사용자" 
-        status="busy" 
-      />
-    </div>
-  );
-};
-
-<AvatarStatusExample />
+<div className="component-preview">
+  <div style={{ display: 'flex', gap: '16px' }}>
+    <Avatar 
+      src="https://i.pravatar.cc/150?img=1" 
+      alt="온라인 사용자" 
+      size="lg"
+      status="online"
+    />
+    <Avatar 
+      src="https://i.pravatar.cc/150?img=2" 
+      alt="자리비움 사용자" 
+      size="lg"
+      status="away"
+    />
+    <Avatar 
+      src="https://i.pravatar.cc/150?img=3" 
+      alt="바쁜 사용자" 
+      size="lg"
+      status="busy"
+    />
+    <Avatar 
+      src="https://i.pravatar.cc/150?img=4" 
+      alt="오프라인 사용자" 
+      size="lg"
+      status="offline"
+    />
+  </div>
+</div>
 
 ## 모양 변형
 
@@ -223,37 +208,35 @@ function AvatarShapeExample() {
         src="https://i.pravatar.cc/150?img=1" 
         alt="원형 아바타" 
         shape="circle" 
+        size="lg"
       />
-      
       <Avatar 
         src="https://i.pravatar.cc/150?img=2" 
         alt="사각형 아바타" 
         shape="square" 
+        size="lg"
       />
     </div>
   );
 }
 ```
 
-export const AvatarShapeExample = () => {
-  return (
-    <div style={{ display: 'flex', gap: '16px' }}>
-      <Avatar 
-        src="https://i.pravatar.cc/150?img=1" 
-        alt="원형 아바타" 
-        shape="circle" 
-      />
-      
-      <Avatar 
-        src="https://i.pravatar.cc/150?img=2" 
-        alt="사각형 아바타" 
-        shape="square" 
-      />
-    </div>
-  );
-};
-
-<AvatarShapeExample />
+<div className="component-preview">
+  <div style={{ display: 'flex', gap: '16px' }}>
+    <Avatar 
+      src="https://i.pravatar.cc/150?img=1" 
+      alt="원형 아바타" 
+      shape="circle" 
+      size="lg"
+    />
+    <Avatar 
+      src="https://i.pravatar.cc/150?img=2" 
+      alt="사각형 아바타" 
+      shape="square" 
+      size="lg"
+    />
+  </div>
+</div>
 
 ## 테두리 추가
 
@@ -270,40 +253,58 @@ function AvatarBorderExample() {
         alt="테두리 있는 아바타" 
         border={true}
         borderColor="#ffffff"
+        size="lg"
       />
       
       <Avatar 
         src="https://i.pravatar.cc/150?img=2" 
         alt="컬러 테두리 아바타" 
         border={true}
-        borderColor="#3b82f6"
+        borderColor="#3182ce"
+        size="lg"
+      />
+      
+      <Avatar 
+        src="https://i.pravatar.cc/150?img=3" 
+        alt="두꺼운 테두리 아바타" 
+        border={true}
+        borderColor="#38a169"
+        borderWidth="4px"
+        size="lg"
       />
     </div>
   );
 }
 ```
 
-export const AvatarBorderExample = () => {
-  return (
-    <div style={{ display: 'flex', gap: '16px', backgroundColor: '#f0f0f0', padding: '16px', borderRadius: '8px' }}>
-      <Avatar 
-        src="https://i.pravatar.cc/150?img=1" 
-        alt="테두리 있는 아바타" 
-        border={true}
-        borderColor="#ffffff"
-      />
-      
-      <Avatar 
-        src="https://i.pravatar.cc/150?img=2" 
-        alt="컬러 테두리 아바타" 
-        border={true}
-        borderColor="#3b82f6"
-      />
-    </div>
-  );
-};
-
-<AvatarBorderExample />
+<div className="component-preview" style={{ backgroundColor: 'var(--component-bg)' }}>
+  <div style={{ display: 'flex', gap: '16px', padding: '16px', borderRadius: '8px', backgroundColor: 'var(--component-border)' }}>
+    <Avatar 
+      src="https://i.pravatar.cc/150?img=1" 
+      alt="테두리 있는 아바타" 
+      border={true}
+      borderColor="#ffffff"
+      size="lg"
+    />
+    
+    <Avatar 
+      src="https://i.pravatar.cc/150?img=2" 
+      alt="컬러 테두리 아바타" 
+      border={true}
+      borderColor="#3182ce"
+      size="lg"
+    />
+    
+    <Avatar 
+      src="https://i.pravatar.cc/150?img=3" 
+      alt="두꺼운 테두리 아바타" 
+      border={true}
+      borderColor="#38a169"
+      borderWidth="4px"
+      size="lg"
+    />
+  </div>
+</div>
 
 ## API 참조
 

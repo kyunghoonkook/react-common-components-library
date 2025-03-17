@@ -1,7 +1,7 @@
 {
   "id": "components/tooltip",
   "title": "Tooltip",
-  "description": "Tooltip은 요소에 마우스를 올리거나 클릭했을 때 추가 정보를 표시하는 작은 팝업 컴포넌트입니다.",
+  "description": "Tooltip은 요소에 마우스를 올리거나 클릭했을 때 추가 정보를 표시하는 작은 팝업 컴포넌트입니다. 다크모드와 라이트모드를 자동으로 지원하여 현재 테마에 맞게 자동으로 스타일이 적용됩니다.",
   "source": "@site/docs/components/tooltip.mdx",
   "sourceDirName": "components",
   "slug": "/components/tooltip",

@@ -16,7 +16,167 @@
     },
     "./styles.css": "./dist/styles.css",
     "./*/styles.css": "./dist/*/styles.css",
-    "./*": {
+    "./Accordion": {
+      "import": "./dist/esm/components/Accordion/index.js",
+      "require": "./dist/cjs/components/Accordion/index.js",
+      "types": "./dist/types/components/Accordion/index.d.ts"
+    },
+    "./AlertDialog": {
+      "import": "./dist/esm/components/AlertDialog/index.js",
+      "require": "./dist/cjs/components/AlertDialog/index.js",
+      "types": "./dist/types/components/AlertDialog/index.d.ts"
+    },
+    "./AspectRatio": {
+      "import": "./dist/esm/components/AspectRatio/index.js",
+      "require": "./dist/cjs/components/AspectRatio/index.js",
+      "types": "./dist/types/components/AspectRatio/index.d.ts"
+    },
+    "./Avatar": {
+      "import": "./dist/esm/components/Avatar/index.js",
+      "require": "./dist/cjs/components/Avatar/index.js",
+      "types": "./dist/types/components/Avatar/index.d.ts"
+    },
+    "./Button": {
+      "import": "./dist/esm/components/Button/index.js",
+      "require": "./dist/cjs/components/Button/index.js",
+      "types": "./dist/types/components/Button/index.d.ts"
+    },
+    "./Checkbox": {
+      "import": "./dist/esm/components/Checkbox/index.js",
+      "require": "./dist/cjs/components/Checkbox/index.js",
+      "types": "./dist/types/components/Checkbox/index.d.ts"
+    },
+    "./Collapsible": {
+      "import": "./dist/esm/components/Collapsible/index.js",
+      "require": "./dist/cjs/components/Collapsible/index.js",
+      "types": "./dist/types/components/Collapsible/index.d.ts"
+    },
+    "./Command": {
+      "import": "./dist/esm/components/Command/index.js",
+      "require": "./dist/cjs/components/Command/index.js",
+      "types": "./dist/types/components/Command/index.d.ts"
+    },
+    "./ContextMenu": {
+      "import": "./dist/esm/components/ContextMenu/index.js",
+      "require": "./dist/cjs/components/ContextMenu/index.js",
+      "types": "./dist/types/components/ContextMenu/index.d.ts"
+    },
+    "./Dialog": {
+      "import": "./dist/esm/components/Dialog/index.js",
+      "require": "./dist/cjs/components/Dialog/index.js",
+      "types": "./dist/types/components/Dialog/index.d.ts"
+    },
+    "./DropdownMenu": {
+      "import": "./dist/esm/components/DropdownMenu/index.js",
+      "require": "./dist/cjs/components/DropdownMenu/index.js",
+      "types": "./dist/types/components/DropdownMenu/index.d.ts"
+    },
+    "./HoverCard": {
+      "import": "./dist/esm/components/HoverCard/index.js",
+      "require": "./dist/cjs/components/HoverCard/index.js",
+      "types": "./dist/types/components/HoverCard/index.d.ts"
+    },
+    "./Input": {
+      "import": "./dist/esm/components/Input/index.js",
+      "require": "./dist/cjs/components/Input/index.js",
+      "types": "./dist/types/components/Input/index.d.ts"
+    },
+    "./Label": {
+      "import": "./dist/esm/components/Label/index.js",
+      "require": "./dist/cjs/components/Label/index.js",
+      "types": "./dist/types/components/Label/index.d.ts"
+    },
+    "./MenuBar": {
+      "import": "./dist/esm/components/MenuBar/index.js",
+      "require": "./dist/cjs/components/MenuBar/index.js",
+      "types": "./dist/types/components/MenuBar/index.d.ts"
+    },
+    "./NavigationMenu": {
+      "import": "./dist/esm/components/NavigationMenu/index.js",
+      "require": "./dist/cjs/components/NavigationMenu/index.js",
+      "types": "./dist/types/components/NavigationMenu/index.d.ts"
+    },
+    "./Popover": {
+      "import": "./dist/esm/components/Popover/index.js",
+      "require": "./dist/cjs/components/Popover/index.js",
+      "types": "./dist/types/components/Popover/index.d.ts"
+    },
+    "./PopoverField": {
+      "import": "./dist/esm/components/PopoverField/index.js",
+      "require": "./dist/cjs/components/PopoverField/index.js",
+      "types": "./dist/types/components/PopoverField/index.d.ts"
+    },
+    "./Progress": {
+      "import": "./dist/esm/components/Progress/index.js",
+      "require": "./dist/cjs/components/Progress/index.js",
+      "types": "./dist/types/components/Progress/index.d.ts"
+    },
+    "./RadioGroup": {
+      "import": "./dist/esm/components/RadioGroup/index.js",
+      "require": "./dist/cjs/components/RadioGroup/index.js",
+      "types": "./dist/types/components/RadioGroup/index.d.ts"
+    },
+    "./RadioItem": {
+      "import": "./dist/esm/components/RadioItem/index.js",
+      "require": "./dist/cjs/components/RadioItem/index.js",
+      "types": "./dist/types/components/RadioItem/index.d.ts"
+    },
+    "./ScrollArea": {
+      "import": "./dist/esm/components/ScrollArea/index.js",
+      "require": "./dist/cjs/components/ScrollArea/index.js",
+      "types": "./dist/types/components/ScrollArea/index.d.ts"
+    },
+    "./Select": {
+      "import": "./dist/esm/components/Select/index.js",
+      "require": "./dist/cjs/components/Select/index.js",
+      "types": "./dist/types/components/Select/index.d.ts"
+    },
+    "./Separator": {
+      "import": "./dist/esm/components/Separator/index.js",
+      "require": "./dist/cjs/components/Separator/index.js",
+      "types": "./dist/types/components/Separator/index.d.ts"
+    },
+    "./Slider": {
+      "import": "./dist/esm/components/Slider/index.js",
+      "require": "./dist/cjs/components/Slider/index.js",
+      "types": "./dist/types/components/Slider/index.d.ts"
+    },
+    "./Switch": {
+      "import": "./dist/esm/components/Switch/index.js",
+      "require": "./dist/cjs/components/Switch/index.js",
+      "types": "./dist/types/components/Switch/index.d.ts"
+    },
+    "./Tabs": {
+      "import": "./dist/esm/components/Tabs/index.js",
+      "require": "./dist/cjs/components/Tabs/index.js",
+      "types": "./dist/types/components/Tabs/index.d.ts"
+    },
+    "./TabsContent": {
+      "import": "./dist/esm/components/TabsContent/index.js",
+      "require": "./dist/cjs/components/TabsContent/index.js",
+      "types": "./dist/types/components/TabsContent/index.d.ts"
+    },
+    "./TabsList": {
+      "import": "./dist/esm/components/TabsList/index.js",
+      "require": "./dist/cjs/components/TabsList/index.js",
+      "types": "./dist/types/components/TabsList/index.d.ts"
+    },
+    "./TabsTrigger": {
+      "import": "./dist/esm/components/TabsTrigger/index.js",
+      "require": "./dist/cjs/components/TabsTrigger/index.js",
+      "types": "./dist/types/components/TabsTrigger/index.d.ts"
+    },
+    "./Textarea": {
+      "import": "./dist/esm/components/Textarea/index.js",
+      "require": "./dist/cjs/components/Textarea/index.js",
+      "types": "./dist/types/components/Textarea/index.d.ts"
+    },
+    "./Tooltip": {
+      "import": "./dist/esm/components/Tooltip/index.js",
+      "require": "./dist/cjs/components/Tooltip/index.js",
+      "types": "./dist/types/components/Tooltip/index.d.ts"
+    },
+    "./components/*": {
       "import": "./dist/esm/components/*/index.js",
       "require": "./dist/cjs/components/*/index.js",
       "types": "./dist/types/components/*/index.d.ts"
@@ -53,6 +213,8 @@
     "@storybook/react-webpack5": "^8.6.3",
     "@storybook/test": "^8.6.3",
     "@types/react": "^18.0.0",
+    "@types/react-dom": "^19.0.4",
+    "glob": "^11.0.1",
     "html-webpack-plugin": "^5.6.3",
     "postcss": "^8.4.12",
     "rollup": "^2.70.2",
@@ -113,5 +275,8 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public"
+  },
+  "dependencies": {
+    "@radix-ui/react-id": "^1.1.0"
   }
 }

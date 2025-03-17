@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, forwardRef } from 'react';
+import React, { useState, useRef, useEffect, forwardRef, useCallback, useMemo, ReactNode, KeyboardEvent, MouseEvent as ReactMouseEvent } from 'react';
 import './MenuBar.css';
 
 export interface MenuBarProps {
@@ -22,6 +22,21 @@ export interface MenuBarProps {
    * @example '100%', '300px', 'auto'
    */
   width?: string;
+
+  /**
+   * 메뉴바가 활성화될 때 호출되는 콜백
+   */
+  onActivate?: () => void;
+
+  /**
+   * 메뉴바가 비활성화될 때 호출되는 콜백
+   */
+  onDeactivate?: () => void;
+  
+  /**
+   * 접근성을 위한 레이블
+   */
+  ariaLabel?: string;
 }
 
 export interface MenuBarItemProps {
@@ -49,6 +64,11 @@ export interface MenuBarItemProps {
    * 메뉴 아이템에 적용할 추가 CSS 클래스
    */
   className?: string;
+
+  /**
+   * 아이템이 선택되었을 때 호출되는 콜백
+   */
+  onSelect?: () => void;
 }
 
 // 구분선 타입과 메뉴 항목 타입을 구분하기 위한 인터페이스
@@ -114,6 +134,11 @@ export interface MenuActionItem {
    * 구분선 여부 (false 또는 정의하지 않음)
    */
   isSeparator?: false;
+
+  /**
+   * 설명 텍스트
+   */
+  description?: string;
 }
 
 // MenuItemProps는 구분선 또는 액션 아이템 중 하나
@@ -154,6 +179,11 @@ export interface MenuContentProps {
    * 서브메뉴 여부
    */
   isSubmenu?: boolean;
+
+  /**
+   * 메뉴 계층 수준
+   */
+  level?: number;
 }
 
 export const MenuBar = forwardRef<HTMLDivElement, MenuBarProps>(({
@@ -161,20 +191,65 @@ export const MenuBar = forwardRef<HTMLDivElement, MenuBarProps>(({
   className = '',
   style,
   width,
+  onActivate,
+  onDeactivate,
+  ariaLabel = '메뉴'
 }, ref) => {
   const [activeMenuId, setActiveMenuId] = useState<string | null>(null);
+  const [focusedItemIndex, setFocusedItemIndex] = useState<number>(-1);
   const menuRefs = useRef<Map<string, HTMLElement>>(new Map());
+  const menuBarRef = useRef<HTMLDivElement | null>(null);
   
-  const handleMenuClick = (id: string) => {
+  const handleMenuClick = useCallback((id: string) => {
+    const wasActive = activeMenuId === id;
     setActiveMenuId(prevId => prevId === id ? null : id);
-  };
-  
-  const handleClickOutside = (event: MouseEvent) => {
-    const target = event.target as Node;
-    if (!ref || !('contains' in ref) || !(ref as any).contains(target)) {
-      setActiveMenuId(null);
+    
+    if (!wasActive) {
+      onActivate?.();
+    } else {
+      onDeactivate?.();
     }
-  };
+  }, [activeMenuId, onActivate, onDeactivate]);
+  
+  const handleClickOutside = useCallback((event: globalThis.MouseEvent) => {
+    const target = event.target as Node;
+    const menuBarElement = menuBarRef.current;
+    
+    if (menuBarElement && !menuBarElement.contains(target)) {
+      setActiveMenuId(null);
+      onDeactivate?.();
+    }
+  }, [onDeactivate]);
+
+  const handleKeyDown = useCallback((e: KeyboardEvent<HTMLDivElement>) => {
+    // 왼쪽/오른쪽 화살표로 메뉴 아이템 간 이동
+    if (e.key === 'ArrowLeft') {
+      setFocusedItemIndex(prev => (prev <= 0 ? items.length - 1 : prev - 1));
+      e.preventDefault();
+    } else if (e.key === 'ArrowRight') {
+      setFocusedItemIndex(prev => (prev >= items.length - 1 ? 0 : prev + 1));
+      e.preventDefault();
+    } else if (e.key === 'Escape') {
+      setActiveMenuId(null);
+      onDeactivate?.();
+      e.preventDefault();
+    } else if (e.key === 'Home') {
+      setFocusedItemIndex(0);
+      e.preventDefault();
+    } else if (e.key === 'End') {
+      setFocusedItemIndex(items.length - 1);
+      e.preventDefault();
+    } else if (e.key === 'Enter' || e.key === ' ') {
+      if (focusedItemIndex >= 0 && focusedItemIndex < items.length) {
+        const item = items[focusedItemIndex];
+        if (!item.disabled) {
+          handleMenuClick(item.id);
+          item.onSelect?.();
+        }
+      }
+      e.preventDefault();
+    }
+  }, [items, focusedItemIndex, handleMenuClick, onDeactivate]);
   
   useEffect(() => {
     if (activeMenuId) {
@@ -184,23 +259,54 @@ export const MenuBar = forwardRef<HTMLDivElement, MenuBarProps>(({
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [activeMenuId]);
+  }, [activeMenuId, handleClickOutside]);
   
+  // 포커스된 아이템 변경 시 포커스 이동
+  useEffect(() => {
+    if (focusedItemIndex >= 0 && focusedItemIndex < items.length) {
+      const itemId = items[focusedItemIndex].id;
+      const itemElement = menuRefs.current.get(itemId);
+      itemElement?.focus();
+    }
+  }, [focusedItemIndex, items]);
+
+  const menuBarClasses = useMemo(() => {
+    return `menubar ${className}`;
+  }, [className]);
+
   return (
     <div 
-      ref={ref}
-      className={`menubar ${className}`}
+      ref={(node) => {
+        // useRef와 forwardRef를 동시에 사용하기 위한 처리
+        menuBarRef.current = node;
+        
+        // forwardRef에 전달
+        if (typeof ref === 'function') {
+          ref(node);
+        } else if (ref) {
+          // @ts-ignore - ref가 React.MutableRefObject 타입일 때 할당
+          ref.current = node;
+        }
+      }}
+      className={menuBarClasses}
       style={{ 
         width: width,
         ...style
       }}
+      role="menubar"
+      aria-label={ariaLabel}
+      onKeyDown={handleKeyDown}
     >
-      {items.map((item) => (
+      {items.map((item, index) => (
         <MenuBarItem
           key={item.id}
           {...item}
           active={activeMenuId === item.id}
-          onClick={() => handleMenuClick(item.id)}
+          onClick={() => {
+            handleMenuClick(item.id);
+            item.onSelect?.();
+          }}
+          onFocus={() => setFocusedItemIndex(index)}
           ref={(el) => {
             if (el) menuRefs.current.set(item.id, el);
           }}
@@ -211,8 +317,12 @@ export const MenuBar = forwardRef<HTMLDivElement, MenuBarProps>(({
               visible={activeMenuId === item.id}
               anchorRef={{ current: menuRefs.current.get(item.id) || null }}
               onOpenChange={(open) => {
-                if (!open) setActiveMenuId(null);
+                if (!open) {
+                  setActiveMenuId(null);
+                  onDeactivate?.();
+                }
               }}
+              level={1}
             />
           )}
         </MenuBarItem>
@@ -224,6 +334,7 @@ export const MenuBar = forwardRef<HTMLDivElement, MenuBarProps>(({
 export const MenuBarItem = forwardRef<HTMLDivElement, MenuBarItemProps & {
   active?: boolean;
   onClick?: () => void;
+  onFocus?: () => void;
   children?: React.ReactNode;
 }>(({
   label,
@@ -232,9 +343,10 @@ export const MenuBarItem = forwardRef<HTMLDivElement, MenuBarItemProps & {
   className = '',
   active = false,
   onClick,
+  onFocus,
   children,
 }, ref) => {
-  const handleKeyDown = (e: React.KeyboardEvent) => {
+  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
     if (disabled) return;
     
     // 스페이스, 엔터 또는 아래 화살표 키로 메뉴 열기
@@ -242,14 +354,19 @@ export const MenuBarItem = forwardRef<HTMLDivElement, MenuBarItemProps & {
       e.preventDefault();
       onClick?.();
     }
-  };
+  }, [disabled, onClick]);
   
+  const menuItemClasses = useMemo(() => {
+    return `menubar-item ${active ? 'menubar-item-active' : ''} ${disabled ? 'menubar-item-disabled' : ''} ${className}`;
+  }, [active, className, disabled]);
+
   return (
     <div
       ref={ref}
-      className={`menubar-item ${active ? 'menubar-item-active' : ''} ${disabled ? 'menubar-item-disabled' : ''} ${className}`}
+      className={menuItemClasses}
       onClick={disabled ? undefined : onClick}
       onKeyDown={handleKeyDown}
+      onFocus={onFocus}
       tabIndex={disabled ? -1 : 0}
       role="menuitem"
       aria-disabled={disabled}
@@ -270,12 +387,15 @@ export const MenuContent = forwardRef<HTMLDivElement, MenuContentProps>(({
   anchorRef,
   style,
   isSubmenu = false,
+  level = 0
 }, ref) => {
   const menuRef = useRef<HTMLDivElement>(null);
   const [activeSubmenuId, setActiveSubmenuId] = useState<string | null>(null);
+  const [focusedItemIndex, setFocusedItemIndex] = useState<number>(-1);
   const submenuRefs = useRef<Map<string, HTMLLIElement>>(new Map());
+  const itemRefs = useRef<Map<string, HTMLLIElement>>(new Map());
   
-  const positionMenu = () => {
+  const positionMenu = useCallback(() => {
     if (!menuRef.current || !anchorRef.current) return {};
     
     const menuRect = menuRef.current.getBoundingClientRect();
@@ -311,38 +431,92 @@ export const MenuContent = forwardRef<HTMLDivElement, MenuContentProps>(({
       position: 'fixed' as const,
       top: `${top}px`,
       left: `${left}px`,
-      zIndex: isSubmenu ? 101 : 100, // 서브메뉴는 부모 메뉴보다 높은 z-index를 가짐
+      zIndex: 100 + level, // 중첩된 메뉴일수록 높은 z-index를 가짐
       ...style,
     };
-  };
+  }, [anchorRef, isSubmenu, level, style]);
+  
+  const handleClickOutside = useCallback((event: globalThis.MouseEvent) => {
+    if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+      onOpenChange?.(false);
+    }
+  }, [onOpenChange]);
+
+  const handleKeyDown = useCallback((e: KeyboardEvent<HTMLDivElement>) => {
+    // 위/아래 화살표로 메뉴 아이템 간 이동
+    const actionItems = items.filter(item => !item.isSeparator);
+    
+    if (e.key === 'ArrowDown') {
+      setFocusedItemIndex(prev => (prev >= actionItems.length - 1 ? 0 : prev + 1));
+      e.preventDefault();
+    } else if (e.key === 'ArrowUp') {
+      setFocusedItemIndex(prev => (prev <= 0 ? actionItems.length - 1 : prev - 1));
+      e.preventDefault();
+    } else if (e.key === 'Escape') {
+      onOpenChange?.(false);
+      e.preventDefault();
+    } else if (e.key === 'ArrowRight' && activeSubmenuId === null) {
+      // 오른쪽 화살표 키로 첫 번째 서브메뉴 열기
+      const firstItemWithSubmenu = actionItems.find(item => 
+        !item.isSeparator && item.items && item.items.length > 0
+      );
+      if (firstItemWithSubmenu && !firstItemWithSubmenu.isSeparator) {
+        setActiveSubmenuId(firstItemWithSubmenu.id);
+      }
+      e.preventDefault();
+    } else if (e.key === 'ArrowLeft' && isSubmenu) {
+      // 왼쪽 화살표 키로 서브메뉴 닫기
+      onOpenChange?.(false);
+      e.preventDefault();
+    } else if (e.key === 'Home') {
+      setFocusedItemIndex(0);
+      e.preventDefault();
+    } else if (e.key === 'End') {
+      setFocusedItemIndex(actionItems.length - 1);
+      e.preventDefault();
+    }
+  }, [items, focusedItemIndex, activeSubmenuId, isSubmenu, onOpenChange]);
   
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        onOpenChange?.(false);
-      }
-    };
-    
     if (visible) {
       document.addEventListener('mousedown', handleClickOutside);
+      // 메뉴가 열리면 첫 번째 항목에 포커스
+      setFocusedItemIndex(0);
+    } else {
+      setActiveSubmenuId(null);
+      setFocusedItemIndex(-1);
     }
     
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [visible, onOpenChange]);
+  }, [visible, handleClickOutside]);
+  
+  // 포커스된 아이템 변경 시 포커스 이동
+  useEffect(() => {
+    if (focusedItemIndex >= 0) {
+      const actionItems = items.filter(item => !item.isSeparator);
+      if (focusedItemIndex < actionItems.length) {
+        const itemId = actionItems[focusedItemIndex].id;
+        const itemElement = itemRefs.current.get(itemId);
+        itemElement?.focus();
+      }
+    }
+  }, [focusedItemIndex, items]);
   
   if (!visible) return null;
   
-  const handleMouseEnter = (id: string) => {
+  const handleMouseEnter = useCallback((id: string) => {
     setActiveSubmenuId(id);
-  };
+  }, []);
   
-  const handleMouseLeave = () => {
+  const handleMouseLeave = useCallback(() => {
     setActiveSubmenuId(null);
-  };
+  }, []);
   
   const computedStyle = positionMenu();
+  
+  const actionItems = items.filter(item => !item.isSeparator);
   
   return (
     <div
@@ -350,6 +524,8 @@ export const MenuContent = forwardRef<HTMLDivElement, MenuContentProps>(({
       className={`menu-content ${className}`}
       style={computedStyle}
       role="menu"
+      aria-orientation="vertical"
+      onKeyDown={handleKeyDown}
     >
       <ul className="menu-list">
         {items.map((item) => (
@@ -360,8 +536,17 @@ export const MenuContent = forwardRef<HTMLDivElement, MenuContentProps>(({
               key={item.id}
               {...item}
               onMouseEnter={() => handleMouseEnter(item.id)}
+              onFocus={() => {
+                const index = actionItems.findIndex(i => i.id === item.id);
+                if (index !== -1) {
+                  setFocusedItemIndex(index);
+                }
+              }}
               ref={(el) => {
-                if (el) submenuRefs.current.set(item.id, el);
+                if (el) {
+                  submenuRefs.current.set(item.id, el);
+                  itemRefs.current.set(item.id, el);
+                }
               }}
             >
               {item.items && activeSubmenuId === item.id && (
@@ -373,6 +558,7 @@ export const MenuContent = forwardRef<HTMLDivElement, MenuContentProps>(({
                     if (!open) setActiveSubmenuId(null);
                   }}
                   isSubmenu
+                  level={level + 1}
                 />
               )}
             </MenuItem>
@@ -386,6 +572,7 @@ export const MenuContent = forwardRef<HTMLDivElement, MenuContentProps>(({
 export const MenuItem = forwardRef<HTMLLIElement, MenuActionItem & {
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
+  onFocus?: () => void;
   children?: React.ReactNode;
 }>(({
   id,
@@ -396,11 +583,13 @@ export const MenuItem = forwardRef<HTMLLIElement, MenuActionItem & {
   icon,
   items,
   className = '',
+  description,
   onMouseEnter,
   onMouseLeave,
+  onFocus,
   children,
 }, ref) => {
-  const handleKeyDown = (e: React.KeyboardEvent) => {
+  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
     if (disabled) return;
     
     // 스페이스 또는 엔터 키로 클릭 이벤트 발생
@@ -420,25 +609,31 @@ export const MenuItem = forwardRef<HTMLLIElement, MenuActionItem & {
       e.preventDefault();
       onMouseLeave?.();
     }
-  };
+  }, [disabled, items, onClick, onMouseEnter, onMouseLeave]);
   
+  const menuItemClasses = useMemo(() => {
+    return `menu-item ${disabled ? 'menu-item-disabled' : ''} ${className}`;
+  }, [className, disabled]);
+
   return (
     <li
       ref={ref}
-      className={`menu-item ${disabled ? 'menu-item-disabled' : ''} ${className}`}
+      className={menuItemClasses}
       onClick={disabled ? undefined : onClick}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
+      onFocus={onFocus}
       onKeyDown={handleKeyDown}
       role="menuitem"
       tabIndex={disabled ? -1 : 0}
       aria-disabled={disabled}
       aria-haspopup={Boolean(items)}
+      aria-description={description}
     >
       <div className="menu-item-container">
-        {icon && <span className="menu-item-icon">{icon}</span>}
+        {icon && <span className="menu-item-icon" aria-hidden="true">{icon}</span>}
         <span className="menu-item-label">{label}</span>
-        {items && <span className="menu-item-chevron">›</span>}
+        {items && <span className="menu-item-chevron" aria-hidden="true">›</span>}
         {shortcut && <MenuShortcut>{shortcut}</MenuShortcut>}
       </div>
       {children}
@@ -469,11 +664,19 @@ export const MenuShortcut = forwardRef<HTMLSpanElement, {
     <span 
       ref={ref}
       className={`menu-shortcut ${className}`}
+      aria-hidden="true"
     >
       {children}
     </span>
   );
 });
+
+// Memoized components
+const MemoizedMenuItem = React.memo(MenuItem);
+const MemoizedMenuSeparator = React.memo(MenuSeparator);
+const MemoizedMenuShortcut = React.memo(MenuShortcut);
+const MemoizedMenuContent = React.memo(MenuContent);
+const MemoizedMenuBarItem = React.memo(MenuBarItem);
 
 MenuBar.displayName = 'MenuBar';
 MenuBarItem.displayName = 'MenuBarItem';

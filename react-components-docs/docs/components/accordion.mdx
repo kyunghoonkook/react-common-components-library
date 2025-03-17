@@ -7,7 +7,7 @@ import { useState } from 'react';
 
 # Accordion
 
-접을 수 있는 콘텐츠 패널을 제공하는 컴포넌트입니다.
+접을 수 있는 콘텐츠 패널을 제공하는 컴포넌트입니다. 다크모드와 라이트모드를 모두 지원합니다.
 
 ## 기본 사용법
 
@@ -46,7 +46,9 @@ export const BasicAccordionExample = () => {
   ];
 
   return (
-    <Accordion items={items} className="custom-accordion" />
+    <div className="component-preview">
+      <Accordion items={items} className="custom-accordion" />
+    </div>
   );
 };
 
@@ -54,126 +56,83 @@ export const BasicAccordionExample = () => {
 
 ## 다중 선택 사용법
 
-여러 항목을 동시에 열 수 있는 아코디언을 만들 수 있습니다:
+`allowMultiple` 속성을 사용하면 여러 항목을 동시에 펼칠 수 있습니다.
 
 ```jsx
-import { Accordion } from 'react-common-components-library';
-
-function MultiAccordionExample() {
-  const items = [
-    {
-      title: "섹션 1",
-      content: "섹션 1의 내용입니다."
-    },
-    {
-      title: "섹션 2",
-      content: "섹션 2의 내용입니다."
-    }
-  ];
-
-  return (
-    <Accordion 
-      items={items} 
-      allowMultiple 
-      defaultExpanded={[0]} 
-    />
-  );
-}
+<Accordion 
+  items={items} 
+  allowMultiple 
+  defaultExpanded={[0]} 
+/>
 ```
 
-export const MultiAccordionExample = () => {
+export const MultipleAccordionExample = () => {
   const items = [
     {
       title: "섹션 1",
-      content: "섹션 1의 내용입니다. 이 섹션은 기본적으로 펼쳐져 있습니다."
+      content: "섹션 1의 내용입니다. 여러 섹션을 동시에 열어볼 수 있습니다."
     },
     {
       title: "섹션 2",
-      content: "섹션 2의 내용입니다. 다중 선택 모드에서는 여러 섹션을 동시에 열 수 있습니다."
+      content: "섹션 2의 내용입니다. 다른 섹션이 열려 있어도 이 섹션을 열 수 있습니다."
     },
     {
       title: "섹션 3",
-      content: "섹션 3의 내용입니다. 다른 섹션을 열어도 이미 열려 있는 섹션은 닫히지 않습니다."
+      content: "섹션 3의 내용입니다. 기본적으로 첫 번째 섹션이 열려 있는 상태로 시작합니다."
     }
   ];
 
   return (
-    <Accordion 
-      items={items} 
-      allowMultiple 
-      defaultExpanded={[0]} 
-    />
+    <div className="component-preview">
+      <Accordion 
+        items={items} 
+        allowMultiple 
+        defaultExpanded={[0]} 
+      />
+    </div>
   );
 };
 
-<MultiAccordionExample />
+<MultipleAccordionExample />
 
 ## 커스텀 스타일 예제
 
-아코디언에 커스텀 스타일을 적용할 수 있습니다:
+다양한 스타일 옵션을 통해 아코디언의 모양을 커스터마이징할 수 있습니다.
 
 ```jsx
-import { Accordion } from 'react-common-components-library';
-
-function CustomStyledAccordionExample() {
-  const items = [
-    {
-      title: "섹션 1",
-      content: "섹션 1의 내용입니다."
-    },
-    {
-      title: "섹션 2",
-      content: "섹션 2의 내용입니다."
-    }
-  ];
-
-  return (
-    <Accordion 
-      items={items}
-      titleClassName="custom-title"
-      contentClassName="custom-content"
-      itemClassName="custom-item"
-      disableAnimation={true}
-      itemGap={10}
-    />
-  );
-}
+<Accordion 
+  items={items}
+  titleClassName="custom-title"
+  contentClassName="custom-content"
+  itemClassName="custom-item"
+  disableAnimation={true}
+  itemGap={10}
+/>
 ```
 
 export const CustomStyledAccordionExample = () => {
   const items = [
     {
       title: "커스텀 스타일 섹션 1",
-      content: "섹션 1의 내용입니다. 커스텀 스타일이 적용되었습니다."
+      content: "이 섹션은 커스텀 클래스를 사용하여 스타일이 적용되었습니다."
     },
     {
       title: "커스텀 스타일 섹션 2",
-      content: "섹션 2의 내용입니다. 커스텀 스타일이 적용되었습니다."
+      content: "이 섹션은 애니메이션이 비활성화되어 있고, 항목 간 간격이 넓습니다."
     }
   ];
 
   return (
-    <Accordion 
-      items={items}
-      titleStyle={{ 
-        backgroundColor: '#e0f2fe', 
-        padding: '12px', 
-        borderRadius: '4px',
-        fontWeight: 'bold'
-      }}
-      contentStyle={{ 
-        backgroundColor: '#f0f9ff', 
-        padding: '12px', 
-        borderRadius: '4px' 
-      }}
-      itemStyle={{ 
-        border: '1px solid #bae6fd', 
-        borderRadius: '6px', 
-        marginBottom: '8px' 
-      }}
-      disableAnimation={false}
-      itemGap={10}
-    />
+    <div className="component-preview">
+      <Accordion 
+        items={items}
+        titleClassName="custom-title"
+        contentClassName="custom-content"
+        itemClassName="custom-item"
+        disableAnimation={true}
+        itemGap={10}
+      />
+    </div>
   );
 };
 
@@ -181,67 +140,50 @@ export const CustomStyledAccordionExample = () => {
 
 ## 커스텀 아이콘 예제
 
-아코디언의 화살표 아이콘을 커스터마이징할 수 있습니다:
+자신만의 아이콘을 사용하여 아코디언의 모양을 변경할 수 있습니다.
 
 ```jsx
-import { Accordion } from 'react-common-components-library';
+const customIcon = (isOpen) => (
+  <span>{isOpen ? '📖' : '📘'}</span>
+);
 
-function CustomIconAccordionExample() {
-  const items = [
-    {
-      title: "섹션 1",
-      content: "섹션 1의 내용입니다."
-    },
-    {
-      title: "섹션 2",
-      content: "섹션 2의 내용입니다."
-    }
-  ];
-
-  // 커스텀 아이콘 함수
-  const customIcon = (isOpen) => (
-    <span>{isOpen ? '📖' : '📘'}</span>
-  );
-
-  return (
-    <Accordion 
-      items={items}
-      customIcon={customIcon}
-    />
-  );
-}
+<Accordion 
+  items={items}
+  customIcon={customIcon}
+/>
 ```
 
 export const CustomIconAccordionExample = () => {
   const items = [
     {
-      title: "책 섹션 1",
-      content: "섹션 1의 내용입니다. 커스텀 아이콘으로 책 이모지를 사용했습니다."
+      title: "커스텀 아이콘 섹션 1",
+      content: "이 섹션은 커스텀 아이콘을 사용합니다."
     },
     {
-      title: "책 섹션 2",
-      content: "섹션 2의 내용입니다. 펼쳐진 책과 닫힌 책 이모지로 상태를 표시합니다."
+      title: "커스텀 아이콘 섹션 2",
+      content: "섹션이 열리고 닫힐 때 아이콘이 변경됩니다."
     }
   ];
 
-  // 커스텀 아이콘 함수
   const customIcon = (isOpen) => (
-    <span style={{ fontSize: '1.2rem', marginRight: '8px' }}>{isOpen ? '📖' : '📘'}</span>
+    <span>{isOpen ? '📖' : '📘'}</span>
   );
 
   return (
-    <Accordion 
-      items={items}
-      customIcon={customIcon}
-    />
+    <div className="component-preview">
+      <Accordion 
+        items={items}
+        customIcon={customIcon}
+      />
+    </div>
   );
 };
 
 <CustomIconAccordionExample />
 
-## API 참조
+## Props
 
-### Accordion Props
+테마 모드(라이트/다크)는 자동으로 도큐사우러스의 테마 설정을 따릅니다.
 
 | 속성 | 타입 | 기본값 | 설명 |
 |------|------|--------|------|

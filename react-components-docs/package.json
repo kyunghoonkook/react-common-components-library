@@ -14,18 +14,26 @@
     "write-heading-ids": "docusaurus write-heading-ids"
   },
   "dependencies": {
-    "@docusaurus/core": "^3.1.1",
-    "@docusaurus/preset-classic": "^3.1.1",
+    "@docusaurus/core": "^3.0.1",
+    "@docusaurus/preset-classic": "^3.0.1",
     "@mdx-js/react": "^3.0.0",
     "clsx": "^2.0.0",
-    "prism-react-renderer": "^2.2.0",
+    "prism-react-renderer": "^2.4.1",
     "react": "^18.0.0",
     "react-common-components-library": "^1.0.1",
     "react-dom": "^18.0.0"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "^3.1.1",
-    "@docusaurus/types": "^3.1.1"
+    "@babel/core": "^7.26.10",
+    "@babel/plugin-transform-runtime": "^7.26.10",
+    "@babel/plugin-transform-typescript": "^7.26.8",
+    "@babel/preset-env": "^7.26.9",
+    "@babel/preset-flow": "^7.25.9",
+    "@babel/preset-react": "^7.26.3",
+    "@babel/preset-typescript": "^7.26.0",
+    "@docusaurus/module-type-aliases": "^3.0.1",
+    "@docusaurus/types": "^3.0.1",
+    "babel-loader": "^10.0.0"
   },
   "browserslist": {
     "production": [

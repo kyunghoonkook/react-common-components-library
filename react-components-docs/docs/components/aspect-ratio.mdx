@@ -28,13 +28,15 @@ function AspectRatioExample() {
 
 export const AspectRatioExample = () => {
   return (
-    <AspectRatio ratio={16 / 9} style={{ maxWidth: '600px' }}>
-      <img 
-        src="https://images.unsplash.com/photo-1531297484001-80022131f5a1"
-        alt="우주에서 본 지구"
-        style={{ objectFit: 'cover', width: '100%', height: '100%' }}
-      />
-    </AspectRatio>
+    <div className="component-preview">
+      <AspectRatio ratio={16 / 9} style={{ maxWidth: '600px' }}>
+        <img 
+          src="https://images.unsplash.com/photo-1531297484001-80022131f5a1"
+          alt="우주에서 본 지구"
+          style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+        />
+      </AspectRatio>
+    </div>
   );
 };
 
@@ -92,41 +94,43 @@ function MultipleRatiosExample() {
 
 export const MultipleRatiosExample = () => {
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '16px' }}>
-      <div>
-        <h3>16:9 (와이드스크린)</h3>
-        <AspectRatio ratio={16 / 9}>
-          <div style={{ backgroundColor: '#f0f0f0', width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            16:9
-          </div>
-        </AspectRatio>
-      </div>
-      
-      <div>
-        <h3>4:3 (기존 TV)</h3>
-        <AspectRatio ratio={4 / 3}>
-          <div style={{ backgroundColor: '#f0f0f0', width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            4:3
-          </div>
-        </AspectRatio>
-      </div>
-      
-      <div>
-        <h3>1:1 (정사각형)</h3>
-        <AspectRatio ratio={1}>
-          <div style={{ backgroundColor: '#f0f0f0', width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            1:1
-          </div>
-        </AspectRatio>
-      </div>
-      
-      <div>
-        <h3>9:16 (모바일)</h3>
-        <AspectRatio ratio={9 / 16}>
-          <div style={{ backgroundColor: '#f0f0f0', width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            9:16
-          </div>
-        </AspectRatio>
+    <div className="component-preview">
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '16px' }}>
+        <div>
+          <h3>16:9 (와이드스크린)</h3>
+          <AspectRatio ratio={16 / 9}>
+            <div style={{ backgroundColor: 'var(--component-border)', width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              16:9
+            </div>
+          </AspectRatio>
+        </div>
+        
+        <div>
+          <h3>4:3 (기존 TV)</h3>
+          <AspectRatio ratio={4 / 3}>
+            <div style={{ backgroundColor: 'var(--component-border)', width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              4:3
+            </div>
+          </AspectRatio>
+        </div>
+        
+        <div>
+          <h3>1:1 (정사각형)</h3>
+          <AspectRatio ratio={1}>
+            <div style={{ backgroundColor: 'var(--component-border)', width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              1:1
+            </div>
+          </AspectRatio>
+        </div>
+        
+        <div>
+          <h3>9:16 (모바일)</h3>
+          <AspectRatio ratio={9 / 16}>
+            <div style={{ backgroundColor: 'var(--component-border)', width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              9:16
+            </div>
+          </AspectRatio>
+        </div>
       </div>
     </div>
   );
@@ -157,14 +161,16 @@ function VideoAspectRatioExample() {
 
 export const VideoAspectRatioExample = () => {
   return (
-    <AspectRatio ratio={16 / 9} style={{ maxWidth: '800px' }}>
-      <iframe
-        src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-        title="YouTube 비디오"
-        allowFullScreen
-        style={{ width: '100%', height: '100%', border: 'none' }}
-      />
-    </AspectRatio>
+    <div className="component-preview">
+      <AspectRatio ratio={16 / 9} style={{ maxWidth: '800px' }}>
+        <iframe
+          src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+          title="YouTube 비디오"
+          allowFullScreen
+          style={{ width: '100%', height: '100%', border: 'none' }}
+        />
+      </AspectRatio>
+    </div>
   );
 };
 
@@ -200,19 +206,21 @@ function CardExample() {
 
 export const CardExample = () => {
   return (
-    <div style={{ maxWidth: '300px', border: '1px solid #e2e8f0', borderRadius: '8px', overflow: 'hidden' }}>
-      <AspectRatio ratio={16 / 9}>
-        <img 
-          src="https://images.unsplash.com/photo-1527549993586-dff825b37782"
-          alt="산 풍경"
-          style={{ objectFit: 'cover', width: '100%', height: '100%' }}
-        />
-      </AspectRatio>
-      <div style={{ padding: '16px' }}>
-        <h3 style={{ margin: '0 0 8px 0' }}>카드 제목</h3>
-        <p style={{ margin: '0', color: '#64748b' }}>
-          AspectRatio를 사용하여 일관된 이미지 크기를 유지하면서 아름다운 카드 디자인을 만들 수 있습니다.
-        </p>
+    <div className="component-preview">
+      <div style={{ maxWidth: '300px', border: '1px solid var(--component-border)', borderRadius: '8px', overflow: 'hidden', backgroundColor: 'var(--component-bg)' }}>
+        <AspectRatio ratio={16 / 9}>
+          <img 
+            src="https://images.unsplash.com/photo-1527549993586-dff825b37782"
+            alt="산 풍경"
+            style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+          />
+        </AspectRatio>
+        <div style={{ padding: '16px' }}>
+          <h3 style={{ margin: '0 0 8px 0' }}>카드 제목</h3>
+          <p style={{ margin: '0', color: 'var(--text-color)' }}>
+            AspectRatio를 사용하여 일관된 이미지 크기를 유지하면서 아름다운 카드 디자인을 만들 수 있습니다.
+          </p>
+        </div>
       </div>
     </div>
   );
