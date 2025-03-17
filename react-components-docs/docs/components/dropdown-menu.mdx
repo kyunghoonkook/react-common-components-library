@@ -88,55 +88,57 @@ export const DropdownMenuExample = () => {
   const [isOpen, setIsOpen] = useState(false);
   
   return (
-    <DropdownMenu
-      title="내 계정"
-      isOpen={isOpen}
-      onClose={() => setIsOpen(false)}
-      sections={[
-        {
-          items: [
-            { 
-              id: 'profile', 
-              label: '프로필', 
-              icon: <ProfileIcon />, 
-              onClick: () => console.log('프로필 클릭됨') 
-            },
-            { 
-              id: 'settings', 
-              label: '설정', 
-              icon: <SettingsIcon />,
-              shortcut: '⌘S', 
-              onClick: () => console.log('설정 클릭됨') 
-            },
-          ]
-        },
-        {
-          items: [
-            { 
-              id: 'logout', 
-              label: '로그아웃', 
-              icon: <LogoutIcon />, 
-              onClick: () => console.log('로그아웃 클릭됨') 
-            },
-          ]
+    <div className="component-preview">
+      <DropdownMenu
+        title="내 계정"
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        sections={[
+          {
+            items: [
+              { 
+                id: 'profile', 
+                label: '프로필', 
+                icon: <ProfileIcon />, 
+                onClick: () => console.log('프로필 클릭됨') 
+              },
+              { 
+                id: 'settings', 
+                label: '설정', 
+                icon: <SettingsIcon />,
+                shortcut: '⌘S', 
+                onClick: () => console.log('설정 클릭됨') 
+              },
+            ]
+          },
+          {
+            items: [
+              { 
+                id: 'logout', 
+                label: '로그아웃', 
+                icon: <LogoutIcon />, 
+                onClick: () => console.log('로그아웃 클릭됨') 
+              },
+            ]
+          }
+        ]}
+        trigger={
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            style={{
+              padding: '0.5rem 1rem',
+              backgroundColor: 'var(--primary-color)',
+              color: 'var(--text-color-inverse)',
+              border: 'none',
+              borderRadius: '0.25rem',
+              cursor: 'pointer'
+            }}
+          >
+            계정 메뉴
+          </button>
         }
-      ]}
-      trigger={
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          style={{
-            padding: '0.5rem 1rem',
-            backgroundColor: '#3b82f6',
-            color: 'white',
-            border: 'none',
-            borderRadius: '0.25rem',
-            cursor: 'pointer'
-          }}
-        >
-          계정 메뉴
-        </button>
-      }
-    />
+      />
+    </div>
   );
 }
 
@@ -231,58 +233,59 @@ export const DropdownWithSubmenuExample = () => {
   const [isOpen, setIsOpen] = useState(false);
   
   return (
-    <DropdownMenu
-      title="지원 메뉴"
-      isOpen={isOpen}
-      onClose={() => setIsOpen(false)}
-      sections={[
-        {
-          items: [
-            { 
-              id: 'support', 
-              label: '고객 지원', 
-              icon: <SupportIcon />,
-              // subItems 속성을 사용하여 서브메뉴 정의
-              subItems: [
-                {
-                  id: 'help',
-                  label: '도움말 센터',
-                  icon: <HelpIcon />,
-                  onClick: () => console.log('도움말 센터 클릭됨')
-                },
-                {
-                  id: 'chat',
-                  label: '실시간 채팅',
-                  icon: <ChatIcon />,
-                  onClick: () => console.log('실시간 채팅 클릭됨')
-                },
-                {
-                  id: 'email',
-                  label: '이메일 지원',
-                  icon: <EmailIcon />,
-                  onClick: () => console.log('이메일 지원 클릭됨')
-                }
-              ]
-            }
-          ]
+    <div className="component-preview">
+      <DropdownMenu
+        title="지원 메뉴"
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        sections={[
+          {
+            items: [
+              { 
+                id: 'support', 
+                label: '고객 지원', 
+                icon: <SupportIcon />,
+                subItems: [
+                  {
+                    id: 'help',
+                    label: '도움말 센터',
+                    icon: <HelpIcon />,
+                    onClick: () => console.log('도움말 센터 클릭됨')
+                  },
+                  {
+                    id: 'chat',
+                    label: '실시간 채팅',
+                    icon: <ChatIcon />,
+                    onClick: () => console.log('실시간 채팅 클릭됨')
+                  },
+                  {
+                    id: 'email',
+                    label: '이메일 지원',
+                    icon: <EmailIcon />,
+                    onClick: () => console.log('이메일 지원 클릭됨')
+                  }
+                ]
+              }
+            ]
+          }
+        ]}
+        trigger={
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            style={{
+              padding: '0.5rem 1rem',
+              backgroundColor: 'var(--primary-color)',
+              color: 'var(--text-color-inverse)',
+              border: 'none',
+              borderRadius: '0.25rem',
+              cursor: 'pointer'
+            }}
+          >
+            지원 메뉴
+          </button>
         }
-      ]}
-      trigger={
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          style={{
-            padding: '0.5rem 1rem',
-            backgroundColor: '#3b82f6',
-            color: 'white',
-            border: 'none',
-            borderRadius: '0.25rem',
-            cursor: 'pointer'
-          }}
-        >
-          지원 메뉴
-        </button>
-      }
-    />
+      />
+    </div>
   );
 }
 

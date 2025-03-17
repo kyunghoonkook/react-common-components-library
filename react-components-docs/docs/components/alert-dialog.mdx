@@ -45,7 +45,7 @@ export const AlertDialogExample = () => {
   const [isOpen, setIsOpen] = useState(false);
   
   return (
-    <>
+    <div className="component-preview">
       <button 
         onClick={() => setIsOpen(true)}
         style={{ 
@@ -72,7 +72,7 @@ export const AlertDialogExample = () => {
           setIsOpen(false);
         }}
       />
-    </>
+    </div>
   );
 };
 
@@ -117,7 +117,7 @@ export const DangerAlertDialogExample = () => {
   const [isOpen, setIsOpen] = useState(false);
   
   return (
-    <>
+    <div className="component-preview">
       <button 
         onClick={() => setIsOpen(true)}
         style={{ 
@@ -145,7 +145,7 @@ export const DangerAlertDialogExample = () => {
           setIsOpen(false);
         }}
       />
-    </>
+    </div>
   );
 };
 
@@ -206,7 +206,7 @@ export const CustomContentAlertDialogExample = () => {
   const [confirmCode, setConfirmCode] = useState('');
   
   return (
-    <>
+    <div className="component-preview">
       <button 
         onClick={() => setIsOpen(true)}
         style={{ 
@@ -247,19 +247,20 @@ export const CustomContentAlertDialogExample = () => {
             style={{ 
               width: '100%', 
               padding: '0.5rem', 
-              border: '1px solid #e2e8f0', 
+              border: '1px solid var(--component-border)', 
               borderRadius: '0.25rem',
-              marginBottom: '0.5rem' 
+              backgroundColor: 'var(--component-bg)',
+              color: 'var(--text-color)'
             }}
           />
           {confirmCode !== 'CONFIRM' && confirmCode !== '' && (
-            <p style={{ color: 'red', margin: '0.5rem 0 0', fontSize: '0.875rem' }}>
+            <p style={{ color: '#f43f5e', marginTop: '0.5rem', fontSize: '0.875rem' }}>
               'CONFIRM'을 정확히 입력하세요
             </p>
           )}
         </div>
       </AlertDialog>
-    </>
+    </div>
   );
 };
 

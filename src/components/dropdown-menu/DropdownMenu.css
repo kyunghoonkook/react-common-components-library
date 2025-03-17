@@ -3,6 +3,10 @@
   display: inline-block;
 }
 
+.dropdown-menu-trigger {
+  display: inline-block;
+}
+
 .dropdown-menu {
   position: absolute;
   background-color: white;
@@ -10,10 +14,11 @@
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   animation: dropdownFadeIn 0.15s ease-out;
-  z-index: 100;
-  margin-top: 8px;
+  z-index: 1000;
   overflow: visible;
   border: 1px solid rgba(0, 0, 0, 0.08);
+  margin: 0;
+  padding: 0;
 }
 
 @keyframes dropdownFadeIn {
@@ -27,43 +32,66 @@
   }
 }
 
-/* 메뉴 위치 변형 */
+/* 위치 클래스들 */
 .dropdown-menu.position-bottom-start {
   top: 100%;
   left: 0;
+  margin-top: 8px;
 }
 
 .dropdown-menu.position-bottom-end {
   top: 100%;
   right: 0;
+  margin-top: 8px;
 }
 
 .dropdown-menu.position-top-start {
   bottom: 100%;
   left: 0;
-  margin-top: 0;
   margin-bottom: 8px;
 }
 
 .dropdown-menu.position-top-end {
   bottom: 100%;
   right: 0;
-  margin-top: 0;
   margin-bottom: 8px;
 }
 
 .dropdown-menu.position-right-start {
   top: 0;
   left: 100%;
-  margin-top: 0;
   margin-left: 8px;
 }
 
 .dropdown-menu.position-left-start {
   top: 0;
   right: 100%;
-  margin-top: 0;
   margin-right: 8px;
+}
+
+/* 서브메뉴 위치 지정 */
+.dropdown-menu-item {
+  position: relative;
+}
+
+.dropdown-submenu {
+  margin-left: 0;
+  padding: 0;
+}
+
+.dropdown-submenu .dropdown-menu {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  min-width: 180px;
+  margin-left: 2px;
+  z-index: 200;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.dropdown-submenu-menu {
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.15) !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
 }
 
 .dropdown-menu-title {
@@ -149,25 +177,7 @@
   margin: 5px 0;
 }
 
-/* 서브메뉴 스타일 - 확실하게 수정 */
-.dropdown-submenu {
-  position: absolute;
-  top: 0;
-  left: 100%;
-  min-width: 180px;
-  background-color: white;
-  border-radius: 6px;
-  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.15);
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  margin-left: 2px;
-  padding: 6px 0;
-  z-index: 200;
-  animation: fadeIn 0.2s ease-out;
-  opacity: 1;
-  visibility: visible;
-  display: block;
-}
-
+/* 서브메뉴 애니메이션 */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -181,7 +191,7 @@
 
 /* 모바일 대응 */
 @media (max-width: 640px) {
-  .dropdown-submenu {
+  .dropdown-submenu .dropdown-menu {
     position: fixed;
     top: auto;
     left: 0;
@@ -190,7 +200,7 @@
     width: 100%;
     max-height: 50vh;
     margin-left: 0;
-    border-radius: 16px 16px 0 0;
+    border-radius: 16px 16px 0 0 !important;
     overflow-y: auto;
     animation: mobileSlideUp 0.3s ease-out;
   }

@@ -70,38 +70,40 @@ function CommandExample() {
 }
 ```
 
-<Command style={{ borderRadius: '0.5rem', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)', maxWidth: '400px' }}>
-  <CommandInput placeholder="명령어 검색..." />
-  <CommandList>
-    <CommandEmpty>검색 결과가 없습니다.</CommandEmpty>
-    
-    <CommandGroup heading="제안">
-      <CommandItem>
-        <span>새 파일</span>
-      </CommandItem>
-      <CommandItem>
-        <span>새 폴더</span>
-      </CommandItem>
-      <CommandItem>
-        <span>설정</span>
-      </CommandItem>
-    </CommandGroup>
-    
-    <CommandSeparator />
-    
-    <CommandGroup heading="최근 문서">
-      <CommandItem>
-        <span>프로젝트 계획서.docx</span>
-      </CommandItem>
-      <CommandItem>
-        <span>분기별 보고서.xlsx</span>
-      </CommandItem>
-      <CommandItem>
-        <span>발표자료.pptx</span>
-      </CommandItem>
-    </CommandGroup>
-  </CommandList>
-</Command>
+<div className="component-preview">
+  <Command style={{ borderRadius: '0.5rem', border: '1px solid var(--component-border)', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)', maxWidth: '400px', backgroundColor: 'var(--component-bg)' }}>
+    <CommandInput placeholder="명령어 검색..." />
+    <CommandList>
+      <CommandEmpty>검색 결과가 없습니다.</CommandEmpty>
+      
+      <CommandGroup heading="제안">
+        <CommandItem>
+          <span>새 파일</span>
+        </CommandItem>
+        <CommandItem>
+          <span>새 폴더</span>
+        </CommandItem>
+        <CommandItem>
+          <span>설정</span>
+        </CommandItem>
+      </CommandGroup>
+      
+      <CommandSeparator />
+      
+      <CommandGroup heading="최근 문서">
+        <CommandItem>
+          <span>프로젝트 계획서.docx</span>
+        </CommandItem>
+        <CommandItem>
+          <span>분기별 보고서.xlsx</span>
+        </CommandItem>
+        <CommandItem>
+          <span>발표자료.pptx</span>
+        </CommandItem>
+      </CommandGroup>
+    </CommandList>
+  </Command>
+</div>
 
 ## 아이콘과 함께 사용
 
@@ -190,42 +192,44 @@ export const DocumentIcon = () => (
   </svg>
 );
 
-<Command style={{ borderRadius: '0.5rem', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)', maxWidth: '400px' }}>
-  <CommandInput placeholder="명령어 검색..." />
-  <CommandList>
-    <CommandEmpty>검색 결과가 없습니다.</CommandEmpty>
-    
-    <CommandGroup heading="제안">
-      <CommandItem>
-        <div style={{ marginRight: '8px', display: 'inline-flex' }}><FileIcon /></div>
-        <span>새 파일</span>
-      </CommandItem>
-      <CommandItem>
-        <div style={{ marginRight: '8px', display: 'inline-flex' }}><FolderIcon /></div>
-        <span>새 폴더</span>
-      </CommandItem>
-      <CommandItem>
-        <div style={{ marginRight: '8px', display: 'inline-flex' }}><SettingsIcon /></div>
-        <span>설정</span>
-      </CommandItem>
-    </CommandGroup>
-    
-    <CommandGroup heading="최근 문서">
-      <CommandItem>
-        <div style={{ marginRight: '8px', display: 'inline-flex' }}><DocumentIcon /></div>
-        <span>프로젝트 계획서.docx</span>
-      </CommandItem>
-      <CommandItem>
-        <div style={{ marginRight: '8px', display: 'inline-flex' }}><DocumentIcon /></div>
-        <span>분기별 보고서.xlsx</span>
-      </CommandItem>
-      <CommandItem>
-        <div style={{ marginRight: '8px', display: 'inline-flex' }}><DocumentIcon /></div>
-        <span>발표자료.pptx</span>
-      </CommandItem>
-    </CommandGroup>
-  </CommandList>
-</Command>
+<div className="component-preview">
+  <Command style={{ borderRadius: '0.5rem', border: '1px solid var(--component-border)', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)', maxWidth: '400px', backgroundColor: 'var(--component-bg)' }}>
+    <CommandInput placeholder="명령어 검색..." />
+    <CommandList>
+      <CommandEmpty>검색 결과가 없습니다.</CommandEmpty>
+      
+      <CommandGroup heading="제안">
+        <CommandItem>
+          <div style={{ marginRight: '8px', display: 'inline-flex' }}><FileIcon /></div>
+          <span>새 파일</span>
+        </CommandItem>
+        <CommandItem>
+          <div style={{ marginRight: '8px', display: 'inline-flex' }}><FolderIcon /></div>
+          <span>새 폴더</span>
+        </CommandItem>
+        <CommandItem>
+          <div style={{ marginRight: '8px', display: 'inline-flex' }}><SettingsIcon /></div>
+          <span>설정</span>
+        </CommandItem>
+      </CommandGroup>
+      
+      <CommandGroup heading="최근 문서">
+        <CommandItem>
+          <div style={{ marginRight: '8px', display: 'inline-flex' }}><DocumentIcon /></div>
+          <span>프로젝트 계획서.docx</span>
+        </CommandItem>
+        <CommandItem>
+          <div style={{ marginRight: '8px', display: 'inline-flex' }}><DocumentIcon /></div>
+          <span>분기별 보고서.xlsx</span>
+        </CommandItem>
+        <CommandItem>
+          <div style={{ marginRight: '8px', display: 'inline-flex' }}><DocumentIcon /></div>
+          <span>발표자료.pptx</span>
+        </CommandItem>
+      </CommandGroup>
+    </CommandList>
+  </Command>
+</div>
 
 ## 단축키 표시
 

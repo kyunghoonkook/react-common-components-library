@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, ReactNode } from 'react';
+import React, { useEffect, useRef, useState, useCallback, ReactNode, useMemo } from 'react';
 import './ContextMenu.css';
 
 /**
@@ -54,6 +54,22 @@ export interface MenuItem {
    * 항목 앞에 표시할 아이콘 (선택적)
    */
   icon?: ReactNode;
+
+  /**
+   * 항목의 설명 (선택적)
+   */
+  description?: string;
+
+  /**
+   * 항목의 키보드 단축키 (선택적)
+   */
+  keyboardShortcut?: {
+    key: string;
+    ctrl?: boolean;
+    alt?: boolean;
+    shift?: boolean;
+    meta?: boolean;
+  };
 }
 
 /**
@@ -104,44 +120,82 @@ export interface ContextMenuProps {
    * 추가 CSS 클래스
    */
   className?: string;
+
+  /**
+   * 서브메뉴 열림 딜레이 (ms)
+   * @default 200
+   */
+  submenuDelay?: number;
+
+  /**
+   * 메뉴 ID (내부 사용)
+   */
+  id?: string;
+
+  /**
+   * 부모 메뉴 ID (내부 사용)
+   */
+  parentId?: string;
 }
 
 /**
  * ContextMenu 컴포넌트
  */
-const ContextMenu: React.FC<ContextMenuProps> = ({
+const ContextMenu = React.memo<ContextMenuProps>(({
   isOpen,
   onClose,
   sections,
   x,
   y,
   className = '',
+  submenuDelay = 200,
+  id = 'root',
+  parentId,
 }) => {
   const menuRef = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState({ x, y });
+  const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number>(-1);
+  const submenuTimerRef = useRef<NodeJS.Timeout>();
   
+  // 모든 메뉴 항목을 플랫하게 만들기
+  const flatItems = useMemo(() => {
+    return sections.flatMap(section => section.items.filter(item => item.type !== 'separator'));
+  }, [sections]);
+
   // 메뉴가 화면 바깥으로 나가지 않도록 위치 조정
-  useEffect(() => {
-    if (isOpen && menuRef.current) {
-      const menu = menuRef.current;
-      const rect = menu.getBoundingClientRect();
-      
-      let adjustedX = x;
-      let adjustedY = y;
-      
-      // 가로 방향 조정
-      if (x + rect.width > window.innerWidth) {
+  const adjustPosition = useCallback(() => {
+    if (!menuRef.current) return;
+
+    const menu = menuRef.current;
+    const rect = menu.getBoundingClientRect();
+    
+    let adjustedX = x;
+    let adjustedY = y;
+    
+    // 가로 방향 조정
+    if (x + rect.width > window.innerWidth) {
+      if (parentId) {
+        // 서브메뉴인 경우 왼쪽으로 표시
+        adjustedX = x - rect.width;
+      } else {
         adjustedX = window.innerWidth - rect.width;
       }
-      
-      // 세로 방향 조정
-      if (y + rect.height > window.innerHeight) {
-        adjustedY = window.innerHeight - rect.height;
-      }
-      
-      setPosition({ x: adjustedX, y: adjustedY });
     }
-  }, [isOpen, x, y]);
+    
+    // 세로 방향 조정
+    if (y + rect.height > window.innerHeight) {
+      adjustedY = window.innerHeight - rect.height;
+    }
+    
+    setPosition({ x: adjustedX, y: adjustedY });
+  }, [x, y, parentId]);
+  
+  useEffect(() => {
+    if (isOpen) {
+      adjustPosition();
+    }
+  }, [isOpen, adjustPosition]);
   
   // 외부 클릭시 메뉴 닫기
   useEffect(() => {
@@ -160,14 +214,58 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
     };
   }, [isOpen, onClose]);
   
-  // ESC 키 누를시 메뉴 닫기
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
+  // 키보드 네비게이션
+  const handleKeyDown = useCallback((e: KeyboardEvent) => {
+    if (!isOpen) return;
+
+    switch (e.key) {
+      case 'Escape':
+        e.preventDefault();
         onClose();
-      }
-    };
-    
+        break;
+      case 'ArrowDown':
+        e.preventDefault();
+        setSelectedIndex(prev => {
+          const next = prev + 1;
+          return next >= flatItems.length ? 0 : next;
+        });
+        break;
+      case 'ArrowUp':
+        e.preventDefault();
+        setSelectedIndex(prev => {
+          const next = prev - 1;
+          return next < 0 ? flatItems.length - 1 : next;
+        });
+        break;
+      case 'ArrowRight':
+        e.preventDefault();
+        if (selectedIndex >= 0 && flatItems[selectedIndex].items) {
+          setActiveSubmenu(flatItems[selectedIndex].id || `item-${selectedIndex}`);
+        }
+        break;
+      case 'ArrowLeft':
+        e.preventDefault();
+        if (parentId) {
+          onClose();
+        }
+        break;
+      case 'Enter':
+      case ' ':
+        e.preventDefault();
+        if (selectedIndex >= 0) {
+          const item = flatItems[selectedIndex];
+          if (!item.disabled && item.onClick) {
+            item.onClick();
+            if (!item.items) {
+              onClose();
+            }
+          }
+        }
+        break;
+    }
+  }, [isOpen, onClose, flatItems, selectedIndex, parentId]);
+  
+  useEffect(() => {
     if (isOpen) {
       document.addEventListener('keydown', handleKeyDown);
     }
@@ -175,23 +273,84 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [isOpen, onClose]);
-  
-  if (!isOpen) return null;
-  
+  }, [isOpen, handleKeyDown]);
+
+  // 서브메뉴 처리
+  const handleSubmenuEnter = useCallback((itemId: string) => {
+    if (submenuTimerRef.current) {
+      clearTimeout(submenuTimerRef.current);
+    }
+    submenuTimerRef.current = setTimeout(() => {
+      setActiveSubmenu(itemId);
+    }, submenuDelay);
+  }, [submenuDelay]);
+
+  const handleSubmenuLeave = useCallback(() => {
+    if (submenuTimerRef.current) {
+      clearTimeout(submenuTimerRef.current);
+    }
+    submenuTimerRef.current = setTimeout(() => {
+      setActiveSubmenu(null);
+    }, submenuDelay);
+  }, [submenuDelay]);
+
+  // 단축키 처리
+  useEffect(() => {
+    const handleShortcut = (e: KeyboardEvent) => {
+      if (!isOpen) return;
+
+      flatItems.forEach(item => {
+        if (item.keyboardShortcut) {
+          const { key, ctrl, alt, shift, meta } = item.keyboardShortcut;
+          if (
+            e.key.toLowerCase() === key.toLowerCase() &&
+            (!ctrl || e.ctrlKey) &&
+            (!alt || e.altKey) &&
+            (!shift || e.shiftKey) &&
+            (!meta || e.metaKey)
+          ) {
+            e.preventDefault();
+            if (!item.disabled && item.onClick) {
+              item.onClick();
+              onClose();
+            }
+          }
+        }
+      });
+    };
+
+    if (isOpen) {
+      document.addEventListener('keydown', handleShortcut);
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleShortcut);
+    };
+  }, [isOpen, onClose, flatItems]);
+
   // 메뉴 항목 렌더링
-  const renderMenuItem = (item: MenuItem) => {
+  const renderMenuItem = useCallback((item: MenuItem, index: number) => {
+    const itemId = item.id || `item-${index}`;
+    const isSelected = index === selectedIndex;
+    
     // 구분선 렌더링
     if (item.type === 'separator') {
-      return <div key={item.id || `sep-${Math.random()}`} className="context-menu-separator" />;
+      return (
+        <div 
+          key={itemId} 
+          className="context-menu-separator" 
+          role="separator" 
+        />
+      );
     }
     
     // 체크박스 타입 항목 렌더링
     if (item.type === 'checkbox') {
       return (
         <div
-          key={item.id || `item-${Math.random()}`}
-          className={`context-menu-item ${item.disabled ? 'disabled' : ''}`}
+          key={itemId}
+          id={itemId}
+          className={`context-menu-item ${item.disabled ? 'disabled' : ''} ${isSelected ? 'selected' : ''}`}
           onClick={() => {
             if (!item.disabled && item.onClick) {
               item.onClick();
@@ -200,13 +359,48 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
               }
             }
           }}
+          onMouseEnter={() => {
+            setSelectedIndex(index);
+            if (item.items) {
+              handleSubmenuEnter(itemId);
+            } else {
+              handleSubmenuLeave();
+            }
+          }}
+          role="menuitemcheckbox"
+          aria-checked={item.checked}
+          aria-disabled={item.disabled}
+          aria-haspopup={item.items ? 'menu' : undefined}
+          aria-expanded={item.items ? activeSubmenu === itemId : undefined}
+          tabIndex={-1}
         >
-          <div className="context-menu-item-checkbox">
+          <div className="context-menu-item-checkbox" aria-hidden="true">
             {item.checked && <span className="context-menu-check">✓</span>}
           </div>
-          <div className="context-menu-item-label">{item.label}</div>
-          {item.shortcut && <div className="context-menu-item-shortcut">{item.shortcut}</div>}
-          {item.items && <div className="context-menu-item-arrow">›</div>}
+          <div className="context-menu-item-content">
+            <div className="context-menu-item-label">{item.label}</div>
+            {item.description && (
+              <div className="context-menu-item-description">{item.description}</div>
+            )}
+          </div>
+          {item.shortcut && (
+            <div className="context-menu-item-shortcut" aria-hidden="true">
+              {item.shortcut}
+            </div>
+          )}
+          {item.items && <div className="context-menu-item-arrow" aria-hidden="true">›</div>}
+          {item.items && activeSubmenu === itemId && (
+            <ContextMenu
+              isOpen={true}
+              onClose={onClose}
+              sections={[{ items: item.items }]}
+              x={position.x + menuRef.current!.offsetWidth}
+              y={position.y + (index * 36)} // 36px는 메뉴 항목의 높이
+              submenuDelay={submenuDelay}
+              id={itemId}
+              parentId={id}
+            />
+          )}
         </div>
       );
     }
@@ -214,8 +408,9 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
     // 일반 항목 렌더링
     return (
       <div
-        key={item.id || `item-${Math.random()}`}
-        className={`context-menu-item ${item.disabled ? 'disabled' : ''}`}
+        key={itemId}
+        id={itemId}
+        className={`context-menu-item ${item.disabled ? 'disabled' : ''} ${isSelected ? 'selected' : ''}`}
         onClick={() => {
           if (!item.disabled && item.onClick) {
             item.onClick();
@@ -224,14 +419,63 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
             }
           }
         }}
+        onMouseEnter={() => {
+          setSelectedIndex(index);
+          if (item.items) {
+            handleSubmenuEnter(itemId);
+          } else {
+            handleSubmenuLeave();
+          }
+        }}
+        role="menuitem"
+        aria-disabled={item.disabled}
+        aria-haspopup={item.items ? 'menu' : undefined}
+        aria-expanded={item.items ? activeSubmenu === itemId : undefined}
+        tabIndex={-1}
       >
-        {item.icon && <div className="context-menu-item-icon">{item.icon}</div>}
-        <div className="context-menu-item-label">{item.label}</div>
-        {item.shortcut && <div className="context-menu-item-shortcut">{item.shortcut}</div>}
-        {item.items && <div className="context-menu-item-arrow">›</div>}
+        {item.icon && (
+          <div className="context-menu-item-icon" aria-hidden="true">
+            {item.icon}
+          </div>
+        )}
+        <div className="context-menu-item-content">
+          <div className="context-menu-item-label">{item.label}</div>
+          {item.description && (
+            <div className="context-menu-item-description">{item.description}</div>
+          )}
+        </div>
+        {item.shortcut && (
+          <div className="context-menu-item-shortcut" aria-hidden="true">
+            {item.shortcut}
+          </div>
+        )}
+        {item.items && <div className="context-menu-item-arrow" aria-hidden="true">›</div>}
+        {item.items && activeSubmenu === itemId && (
+          <ContextMenu
+            isOpen={true}
+            onClose={onClose}
+            sections={[{ items: item.items }]}
+            x={position.x + menuRef.current!.offsetWidth}
+            y={position.y + (index * 36)} // 36px는 메뉴 항목의 높이
+            submenuDelay={submenuDelay}
+            id={itemId}
+            parentId={id}
+          />
+        )}
       </div>
     );
-  };
+  }, [
+    selectedIndex,
+    activeSubmenu,
+    handleSubmenuEnter,
+    handleSubmenuLeave,
+    onClose,
+    position,
+    submenuDelay,
+    id
+  ]);
+  
+  if (!isOpen) return null;
   
   return (
     <div
@@ -241,18 +485,42 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
         left: `${position.x}px`,
         top: `${position.y}px`,
       }}
+      role="menu"
+      aria-orientation="vertical"
+      onMouseLeave={handleSubmenuLeave}
     >
-      {sections.map((section, index) => (
-        <div key={section.title || `section-${index}`} className="context-menu-section">
-          {section.title && <div className="context-menu-section-title">{section.title}</div>}
-          <div className="context-menu-items">
-            {section.items.map(renderMenuItem)}
+      {sections.map((section, sectionIndex) => (
+        <div 
+          key={section.title || `section-${sectionIndex}`} 
+          className="context-menu-section"
+          role="presentation"
+        >
+          {section.title && (
+            <div 
+              className="context-menu-section-title" 
+              role="presentation"
+            >
+              {section.title}
+            </div>
+          )}
+          <div 
+            className="context-menu-items"
+            role="presentation"
+          >
+            {section.items.map((item, index) => renderMenuItem(item, index))}
           </div>
-          {index < sections.length - 1 && <div className="context-menu-section-separator" />}
+          {sectionIndex < sections.length - 1 && (
+            <div 
+              className="context-menu-section-separator" 
+              role="separator"
+            />
+          )}
         </div>
       ))}
     </div>
   );
-};
+});
+
+ContextMenu.displayName = 'ContextMenu';
 
 export default ContextMenu; 

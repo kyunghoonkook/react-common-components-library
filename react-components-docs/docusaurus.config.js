@@ -44,7 +44,6 @@ const config = {
     ],
   ],
 
-  // Docusaurus에 내장된 webpack 설정 확장하기
   plugins: [
     function customWebpackConfigPlugin(context, options) {
       return {
@@ -53,9 +52,35 @@ const config = {
           return {
             resolve: {
               alias: {
+                '@site': path.resolve(__dirname),
                 'react-common-components-library': path.resolve(__dirname, 'src/mock-components'),
                 'react-components-library': path.resolve(__dirname, 'src/mock-components'),
               },
+              extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
+            },
+            module: {
+              rules: [
+                {
+                  test: /\.(js|jsx|ts|tsx|mjs)$/,
+                  exclude: /node_modules/,
+                  use: {
+                    loader: require.resolve('babel-loader'),
+                    options: {
+                      babelrc: false,
+                      configFile: false,
+                      presets: [
+                        require.resolve('@babel/preset-env'),
+                        require.resolve('@babel/preset-react'),
+                        require.resolve('@babel/preset-typescript'),
+                      ],
+                      plugins: [
+                        require.resolve('@babel/plugin-transform-runtime'),
+                      ],
+                      cacheDirectory: true,
+                    },
+                  },
+                },
+              ],
             },
           };
         },
@@ -68,6 +93,15 @@ const config = {
     ({
       // 소셜 카드 이미지 참조 제거
       // image: 'img/social-card.jpg',
+      
+      // 다크모드 설정 - 테마 전환을 위한 설정 추가
+      colorMode: {
+        defaultMode: 'light',
+        disableSwitch: false,
+        respectPrefersColorScheme: true,
+      
+      },
+
       navbar: {
         title: "React Common Components",
         logo: {

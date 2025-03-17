@@ -1,15 +1,22 @@
 {
-  "/docs-cd3": {
+  "/404-5c5": {
+    "__comp": "6bb41b40",
+    "__context": {
+      "plugin": "a7456010"
+    },
+    "config": "5e9f5e1a"
+  },
+  "/docs-931": {
     "__comp": "5e95c892",
     "__context": {
       "plugin": "aba21aa0"
     }
   },
-  "/docs-100": {
+  "/docs-231": {
     "__comp": "a7bd4aaa",
     "__props": "0058b4c6"
   },
-  "/docs-673": {
+  "/docs-7e7": {
     "__comp": "a94703ab"
   },
   "/docs/components/accordion-061": {
@@ -99,10 +106,6 @@
   "/docs/components/separator-98e": {
     "__comp": "17896441",
     "content": "b4e54dc2"
-  },
-  "/docs/components/slider-ec5": {
-    "__comp": "17896441",
-    "content": "e97f9a74"
   },
   "/docs/components/slider-e31": {
     "__comp": "17896441",

@@ -40,6 +40,11 @@ export default {
     null
   ],
   "themeConfig": {
+    "colorMode": {
+      "defaultMode": "light",
+      "disableSwitch": false,
+      "respectPrefersColorScheme": true
+    },
     "navbar": {
       "title": "React Common Components",
       "logo": {
@@ -292,11 +297,6 @@ export default {
           }
         }
       ]
-    },
-    "colorMode": {
-      "defaultMode": "light",
-      "disableSwitch": false,
-      "respectPrefersColorScheme": false
     },
     "docs": {
       "versionPersistence": "localStorage",

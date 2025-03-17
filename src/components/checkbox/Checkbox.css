@@ -1,3 +1,51 @@
+:root {
+  --checkbox-size-sm: 16px;
+  --checkbox-size-md: 20px;
+  --checkbox-size-lg: 24px;
+  
+  --spacing-sm: 4px;
+  --spacing-md: 8px;
+  --spacing-lg: 12px;
+  
+  --font-size-sm: 14px;
+  --font-size-md: 16px;
+  --font-size-lg: 18px;
+  
+  --color-border-secondary: #e2e8f0;
+  --color-border-hover: #94a3b8;
+  --color-border-primary: #cbd5e1;
+  
+  --color-bg-primary: #ffffff;
+  --color-bg-tertiary: #f1f5f9;
+  
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #475569;
+  --color-text-tertiary: #94a3b8;
+  
+  --color-error: #ef4444;
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  
+  --border-radius-sm: 4px;
+  --transition-default: all 0.2s ease-in-out;
+  --focus-ring: 0 0 0 2px rgba(59, 130, 246, 0.5);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-border-secondary: #334155;
+    --color-border-hover: #64748b;
+    --color-border-primary: #475569;
+    
+    --color-bg-primary: #1e293b;
+    --color-bg-tertiary: #334155;
+    
+    --color-text-primary: #f8fafc;
+    --color-text-secondary: #cbd5e1;
+    --color-text-tertiary: #64748b;
+  }
+}
+
 .checkbox-wrapper {
   display: inline-flex;
   align-items: center;
@@ -22,7 +70,7 @@
 .checkbox-checkmark {
   position: relative;
   display: inline-block;
-  border: 1px solid var(--color-border-secondary);
+  border: 2px solid var(--color-border-secondary);
   background-color: var(--color-bg-primary);
   transition: var(--transition-default);
   border-radius: var(--border-radius-sm);
@@ -34,9 +82,9 @@
   position: absolute;
   display: none;
   left: 50%;
-  top: 40%;
-  width: 30%;
-  height: 60%;
+  top: 45%;
+  width: 25%;
+  height: 50%;
   border: solid white;
   border-width: 0 2px 2px 0;
   transform: translate(-50%, -50%) rotate(45deg);
@@ -50,6 +98,22 @@
 
 .checkbox-input:checked ~ .checkbox-checkmark:after {
   display: block;
+}
+
+/* 변형 스타일 */
+.checkbox-success .checkbox-input:checked ~ .checkbox-checkmark {
+  background-color: var(--color-success);
+  border-color: var(--color-success);
+}
+
+.checkbox-warning .checkbox-input:checked ~ .checkbox-checkmark {
+  background-color: var(--color-warning);
+  border-color: var(--color-warning);
+}
+
+.checkbox-error .checkbox-input:checked ~ .checkbox-checkmark {
+  background-color: var(--color-error);
+  border-color: var(--color-error);
 }
 
 /* 인디터미네이트(부분 선택) 상태 */
@@ -92,24 +156,10 @@
   color: var(--color-text-tertiary);
 }
 
-/* 에러 상태 */
-.checkbox-input.checkbox-error ~ .checkbox-checkmark {
-  border-color: var(--color-error);
-}
-
-.checkbox-input.checkbox-error:checked ~ .checkbox-checkmark {
-  background-color: var(--color-error);
-  border-color: var(--color-error);
-}
-
 /* 크기 */
 .checkbox-sm .checkbox-checkmark {
   width: var(--checkbox-size-sm);
   height: var(--checkbox-size-sm);
-}
-
-.checkbox-sm .checkbox-label {
-  font-size: var(--font-size-sm);
 }
 
 .checkbox-md .checkbox-checkmark {
@@ -117,15 +167,20 @@
   height: var(--checkbox-size-md);
 }
 
-.checkbox-md .checkbox-label {
-  font-size: var(--font-size-md);
-}
-
 .checkbox-lg .checkbox-checkmark {
   width: var(--checkbox-size-lg);
   height: var(--checkbox-size-lg);
 }
 
-.checkbox-lg .checkbox-label {
-  font-size: var(--font-size-lg);
+/* 레이블 스타일 */
+.checkbox-label {
+  color: var(--color-text-primary);
+  margin-left: var(--spacing-sm);
+}
+
+.checkbox-description {
+  display: block;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  margin-top: var(--spacing-sm);
 } 

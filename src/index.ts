@@ -1,5 +1,10 @@
 // 변수 CSS 임포트
 import './styles/variables.css';
+import './styles/themes.css';
+
+// 테마 관련 컴포넌트와 유틸리티 내보내기
+export { ThemeProvider, useTheme } from './styles/ThemeContext';
+export { default as ThemeToggle } from './components/ThemeToggle';
 
 // 개별 컴포넌트 export
 export { default as Accordion } from './components/accordion/Accordion';

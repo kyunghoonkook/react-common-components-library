@@ -2615,6 +2615,113 @@ const MyButton: React.FC<ButtonProps> = (props) => {
 };
 ```
 
+## 테마 시스템
+
+이 라이브러리는 라이트/다크 테마를 지원하며, 시스템 설정을 따르거나 사용자가 직접 테마를 선택할 수 있습니다.
+
+### 테마 설정하기
+
+애플리케이션 최상위 레벨에서 `ThemeProvider`를 사용하여 테마 컨텍스트를 설정합니다:
+
+```tsx
+import { ThemeProvider } from 'react-common-components-library';
+
+function App() {
+  return (
+    <ThemeProvider defaultTheme="light">
+      {/* 앱 컴포넌트 */}
+    </ThemeProvider>
+  );
+}
+```
+
+### 테마 전환 버튼 사용하기
+
+테마를 손쉽게 전환할 수 있는 `ThemeToggle` 컴포넌트를 제공합니다:
+
+```tsx
+import { ThemeToggle } from 'react-common-components-library';
+
+function Header() {
+  return (
+    <header>
+      <div className="header-right">
+        <ThemeToggle size="md" />
+      </div>
+    </header>
+  );
+}
+```
+
+### 프로그래밍 방식으로 테마 제어하기
+
+`useTheme` 훅을 사용하여 어느 컴포넌트에서든 테마 상태에 접근하고 제어할 수 있습니다:
+
+```tsx
+import { useTheme } from 'react-common-components-library';
+
+function ThemeControls() {
+  const { theme, setTheme, toggleTheme } = useTheme();
+  
+  return (
+    <div>
+      <p>현재 테마: {theme === 'light' ? '라이트' : '다크'}</p>
+      <button onClick={() => setTheme('light')}>라이트 모드</button>
+      <button onClick={() => setTheme('dark')}>다크 모드</button>
+      <button onClick={toggleTheme}>테마 전환</button>
+    </div>
+  );
+}
+```
+
+### CSS 변수를 활용한 테마 스타일링
+
+모든 컴포넌트는 테마에 따라 자동으로 스타일이 변경됩니다. 자체 컴포넌트를 만들 때도 이 CSS 변수를 활용할 수 있습니다:
+
+```css
+.custom-component {
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-primary);
+  border: 1px solid var(--color-border-primary);
+}
+
+.custom-component:hover {
+  background-color: var(--color-bg-secondary);
+  border-color: var(--color-border-hover);
+}
+```
+
+### 주요 CSS 변수
+
+테마 시스템은 다음과 같은 CSS 변수 그룹을 제공합니다:
+
+| 변수 그룹 | 설명 | 예시 |
+|----------|------|------|
+| 색상 시스템 | 주요 색상 변수 | `--color-primary`, `--color-primary-light` |
+| 텍스트 색상 | 텍스트 관련 색상 | `--color-text-primary`, `--color-text-secondary` |
+| 배경 색상 | 배경 관련 색상 | `--color-bg-primary`, `--color-bg-secondary` |
+| 테두리 색상 | 테두리 관련 색상 | `--color-border-primary`, `--color-border-hover` |
+| 상태 색상 | 상태 표시 색상 | `--color-error`, `--color-success`, `--color-warning` |
+| 그림자 | 그림자 효과 | `--shadow-sm`, `--shadow-md`, `--shadow-lg` |
+| 간격 | 여백, 패딩 등 | `--spacing-xs`, `--spacing-sm`, `--spacing-md` |
+| 테두리 반경 | 모서리 둥글기 | `--border-radius-sm`, `--border-radius-md` |
+
+### 특정 영역에 테마 적용하기
+
+특정 영역에만 다른 테마를 적용하려면 CSS 클래스를 직접 사용할 수 있습니다:
+
+```tsx
+// 항상 다크 테마로 표시되는 영역
+<div className="dark-theme">
+  <Card>다크 테마 컨텐츠</Card>
+</div>
+
+// 항상 라이트 테마로 표시되는 영역
+<div className="light-theme">
+  <Card>라이트 테마 컨텐츠</Card>
+</div>
+```
+
 ## 라이센스
 
 MIT 라이센스로 배포됩니다. 자세한 내용은 LICENSE 파일을 참조하세요.

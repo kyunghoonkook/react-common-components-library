@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, ReactNode } from 'react';
+import React, { useEffect, useRef, ReactNode, useCallback, useState } from 'react';
+import { createPortal } from 'react-dom';
 import './Dialog.css';
 
 /**
@@ -24,6 +25,21 @@ export interface FormFieldProps {
    * 필드 컨테이너에 적용할 추가 CSS 클래스
    */
   className?: string;
+
+  /**
+   * 필수 필드 여부
+   */
+  required?: boolean;
+
+  /**
+   * 에러 메시지
+   */
+  error?: string;
+
+  /**
+   * 도움말 텍스트
+   */
+  helpText?: string;
 }
 
 /**
@@ -34,18 +50,33 @@ export const FormField: React.FC<FormFieldProps> = ({
   children,
   labelClassName = '',
   className = '',
+  required = false,
+  error,
+  helpText,
 }) => {
+  const id = useRef(`field-${Math.random().toString(36).substr(2, 9)}`).current;
+
   return (
     <div className={`dialog-form-field ${className}`}>
       <div className={`dialog-form-field-label ${labelClassName}`}>
-        {label}
+        <label htmlFor={id}>
+          {label}
+          {required && <span className="dialog-form-field-required">*</span>}
+        </label>
       </div>
       <div className="dialog-form-field-input">
-        {children}
+        {React.cloneElement(children as React.ReactElement, { id, 'aria-describedby': error ? `${id}-error` : helpText ? `${id}-help` : undefined })}
+        {error && <div id={`${id}-error`} className="dialog-form-field-error" role="alert">{error}</div>}
+        {helpText && <div id={`${id}-help`} className="dialog-form-field-help">{helpText}</div>}
       </div>
     </div>
   );
 };
+
+/**
+ * Dialog 크기 프리셋
+ */
+export type DialogSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'full';
 
 /**
  * Dialog 컴포넌트의 props 인터페이스
@@ -72,7 +103,7 @@ export interface DialogProps {
   description?: ReactNode;
   
   /**
-   * 다이얼로그 내용 (description 대신 사용 가능)
+   * 다이얼로그 내용
    */
   children?: ReactNode;
   
@@ -130,13 +161,18 @@ export interface DialogProps {
   footerClassName?: string;
   
   /**
-   * 다이얼로그 너비 (px 또는 %)
+   * 다이얼로그 크기
+   * @default 'md'
+   */
+  size?: DialogSize;
+  
+  /**
+   * 다이얼로그 너비 (size보다 우선 적용)
    */
   width?: string;
   
   /**
-   * 최대 너비 (px 또는 %)
-   * @default '500px'
+   * 최대 너비 (size보다 우선 적용)
    */
   maxWidth?: string;
   
@@ -144,12 +180,47 @@ export interface DialogProps {
    * 다이얼로그 컨테이너에 적용할 스타일
    */
   style?: React.CSSProperties;
+
+  /**
+   * 로딩 상태
+   */
+  isLoading?: boolean;
+
+  /**
+   * 초기 포커스를 받을 요소의 ref
+   */
+  initialFocusRef?: React.RefObject<HTMLElement>;
+
+  /**
+   * 닫힐 때 포커스를 받을 요소의 ref
+   */
+  finalFocusRef?: React.RefObject<HTMLElement>;
+
+  /**
+   * 트랜지션 지속 시간 (ms)
+   * @default 200
+   */
+  transitionDuration?: number;
+
+  /**
+   * 중첩 레벨 (내부용)
+   */
+  nestingLevel?: number;
 }
+
+const SIZES: Record<DialogSize, string> = {
+  xs: '320px',
+  sm: '384px',
+  md: '448px',
+  lg: '512px',
+  xl: '576px',
+  full: '100%'
+};
 
 /**
  * 다이얼로그 컴포넌트
  */
-const Dialog: React.FC<DialogProps> = ({
+const Dialog = React.forwardRef<HTMLDivElement, DialogProps>(({
   isOpen,
   onClose,
   title,
@@ -165,91 +236,153 @@ const Dialog: React.FC<DialogProps> = ({
   titleClassName = '',
   contentClassName = '',
   footerClassName = '',
+  size = 'md',
   width,
-  maxWidth = '500px',
+  maxWidth,
   style,
-}) => {
+  isLoading = false,
+  initialFocusRef,
+  finalFocusRef,
+  transitionDuration = 200,
+  nestingLevel = 0,
+}, ref) => {
   const dialogRef = useRef<HTMLDivElement>(null);
   const previousActiveElement = useRef<Element | null>(null);
-  
-  // 다이얼로그가 열릴 때 포커스 설정 및 포커스 트랩 구현
-  useEffect(() => {
-    if (isOpen) {
-      // 현재 활성 요소 저장
-      previousActiveElement.current = document.activeElement;
-      
-      // 다이얼로그에 포커스 설정
-      if (dialogRef.current) {
-        dialogRef.current.focus();
+  const [exiting, setExiting] = useState(false);
+
+  // 포커스 가능한 요소 찾기
+  const getFocusableElements = useCallback(() => {
+    if (!dialogRef.current) return [];
+    return Array.from(
+      dialogRef.current.querySelectorAll(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      )
+    ) as HTMLElement[];
+  }, []);
+
+  // 포커스 트랩 구현
+  const handleTabKey = useCallback((e: KeyboardEvent) => {
+    const focusableElements = getFocusableElements();
+    if (focusableElements.length === 0) return;
+
+    const firstElement = focusableElements[0];
+    const lastElement = focusableElements[focusableElements.length - 1];
+
+    if (e.shiftKey) {
+      if (document.activeElement === firstElement) {
+        e.preventDefault();
+        lastElement.focus();
       }
-      
-      // 스크롤 막기
-      document.body.style.overflow = 'hidden';
     } else {
-      // 스크롤 허용
-      document.body.style.overflow = '';
-      
-      // 포커스 복원
-      if (previousActiveElement.current && 'focus' in previousActiveElement.current) {
-        (previousActiveElement.current as HTMLElement).focus();
+      if (document.activeElement === lastElement) {
+        e.preventDefault();
+        firstElement.focus();
       }
     }
-    
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [isOpen]);
-  
-  // ESC 키 눌림 감지
+  }, [getFocusableElements]);
+
+  // 키보드 이벤트 처리
+  const handleKeyDown = useCallback((e: KeyboardEvent) => {
+    if (e.key === 'Escape' && closeOnEsc) {
+      onClose();
+    } else if (e.key === 'Tab') {
+      handleTabKey(e);
+    }
+  }, [closeOnEsc, onClose, handleTabKey]);
+
+  // 다이얼로그가 열릴 때 포커스 설정
   useEffect(() => {
-    if (!isOpen || !closeOnEsc) return;
-    
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        onClose();
+    if (isOpen) {
+      previousActiveElement.current = document.activeElement;
+      
+      if (initialFocusRef?.current) {
+        initialFocusRef.current.focus();
+      } else {
+        const focusableElements = getFocusableElements();
+        if (focusableElements.length > 0) {
+          focusableElements[0].focus();
+        } else if (dialogRef.current) {
+          dialogRef.current.focus();
+        }
+      }
+
+      document.body.style.overflow = 'hidden';
+      document.addEventListener('keydown', handleKeyDown);
+    }
+
+    return () => {
+      if (isOpen) {
+        document.body.style.overflow = '';
+        document.removeEventListener('keydown', handleKeyDown);
+        
+        if (finalFocusRef?.current) {
+          finalFocusRef.current.focus();
+        } else if (previousActiveElement.current && 'focus' in previousActiveElement.current) {
+          (previousActiveElement.current as HTMLElement).focus();
+        }
       }
     };
-    
-    window.addEventListener('keydown', handleKeyDown);
-    
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [isOpen, closeOnEsc, onClose]);
-  
-  // 다이얼로그가 닫혀있으면 렌더링하지 않음
-  if (!isOpen) return null;
-  
+  }, [isOpen, handleKeyDown, initialFocusRef, finalFocusRef, getFocusableElements]);
+
   // 오버레이 클릭 핸들러
-  const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleOverlayClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget && closeOnOverlayClick) {
       onClose();
     }
-  };
-  
+  }, [closeOnOverlayClick, onClose]);
+
   // 폼 제출 핸들러
-  const handleSubmit = (e: React.FormEvent) => {
-    if (onSubmit) {
+  const handleSubmit = useCallback((e: React.FormEvent) => {
+    e.preventDefault();
+    if (onSubmit && !isLoading) {
       onSubmit(e);
     }
-  };
-  
-  return (
-    <div className={`dialog-overlay ${overlayClassName}`} onClick={handleOverlayClick}>
+  }, [onSubmit, isLoading]);
+
+  // 애니메이션 처리
+  const handleClose = useCallback(() => {
+    setExiting(true);
+    setTimeout(() => {
+      setExiting(false);
+      onClose();
+    }, transitionDuration);
+  }, [onClose, transitionDuration]);
+
+  if (!isOpen) return null;
+
+  const dialogContent = (
+    <div 
+      className={`dialog-overlay ${overlayClassName} ${exiting ? 'exiting' : ''}`} 
+      onClick={handleOverlayClick}
+      style={{ 
+        '--dialog-transition-duration': `${transitionDuration}ms`,
+        '--dialog-z-index': `${1000 + nestingLevel * 10}`,
+      } as React.CSSProperties}
+    >
       <div 
-        className={`dialog ${className}`} 
+        ref={ref || dialogRef}
+        className={`dialog ${className} ${exiting ? 'exiting' : ''}`} 
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={title ? 'dialog-title' : undefined}
+        aria-describedby={description ? 'dialog-description' : undefined}
+        tabIndex={-1}
         style={{ 
-          ...(width ? { width } : {}),
-          ...(maxWidth ? { maxWidth } : {}),
+          width: width || SIZES[size],
+          maxWidth: maxWidth || (size === 'full' ? '100%' : SIZES.xl),
           ...style
         }}
       >
         {title && (
-          <h2 className={`dialog-title ${titleClassName}`}>{title}</h2>
+          <h2 id="dialog-title" className={`dialog-title ${titleClassName}`}>
+            {title}
+          </h2>
         )}
         
         {description && (
-          <p className={`dialog-description`}>{description}</p>
+          <p id="dialog-description" className="dialog-description">
+            {description}
+          </p>
         )}
         
         {onSubmit ? (
@@ -259,8 +392,12 @@ const Dialog: React.FC<DialogProps> = ({
             </div>
             
             <div className={`dialog-footer ${footerClassName}`}>
-              <button type="submit" className="dialog-submit">
-                {submitText}
+              <button 
+                type="submit" 
+                className="dialog-submit"
+                disabled={isLoading}
+              >
+                {isLoading ? 'Loading...' : submitText}
               </button>
             </div>
           </form>
@@ -280,6 +417,10 @@ const Dialog: React.FC<DialogProps> = ({
       </div>
     </div>
   );
-};
+
+  return createPortal(dialogContent, document.body);
+});
+
+Dialog.displayName = 'Dialog';
 
 export default Dialog; 

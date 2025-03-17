@@ -90,7 +90,7 @@ export interface TooltipProps {
   style?: React.CSSProperties;
 }
 
-const Tooltip: React.FC<TooltipProps> = ({
+export const Tooltip: React.FC<TooltipProps> = ({
   content,
   children,
   placement = 'top',
@@ -232,6 +232,4 @@ const Tooltip: React.FC<TooltipProps> = ({
       )}
     </div>
   );
-};
-
-export default Tooltip; 
+}; 

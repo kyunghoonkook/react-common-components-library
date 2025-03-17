@@ -1,7 +1,7 @@
 {
   "id": "components/select",
   "title": "Select",
-  "description": "Select 컴포넌트는 사용자가 미리 정의된 옵션 목록에서 선택할 수 있는 드롭다운 선택 인터페이스를 제공합니다. 카테고리별로 옵션을 그룹화하고, 개별 옵션의 비활성화를 지원하며, 다양한 스타일 옵션과 함께 접근성이 향상된 경험을 제공합니다.",
+  "description": "Select 컴포넌트는 사용자가 미리 정의된 옵션 목록에서 선택할 수 있는 드롭다운 선택 인터페이스를 제공합니다. 카테고리별로 옵션을 그룹화하고, 개별 옵션의 비활성화를 지원하며, 다양한 스타일 옵션과 함께 접근성이 향상된 경험을 제공합니다. 라이트/다크 테마를 자동으로 지원합니다.",
   "source": "@site/docs/components/select.mdx",
   "sourceDirName": "components",
   "slug": "/components/select",

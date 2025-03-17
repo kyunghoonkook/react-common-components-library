@@ -3,16 +3,21 @@ import ComponentCreator from '@docusaurus/ComponentCreator';
 
 export default [
   {
+    path: '/404',
+    component: ComponentCreator('/404', '5c5'),
+    exact: true
+  },
+  {
     path: '/docs',
-    component: ComponentCreator('/docs', 'cd3'),
+    component: ComponentCreator('/docs', '931'),
     routes: [
       {
         path: '/docs',
-        component: ComponentCreator('/docs', '100'),
+        component: ComponentCreator('/docs', '231'),
         routes: [
           {
             path: '/docs',
-            component: ComponentCreator('/docs', '673'),
+            component: ComponentCreator('/docs', '7e7'),
             routes: [
               {
                 path: '/docs/components/accordion',
@@ -143,12 +148,6 @@ export default [
               {
                 path: '/docs/components/separator',
                 component: ComponentCreator('/docs/components/separator', '98e'),
-                exact: true,
-                sidebar: "tutorialSidebar"
-              },
-              {
-                path: '/docs/components/slider',
-                component: ComponentCreator('/docs/components/slider', 'ec5'),
                 exact: true,
                 sidebar: "tutorialSidebar"
               },

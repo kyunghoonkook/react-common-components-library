@@ -89,74 +89,76 @@ function BasicExample() {
 }
 ```
 
-<MenuBar
-  items={[
-    {
-      id: 'file',
-      label: '파일',
-      items: [
-        {
-          id: 'new-file',
-          label: '새 파일',
-          shortcut: '⌘N',
-          onClick: () => console.log('새 파일 클릭됨'),
-        },
-        {
-          id: 'open',
-          label: '열기',
-          shortcut: '⌘O',
-          onClick: () => console.log('열기 클릭됨'),
-        },
-        {
-          id: 'separator-1',
-          isSeparator: true,
-        },
-        {
-          id: 'save',
-          label: '저장',
-          shortcut: '⌘S',
-          onClick: () => console.log('저장 클릭됨'),
-        },
-      ],
-    },
-    {
-      id: 'edit',
-      label: '편집',
-      items: [
-        {
-          id: 'undo',
-          label: '실행 취소',
-          shortcut: '⌘Z',
-          onClick: () => console.log('실행 취소 클릭됨'),
-        },
-        {
-          id: 'redo',
-          label: '다시 실행',
-          shortcut: '⌘⇧Z',
-          onClick: () => console.log('다시 실행 클릭됨'),
-        },
-      ],
-    },
-    {
-      id: 'view',
-      label: '보기',
-      items: [
-        {
-          id: 'zoom-in',
-          label: '확대',
-          shortcut: '⌘+',
-          onClick: () => console.log('확대 클릭됨'),
-        },
-        {
-          id: 'zoom-out',
-          label: '축소',
-          shortcut: '⌘-',
-          onClick: () => console.log('축소 클릭됨'),
-        },
-      ],
-    },
-  ]}
-/>
+<div className="component-preview">
+  <MenuBar
+    items={[
+      {
+        id: 'file',
+        label: '파일',
+        items: [
+          {
+            id: 'new-file',
+            label: '새 파일',
+            shortcut: '⌘N',
+            onClick: () => console.log('새 파일 클릭됨'),
+          },
+          {
+            id: 'open',
+            label: '열기',
+            shortcut: '⌘O',
+            onClick: () => console.log('열기 클릭됨'),
+          },
+          {
+            id: 'separator-1',
+            isSeparator: true,
+          },
+          {
+            id: 'save',
+            label: '저장',
+            shortcut: '⌘S',
+            onClick: () => console.log('저장 클릭됨'),
+          },
+        ],
+      },
+      {
+        id: 'edit',
+        label: '편집',
+        items: [
+          {
+            id: 'undo',
+            label: '실행 취소',
+            shortcut: '⌘Z',
+            onClick: () => console.log('실행 취소 클릭됨'),
+          },
+          {
+            id: 'redo',
+            label: '다시 실행',
+            shortcut: '⌘⇧Z',
+            onClick: () => console.log('다시 실행 클릭됨'),
+          },
+        ],
+      },
+      {
+        id: 'view',
+        label: '보기',
+        items: [
+          {
+            id: 'zoom-in',
+            label: '확대',
+            shortcut: '⌘+',
+            onClick: () => console.log('확대 클릭됨'),
+          },
+          {
+            id: 'zoom-out',
+            label: '축소',
+            shortcut: '⌘-',
+            onClick: () => console.log('축소 클릭됨'),
+          },
+        ],
+      },
+    ]}
+  />
+</div>
 
 ## 아이콘 사용
 
@@ -229,33 +231,35 @@ export const PrintIcon = () => (
   </svg>
 );
 
-<MenuBar
-  items={[
-    {
-      id: 'file',
-      label: '파일',
-      items: [
-        {
-          id: 'new-file',
-          label: '새 파일',
-          icon: <FileIcon />,
-          onClick: () => console.log('새 파일 클릭됨'),
-        },
-        {
-          id: 'separator-1',
-          isSeparator: true,
-        },
-        {
-          id: 'print',
-          label: '인쇄',
-          icon: <PrintIcon />,
-          shortcut: '⌘P',
-          onClick: () => console.log('인쇄 클릭됨'),
-        },
-      ],
-    },
-  ]}
-/>
+<div className="component-preview">
+  <MenuBar
+    items={[
+      {
+        id: 'file',
+        label: '파일',
+        items: [
+          {
+            id: 'new-file',
+            label: '새 파일',
+            icon: <FileIcon />,
+            onClick: () => console.log('새 파일 클릭됨'),
+          },
+          {
+            id: 'separator-1',
+            isSeparator: true,
+          },
+          {
+            id: 'print',
+            label: '인쇄',
+            icon: <PrintIcon />,
+            shortcut: '⌘P',
+            onClick: () => console.log('인쇄 클릭됨'),
+          },
+        ],
+      },
+    ]}
+  />
+</div>
 
 ## 서브메뉴 사용
 

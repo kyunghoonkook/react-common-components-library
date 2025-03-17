@@ -48,27 +48,29 @@ export const CollapsibleExample = () => {
   const [isOpen, setIsOpen] = useState(false);
   
   return (
-    <Collapsible 
-      open={isOpen} 
-      onOpenChange={setIsOpen}
-      className="w-full max-w-md"
-    >
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <h3 style={{ fontSize: '1.125rem', fontWeight: 500 }}>자주 묻는 질문</h3>
-        <CollapsibleTrigger asChild>
-          <button style={{ borderRadius: '9999px', padding: '0.5rem', cursor: 'pointer' }}>
-            {isOpen ? '접기' : '펼치기'}
-          </button>
-        </CollapsibleTrigger>
-      </div>
-      
-      <CollapsibleContent style={{ marginTop: '0.5rem' }}>
-        <div style={{ borderRadius: '0.375rem', backgroundColor: '#f9fafb', padding: '1rem' }}>
-          <p>이 컴포넌트 라이브러리는 React 애플리케이션을 위한 재사용 가능한 UI 컴포넌트 모음입니다.</p>
-          <p style={{ marginTop: '0.5rem' }}>모든 컴포넌트는 접근성과 사용자 경험을 고려하여 설계되었습니다.</p>
+    <div className="component-preview">
+      <Collapsible 
+        open={isOpen} 
+        onOpenChange={setIsOpen}
+        className="w-full max-w-md"
+      >
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <h3 style={{ fontSize: '1.125rem', fontWeight: 500 }}>자주 묻는 질문</h3>
+          <CollapsibleTrigger asChild>
+            <button style={{ borderRadius: '9999px', padding: '0.5rem', cursor: 'pointer', backgroundColor: 'var(--component-bg)' }}>
+              {isOpen ? '접기' : '펼치기'}
+            </button>
+          </CollapsibleTrigger>
         </div>
-      </CollapsibleContent>
-    </Collapsible>
+        
+        <CollapsibleContent style={{ marginTop: '0.5rem' }}>
+          <div style={{ borderRadius: '0.375rem', backgroundColor: 'var(--component-border)', padding: '1rem' }}>
+            <p>이 컴포넌트 라이브러리는 React 애플리케이션을 위한 재사용 가능한 UI 컴포넌트 모음입니다.</p>
+            <p style={{ marginTop: '0.5rem' }}>모든 컴포넌트는 접근성과 사용자 경험을 고려하여 설계되었습니다.</p>
+          </div>
+        </CollapsibleContent>
+      </Collapsible>
+    </div>
   );
 };
 
@@ -129,28 +131,30 @@ export const AccordionStyleExample = () => {
   ];
   
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-      {items.map((item) => (
-        <Collapsible 
-          key={item.id}
-          open={openItem === item.id} 
-          onOpenChange={(open) => setOpenItem(open ? item.id : null)}
-          style={{ border: '1px solid #e5e7eb', borderRadius: '0.375rem', padding: '0.5rem' }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <h3 style={{ fontSize: '1rem', fontWeight: 500 }}>{item.title}</h3>
-            <CollapsibleTrigger asChild>
-              <button style={{ borderRadius: '9999px', padding: '0.25rem', cursor: 'pointer' }}>
-                {openItem === item.id ? '▲' : '▼'}
-              </button>
-            </CollapsibleTrigger>
-          </div>
-          
-          <CollapsibleContent style={{ marginTop: '0.5rem', paddingTop: '0.5rem', borderTop: '1px solid #e5e7eb' }}>
-            <p>{item.content}</p>
-          </CollapsibleContent>
-        </Collapsible>
-      ))}
+    <div className="component-preview">
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+        {items.map((item) => (
+          <Collapsible 
+            key={item.id}
+            open={openItem === item.id} 
+            onOpenChange={(open) => setOpenItem(open ? item.id : null)}
+            style={{ border: '1px solid var(--component-border)', borderRadius: '0.375rem', padding: '0.5rem', backgroundColor: 'var(--component-bg)' }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <h3 style={{ fontSize: '1rem', fontWeight: 500 }}>{item.title}</h3>
+              <CollapsibleTrigger asChild>
+                <button style={{ borderRadius: '9999px', padding: '0.25rem', cursor: 'pointer', backgroundColor: 'var(--component-bg)' }}>
+                  {openItem === item.id ? '▲' : '▼'}
+                </button>
+              </CollapsibleTrigger>
+            </div>
+            
+            <CollapsibleContent style={{ marginTop: '0.5rem', paddingTop: '0.5rem', borderTop: '1px solid var(--component-border)' }}>
+              <p>{item.content}</p>
+            </CollapsibleContent>
+          </Collapsible>
+        ))}
+      </div>
     </div>
   );
 };
@@ -210,26 +214,28 @@ export const AnimatedCollapsibleExample = () => {
   const [isOpen, setIsOpen] = useState(false);
   
   return (
-    <Collapsible 
-      open={isOpen} 
-      onOpenChange={setIsOpen}
-      style={{ width: '100%', maxWidth: '28rem' }}
-    >
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <h3 style={{ fontSize: '1.125rem', fontWeight: 500 }}>애니메이션 효과</h3>
-        <CollapsibleTrigger asChild>
-          <button style={{ borderRadius: '9999px', padding: '0.5rem', cursor: 'pointer' }}>
-            {isOpen ? '접기' : '펼치기'}
-          </button>
-        </CollapsibleTrigger>
-      </div>
-      
-      <CollapsibleContent style={{ marginTop: '0.5rem', transition: 'all 0.3s ease-in-out', overflow: 'hidden' }}>
-        <div style={{ borderRadius: '0.375rem', backgroundColor: '#f9fafb', padding: '1rem' }}>
-          <p>이 콘텐츠는 나타나고 사라집니다.</p>
+    <div className="component-preview">
+      <Collapsible 
+        open={isOpen} 
+        onOpenChange={setIsOpen}
+        style={{ width: '100%', maxWidth: '28rem' }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <h3 style={{ fontSize: '1.125rem', fontWeight: 500 }}>애니메이션 효과</h3>
+          <CollapsibleTrigger asChild>
+            <button style={{ borderRadius: '9999px', padding: '0.5rem', cursor: 'pointer', backgroundColor: 'var(--component-bg)' }}>
+              {isOpen ? '접기' : '펼치기'}
+            </button>
+          </CollapsibleTrigger>
         </div>
-      </CollapsibleContent>
-    </Collapsible>
+        
+        <CollapsibleContent style={{ marginTop: '0.5rem', transition: 'all 0.3s ease-in-out', overflow: 'hidden' }}>
+          <div style={{ borderRadius: '0.375rem', backgroundColor: 'var(--component-border)', padding: '1rem' }}>
+            <p>이 콘텐츠는 나타나고 사라집니다.</p>
+          </div>
+        </CollapsibleContent>
+      </Collapsible>
+    </div>
   );
 };
 

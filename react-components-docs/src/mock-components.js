@@ -1,34 +1,84 @@
 import React from 'react';
+import { useColorMode } from '@docusaurus/theme-common';
+
+// 색상 상수 정의
+export const colors = {
+  primary: '#6366f1',
+  secondary: '#64748b',
+  success: '#10b981',
+  danger: '#ef4444',
+  warning: '#f59e0b',
+  info: '#3b82f6',
+};
+
+// 테마 기반 색상 함수 - 다크모드에 따라 색상을 반환합니다
+const useThemeColors = () => {
+  const { colorMode } = useColorMode();
+  const isDarkTheme = colorMode === 'dark';
+  
+  return {
+    // 배경색
+    background: isDarkTheme ? '#1e1e1e' : '#ffffff',
+    backgroundSecondary: isDarkTheme ? '#2d2d2d' : '#f5f5f5',
+    backgroundHover: isDarkTheme ? '#3e3e3e' : '#e9e9e9',
+    
+    // 텍스트 색상
+    text: isDarkTheme ? '#e6e6e6' : '#1f2937',
+    textSecondary: isDarkTheme ? '#a0a0a0' : '#6b7280',
+    
+    // 테두리 색상
+    border: isDarkTheme ? '#3e3e3e' : '#e5e7eb',
+    borderHover: isDarkTheme ? '#606060' : '#d1d5db',
+    
+    // 브랜드 색상
+    ...colors,
+    
+    // 상태 색상 (다크모드에서 약간 더 밝은 버전 사용)
+    success: isDarkTheme ? '#34d399' : colors.success,
+    error: isDarkTheme ? '#f87171' : colors.danger,
+    warning: isDarkTheme ? '#fbbf24' : colors.warning,
+    info: isDarkTheme ? '#60a5fa' : colors.info,
+    
+    // 기타
+    overlay: isDarkTheme ? 'rgba(0, 0, 0, 0.7)' : 'rgba(0, 0, 0, 0.5)'
+  };
+};
+
+export default useThemeColors;
 
 // 기본적인 모의 컴포넌트 정의
-export const Button = ({ children, variant, size, isLoading, isDisabled, leftIcon, rightIcon, ...props }) => (
-  <button 
-    style={{ 
-      padding: size === 'lg' ? '12px 24px' : size === 'sm' ? '4px 8px' : '8px 16px', 
-      backgroundColor: variant === 'primary' ? '#3b82f6' : 
-                      variant === 'secondary' ? '#93c5fd' : 
-                      variant === 'outline' ? 'transparent' : 
-                      variant === 'ghost' ? 'transparent' : 
-                      variant === 'link' ? 'transparent' : '#e5e7eb',
-      color: variant === 'primary' || variant === 'secondary' ? 'white' : '#374151',
-      border: variant === 'outline' ? '1px solid #d1d5db' : 'none',
-      borderRadius: '4px',
-      cursor: isDisabled ? 'not-allowed' : 'pointer',
-      opacity: isDisabled ? 0.6 : 1,
-      display: 'inline-flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      fontWeight: 500,
-      position: 'relative',
-    }} 
-    disabled={isDisabled}
-    {...props}
-  >
-    {leftIcon && <span style={{ marginRight: '8px' }}>{leftIcon}</span>}
-    {isLoading ? '로딩 중...' : children}
-    {rightIcon && <span style={{ marginLeft: '8px' }}>{rightIcon}</span>}
-  </button>
-);
+export const Button = ({ children, variant, size, isLoading, isDisabled, leftIcon, rightIcon, ...props }) => {
+  const colors = useThemeColors();
+  
+  return (
+    <button 
+      style={{ 
+        padding: size === 'lg' ? '12px 24px' : size === 'sm' ? '4px 8px' : '8px 16px', 
+        backgroundColor: variant === 'primary' ? colors.primary : 
+                        variant === 'secondary' ? colors.primaryLight : 
+                        variant === 'outline' ? 'transparent' : 
+                        variant === 'ghost' ? 'transparent' : 
+                        variant === 'link' ? 'transparent' : colors.backgroundSecondary,
+        color: variant === 'primary' || variant === 'secondary' ? '#ffffff' : colors.text,
+        border: variant === 'outline' ? `1px solid ${colors.border}` : 'none',
+        borderRadius: '4px',
+        cursor: isDisabled ? 'not-allowed' : 'pointer',
+        opacity: isDisabled ? 0.6 : 1,
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontWeight: 500,
+        position: 'relative',
+      }} 
+      disabled={isDisabled}
+      {...props}
+    >
+      {leftIcon && <span style={{ marginRight: '8px' }}>{leftIcon}</span>}
+      {isLoading ? '로딩 중...' : children}
+      {rightIcon && <span style={{ marginLeft: '8px' }}>{rightIcon}</span>}
+    </button>
+  );
+};
 
 export const ButtonGroup = ({ children, isAttached, spacing, ...props }) => (
   <div 
@@ -44,6 +94,7 @@ export const ButtonGroup = ({ children, isAttached, spacing, ...props }) => (
 );
 
 export const Avatar = ({ src, name, size, status, ...props }) => {
+  const colors = useThemeColors();
   const sizeMap = {
     xs: 24,
     sm: 32,
@@ -67,11 +118,11 @@ export const Avatar = ({ src, name, size, status, ...props }) => {
           width: sizeValue,
           height: sizeValue,
           borderRadius: '50%',
-          backgroundColor: !src ? '#93c5fd' : undefined,
+          backgroundColor: !src ? colors.primary : undefined,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          color: !src ? 'white' : undefined,
+          color: !src ? '#ffffff' : undefined,
           fontWeight: 'bold',
           fontSize: sizeValue / 2.5,
           overflow: 'hidden',
@@ -94,11 +145,11 @@ export const Avatar = ({ src, name, size, status, ...props }) => {
             height: sizeValue / 4,
             borderRadius: '50%',
             backgroundColor: 
-              status === 'online' ? '#10b981' : 
-              status === 'away' ? '#f59e0b' : 
-              status === 'busy' ? '#ef4444' : 
-              '#6b7280',
-            border: '2px solid white',
+              status === 'online' ? colors.success : 
+              status === 'away' ? colors.warning : 
+              status === 'busy' ? colors.error : 
+              colors.textSecondary,
+            border: `2px solid ${colors.background}`,
           }}
         />
       )}
@@ -107,6 +158,7 @@ export const Avatar = ({ src, name, size, status, ...props }) => {
 };
 
 export const AvatarGroup = ({ children, max, spacing, ...props }) => {
+  const colors = useThemeColors();
   const childrenArray = React.Children.toArray(children);
   const visibleAvatars = max ? childrenArray.slice(0, max) : childrenArray;
   const remainingCount = max && childrenArray.length > max ? childrenArray.length - max : 0;
@@ -131,13 +183,13 @@ export const AvatarGroup = ({ children, max, spacing, ...props }) => {
             width: 40, 
             height: 40, 
             borderRadius: '50%', 
-            backgroundColor: '#e5e7eb', 
+            backgroundColor: colors.backgroundSecondary, 
             display: 'flex', 
             alignItems: 'center', 
             justifyContent: 'center',
             fontSize: '14px',
             fontWeight: 'bold',
-            color: '#4b5563',
+            color: colors.textSecondary,
             position: 'relative',
             zIndex: 0,
           }}
@@ -175,14 +227,14 @@ export const AlertDialog = ({ isOpen, onClose, title, description, children, can
       left: 0, 
       right: 0, 
       bottom: 0, 
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      backgroundColor: colors.overlay,
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
       zIndex: 1000,
     }}>
       <div style={{ 
-        backgroundColor: 'white', 
+        backgroundColor: colors.background, 
         borderRadius: '8px',
         padding: '24px',
         maxWidth: '500px',
@@ -190,16 +242,16 @@ export const AlertDialog = ({ isOpen, onClose, title, description, children, can
         boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
       }}>
         {title && <h3 style={{ margin: '0 0 8px 0' }}>{title}</h3>}
-        {description && <p style={{ margin: '0 0 16px 0', color: '#4b5563' }}>{description}</p>}
+        {description && <p style={{ margin: '0 0 16px 0', color: colors.textSecondary }}>{description}</p>}
         {children}
         <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px', marginTop: '24px' }}>
           <button 
             onClick={onClose}
             style={{ 
               padding: '8px 16px', 
-              border: '1px solid #d1d5db', 
+              border: `1px solid ${colors.border}`, 
               borderRadius: '4px', 
-              backgroundColor: 'white',
+              backgroundColor: colors.background,
               cursor: 'pointer',
             }}
           >
@@ -211,8 +263,8 @@ export const AlertDialog = ({ isOpen, onClose, title, description, children, can
               padding: '8px 16px', 
               border: 'none', 
               borderRadius: '4px', 
-              backgroundColor: '#ef4444',
-              color: 'white',
+              backgroundColor: colors.error,
+              color: '#ffffff',
               cursor: 'pointer',
             }}
           >
@@ -245,7 +297,7 @@ export const Accordion = ({ items, allowMultiple, defaultExpanded, ...props }) =
         <div 
           key={index}
           style={{ 
-            border: '1px solid #d1d5db', 
+            border: `1px solid ${colors.border}`, 
             borderRadius: '4px', 
             marginBottom: '8px',
           }}
@@ -256,7 +308,7 @@ export const Accordion = ({ items, allowMultiple, defaultExpanded, ...props }) =
               width: '100%', 
               padding: '12px 16px', 
               textAlign: 'left', 
-              backgroundColor: 'white', 
+              backgroundColor: colors.background, 
               border: 'none',
               display: 'flex',
               justifyContent: 'space-between',
@@ -269,7 +321,7 @@ export const Accordion = ({ items, allowMultiple, defaultExpanded, ...props }) =
             <span>{expanded.includes(index) ? '▲' : '▼'}</span>
           </button>
           {expanded.includes(index) && (
-            <div style={{ padding: '16px', borderTop: '1px solid #d1d5db' }}>
+            <div style={{ padding: '16px', borderTop: `1px solid ${colors.border}` }}>
               {item.content}
             </div>
           )}
@@ -327,7 +379,7 @@ export const ScrollArea = ({ children, maxHeight, ...props }) => {
       style={{ 
         maxHeight: maxHeight || '300px',
         overflow: 'auto',
-        border: '1px solid #d1d5db',
+        border: `1px solid ${colors.border}`,
         borderRadius: '4px',
         padding: '8px',
         ...props.style 
@@ -348,8 +400,8 @@ export const Select = ({ children, value, onChange, placeholder, disabled, ...pr
       style={{
         padding: '8px 12px',
         borderRadius: '4px',
-        border: '1px solid #d1d5db',
-        backgroundColor: 'white',
+        border: `1px solid ${colors.border}`,
+        backgroundColor: colors.background,
         cursor: disabled ? 'not-allowed' : 'pointer',
         opacity: disabled ? 0.6 : 1,
         width: '100%',
@@ -379,7 +431,7 @@ export const Separator = ({ orientation = 'horizontal', ...props }) => (
     style={{ 
       width: orientation === 'horizontal' ? '100%' : '1px',
       height: orientation === 'horizontal' ? '1px' : '100%',
-      backgroundColor: '#d1d5db',
+      backgroundColor: colors.border,
       margin: orientation === 'horizontal' ? '8px 0' : '0 8px',
       ...props.style 
     }}
@@ -422,7 +474,7 @@ export const Switch = ({ checked, onCheckedChange, ...props }) => (
         position: 'relative',
         width: '40px',
         height: '20px',
-        backgroundColor: checked ? '#3b82f6' : '#d1d5db',
+        backgroundColor: checked ? colors.primary : colors.backgroundSecondary,
         borderRadius: '10px',
         transition: 'background-color 0.2s',
       }}
@@ -477,11 +529,11 @@ export const TabsTrigger = ({ children, value, isActive, onClick, ...props }) =>
     style={{
       padding: '8px 16px',
       border: 'none',
-      backgroundColor: isActive ? 'white' : 'transparent',
-      borderBottom: isActive ? '2px solid #3b82f6' : 'none',
+      backgroundColor: isActive ? colors.background : colors.backgroundSecondary,
+      borderBottom: isActive ? `2px solid ${colors.primary}` : 'none',
       cursor: 'pointer',
       fontWeight: isActive ? 'bold' : 'normal',
-      color: isActive ? '#3b82f6' : 'inherit',
+      color: isActive ? colors.primary : colors.textSecondary,
       ...props.style
     }}
     onClick={onClick}
@@ -512,7 +564,7 @@ export const Textarea = ({ value, onChange, placeholder, disabled, rows = 3, ...
       width: '100%',
       padding: '8px 12px',
       borderRadius: '4px',
-      border: '1px solid #d1d5db',
+      border: `1px solid ${colors.border}`,
       fontFamily: 'inherit',
       fontSize: 'inherit',
       resize: 'vertical',
@@ -550,7 +602,7 @@ export const Input = ({ type = 'text', value, onChange, placeholder, disabled, .
       width: '100%',
       padding: '8px 12px',
       borderRadius: '4px',
-      border: '1px solid #d1d5db',
+      border: `1px solid ${colors.border}`,
       cursor: disabled ? 'not-allowed' : 'text',
       opacity: disabled ? 0.6 : 1,
       ...props.style
@@ -585,7 +637,7 @@ export const Popover = ({ children, trigger, content, open, onOpenChange, ...pro
             transform: 'translateX(-50%)',
             marginTop: '8px',
             padding: '16px',
-            backgroundColor: 'white',
+            backgroundColor: colors.background,
             borderRadius: '4px',
             boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
             zIndex: 10,
@@ -608,7 +660,7 @@ export const Progress = ({ value = 0, max = 100, ...props }) => (
     style={{
       width: '100%',
       height: '8px',
-      backgroundColor: '#e5e7eb',
+      backgroundColor: colors.backgroundSecondary,
       borderRadius: '4px',
       overflow: 'hidden',
       ...props.style
@@ -619,7 +671,7 @@ export const Progress = ({ value = 0, max = 100, ...props }) => (
       style={{
         width: `${(value / max) * 100}%`,
         height: '100%',
-        backgroundColor: '#3b82f6',
+        backgroundColor: colors.primary,
         transition: 'width 0.3s ease'
       }}
     />
@@ -653,8 +705,8 @@ export const Tooltip = ({ content, children, placement = 'top', ...props }) => {
           marginLeft: placement === 'right' ? '8px' : 0,
           marginRight: placement === 'left' ? '8px' : 0,
           padding: '6px 10px',
-          backgroundColor: '#1f2937',
-          color: 'white',
+          backgroundColor: colors.background,
+          color: colors.text,
           borderRadius: '4px',
           fontSize: '14px',
           zIndex: 1000,
@@ -678,14 +730,14 @@ export const Dialog = ({ children, open, onOpenChange, ...props }) => {
       left: 0, 
       right: 0, 
       bottom: 0, 
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      backgroundColor: colors.overlay,
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
       zIndex: 1000,
     }}>
       <div style={{ 
-        backgroundColor: 'white', 
+        backgroundColor: colors.background, 
         borderRadius: '8px',
         padding: '24px',
         maxWidth: '500px',
@@ -714,7 +766,7 @@ export const Dialog = ({ children, open, onOpenChange, ...props }) => {
 
 // Command 관련 컴포넌트
 export const Command = ({ children, ...props }) => (
-  <div style={{ width: '100%', border: '1px solid #ddd', borderRadius: '8px', overflow: 'hidden' }} {...props}>
+  <div style={{ width: '100%', border: `1px solid ${colors.border}`, borderRadius: '8px', overflow: 'hidden' }} {...props}>
     {children}
   </div>
 );
@@ -742,14 +794,14 @@ export const CommandList = ({ children, ...props }) => (
 );
 
 export const CommandEmpty = ({ children, ...props }) => (
-  <div style={{ padding: '16px', color: '#888', textAlign: 'center' }} {...props}>
+  <div style={{ padding: '16px', color: colors.textSecondary, textAlign: 'center' }} {...props}>
     {children}
   </div>
 );
 
 export const CommandGroup = ({ children, heading, ...props }) => (
   <div style={{ marginBottom: '8px' }} {...props}>
-    {heading && <div style={{ padding: '8px 16px', fontSize: '14px', color: '#888', fontWeight: 500 }}>{heading}</div>}
+    {heading && <div style={{ padding: '8px 16px', fontSize: '14px', color: colors.textSecondary, fontWeight: 500 }}>{heading}</div>}
     {children}
   </div>
 );
@@ -771,7 +823,7 @@ export const CommandItem = ({ children, onSelect, ...props }) => (
 );
 
 export const CommandShortcut = ({ children, ...props }) => (
-  <span style={{ color: '#888', fontSize: '14px' }} {...props}>
+  <span style={{ color: colors.textSecondary, fontSize: '14px' }} {...props}>
     {children}
   </span>
 );
@@ -793,8 +845,8 @@ export const ContextMenuContent = ({ children, ...props }) => (
   <div 
     style={{ 
       position: 'absolute', 
-      backgroundColor: 'white', 
-      border: '1px solid #ddd',
+      backgroundColor: colors.background, 
+      border: `1px solid ${colors.border}`,
       borderRadius: '4px',
       boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
       padding: '8px 0',
@@ -813,7 +865,7 @@ export const ContextMenuItem = ({ children, ...props }) => (
       padding: '8px 16px', 
       cursor: 'pointer', 
       fontSize: '14px',
-      '&:hover': { backgroundColor: '#f9fafb' }
+      '&:hover': { backgroundColor: colors.backgroundHover }
     }} 
     {...props}
   >
@@ -829,7 +881,7 @@ export const ContextMenuCheckboxItem = ({ children, checked, ...props }) => (
       fontSize: '14px',
       display: 'flex',
       alignItems: 'center',
-      '&:hover': { backgroundColor: '#f9fafb' }
+      '&:hover': { backgroundColor: colors.backgroundHover }
     }} 
     {...props}
   >
@@ -848,7 +900,7 @@ export const ContextMenuLabel = ({ children, ...props }) => (
     style={{ 
       padding: '8px 16px', 
       fontSize: '14px',
-      color: '#888',
+      color: colors.textSecondary,
       fontWeight: 500
     }} 
     {...props}
@@ -861,7 +913,7 @@ export const ContextMenuSeparator = (props) => (
   <div 
     style={{ 
       height: '1px',
-      backgroundColor: '#eee',
+      backgroundColor: colors.border,
       margin: '4px 0'
     }} 
     {...props}
@@ -882,7 +934,7 @@ export const ContextMenuRadioItem = ({ children, checked, ...props }) => (
       fontSize: '14px',
       display: 'flex',
       alignItems: 'center',
-      '&:hover': { backgroundColor: '#f9fafb' }
+      '&:hover': { backgroundColor: colors.backgroundHover }
     }} 
     {...props}
   >
@@ -911,7 +963,7 @@ export const ContextMenuSubTrigger = ({ children, ...props }) => (
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
-      '&:hover': { backgroundColor: '#f9fafb' }
+      '&:hover': { backgroundColor: colors.backgroundHover }
     }} 
     {...props}
   >
@@ -926,8 +978,8 @@ export const ContextMenuSubContent = ({ children, ...props }) => (
       position: 'absolute', 
       left: '100%',
       top: 0,
-      backgroundColor: 'white', 
-      border: '1px solid #ddd',
+      backgroundColor: colors.background, 
+      border: `1px solid ${colors.border}`,
       borderRadius: '4px',
       boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
       padding: '8px 0',
@@ -955,8 +1007,8 @@ export const MenuBar = ({ children, ...props }) => (
   <div 
     style={{ 
       display: 'flex',
-      backgroundColor: 'white',
-      border: '1px solid #ddd',
+      backgroundColor: colors.background,
+      border: `1px solid ${colors.border}`,
       borderRadius: '4px',
       padding: '4px'
     }} 
@@ -971,7 +1023,7 @@ export const NavigationMenu = ({ children, ...props }) => (
   <nav 
     style={{ 
       display: 'flex',
-      backgroundColor: 'white',
+      backgroundColor: colors.background,
       borderRadius: '4px',
       padding: '4px'
     }} 
@@ -1057,7 +1109,7 @@ export const CommandSeparator = (props) => (
   <div 
     style={{ 
       height: '1px',
-      backgroundColor: '#eee',
+      backgroundColor: colors.border,
       margin: '4px 0'
     }} 
     {...props}
@@ -1068,7 +1120,7 @@ export const CommandSeparator = (props) => (
 export const DialogContent = ({ children, ...props }) => (
   <div 
     style={{ 
-      backgroundColor: 'white', 
+      backgroundColor: colors.background, 
       borderRadius: '8px',
       padding: '24px',
       maxWidth: '500px',

@@ -71,31 +71,33 @@ function ContextMenuExample() {
 }
 ```
 
-<ContextMenu>
-  <ContextMenuTrigger style={{ display: 'flex', height: '10rem', width: '24rem', alignItems: 'center', justifyContent: 'center', borderRadius: '0.375rem', border: '1px dashed #d1d5db' }}>
-    <span>우클릭하여 메뉴 열기</span>
-  </ContextMenuTrigger>
-  
-  <ContextMenuContent style={{ width: '16rem' }}>
-    <ContextMenuItem>
-      새로 만들기
-    </ContextMenuItem>
-    <ContextMenuItem>
-      새로고침
-    </ContextMenuItem>
-    <ContextMenuSeparator />
-    <ContextMenuItem>
-      복사
-    </ContextMenuItem>
-    <ContextMenuItem>
-      붙여넣기
-    </ContextMenuItem>
-    <ContextMenuSeparator />
-    <ContextMenuItem>
-      속성
-    </ContextMenuItem>
-  </ContextMenuContent>
-</ContextMenu>
+<div className="component-preview">
+  <ContextMenu>
+    <ContextMenuTrigger style={{ display: 'flex', height: '10rem', width: '24rem', alignItems: 'center', justifyContent: 'center', borderRadius: '0.375rem', border: '1px dashed var(--component-border)', backgroundColor: 'var(--component-bg)' }}>
+      <span>우클릭하여 메뉴 열기</span>
+    </ContextMenuTrigger>
+    
+    <ContextMenuContent style={{ width: '16rem' }}>
+      <ContextMenuItem>
+        새로 만들기
+      </ContextMenuItem>
+      <ContextMenuItem>
+        새로고침
+      </ContextMenuItem>
+      <ContextMenuSeparator />
+      <ContextMenuItem>
+        복사
+      </ContextMenuItem>
+      <ContextMenuItem>
+        붙여넣기
+      </ContextMenuItem>
+      <ContextMenuSeparator />
+      <ContextMenuItem>
+        속성
+      </ContextMenuItem>
+    </ContextMenuContent>
+  </ContextMenu>
+</div>
 
 ## 서브메뉴 사용
 
@@ -156,43 +158,45 @@ function ContextMenuWithSubmenuExample() {
 }
 ```
 
-<ContextMenu>
-  <ContextMenuTrigger style={{ display: 'flex', height: '10rem', width: '24rem', alignItems: 'center', justifyContent: 'center', borderRadius: '0.375rem', border: '1px dashed #d1d5db' }}>
-    <span>우클릭하여 메뉴 열기</span>
-  </ContextMenuTrigger>
-  
-  <ContextMenuContent style={{ width: '16rem' }}>
-    <ContextMenuItem>
-      새로 만들기
-    </ContextMenuItem>
+<div className="component-preview">
+  <ContextMenu>
+    <ContextMenuTrigger style={{ display: 'flex', height: '10rem', width: '24rem', alignItems: 'center', justifyContent: 'center', borderRadius: '0.375rem', border: '1px dashed var(--component-border)', backgroundColor: 'var(--component-bg)' }}>
+      <span>우클릭하여 메뉴 열기</span>
+    </ContextMenuTrigger>
     
-    <ContextMenuSub>
-      <ContextMenuSubTrigger>
-        정렬 기준
-      </ContextMenuSubTrigger>
-      <ContextMenuSubContent style={{ width: '12rem' }}>
-        <ContextMenuItem>
-          이름
-        </ContextMenuItem>
-        <ContextMenuItem>
-          날짜
-        </ContextMenuItem>
-        <ContextMenuItem>
-          크기
-        </ContextMenuItem>
-        <ContextMenuItem>
-          유형
-        </ContextMenuItem>
-      </ContextMenuSubContent>
-    </ContextMenuSub>
-    
-    <ContextMenuSeparator />
-    
-    <ContextMenuItem>
-      속성
-    </ContextMenuItem>
-  </ContextMenuContent>
-</ContextMenu>
+    <ContextMenuContent style={{ width: '16rem' }}>
+      <ContextMenuItem>
+        새로 만들기
+      </ContextMenuItem>
+      
+      <ContextMenuSub>
+        <ContextMenuSubTrigger>
+          정렬 기준
+        </ContextMenuSubTrigger>
+        <ContextMenuSubContent style={{ width: '12rem' }}>
+          <ContextMenuItem>
+            이름
+          </ContextMenuItem>
+          <ContextMenuItem>
+            날짜
+          </ContextMenuItem>
+          <ContextMenuItem>
+            크기
+          </ContextMenuItem>
+          <ContextMenuItem>
+            유형
+          </ContextMenuItem>
+        </ContextMenuSubContent>
+      </ContextMenuSub>
+      
+      <ContextMenuSeparator />
+      
+      <ContextMenuItem>
+        속성
+      </ContextMenuItem>
+    </ContextMenuContent>
+  </ContextMenu>
+</div>
 
 ## 체크박스 및 라디오 항목
 
@@ -266,7 +270,7 @@ export const ContextMenuWithSelectionExample = () => {
   
   return (
     <ContextMenu>
-      <ContextMenuTrigger style={{ display: 'flex', height: '10rem', width: '24rem', alignItems: 'center', justifyContent: 'center', borderRadius: '0.375rem', border: '1px dashed #d1d5db' }}>
+      <ContextMenuTrigger style={{ display: 'flex', height: '10rem', width: '24rem', alignItems: 'center', justifyContent: 'center', borderRadius: '0.375rem', border: '1px dashed var(--component-border)', backgroundColor: 'var(--component-bg)' }}>
         <span>우클릭하여 메뉴 열기</span>
       </ContextMenuTrigger>
       
@@ -394,7 +398,7 @@ export const TrashIcon = () => (
 );
 
 <ContextMenu>
-  <ContextMenuTrigger style={{ display: 'flex', height: '10rem', width: '24rem', alignItems: 'center', justifyContent: 'center', borderRadius: '0.375rem', border: '1px dashed #d1d5db' }}>
+  <ContextMenuTrigger style={{ display: 'flex', height: '10rem', width: '24rem', alignItems: 'center', justifyContent: 'center', borderRadius: '0.375rem', border: '1px dashed var(--component-border)', backgroundColor: 'var(--component-bg)' }}>
     <span>우클릭하여 메뉴 열기</span>
   </ContextMenuTrigger>
   

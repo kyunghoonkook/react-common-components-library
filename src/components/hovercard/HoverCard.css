@@ -5,21 +5,42 @@
 
 .hover-card-trigger {
   display: inline-block;
+  cursor: pointer;
+}
+
+.hover-card-trigger:focus {
+  outline: 2px solid #4f46e5;
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 
 .hover-card {
+  position: absolute;
   z-index: 1000;
   background-color: white;
-  border-radius: 6px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   padding: 16px;
   border: 1px solid #e2e8f0;
-  animation: fadeIn 0.2s ease;
+  max-width: 95vw;
+  max-height: 80vh;
+  overflow: auto;
+}
+
+.hover-card-title {
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #1a202c;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 8px;
 }
 
 .hover-card-content {
   position: relative;
   z-index: 1;
+  color: #4a5568;
+  font-size: 14px;
+  line-height: 1.5;
 }
 
 .hover-card-arrow {
@@ -28,6 +49,7 @@
   height: 16px;
   background-color: white;
   z-index: 0;
+  border-radius: 2px;
 }
 
 @keyframes fadeIn {
@@ -98,5 +120,59 @@
   to {
     opacity: 1;
     transform: translateX(0);
+  }
+}
+
+/* 다크 모드 지원 */
+@media (prefers-color-scheme: dark) {
+  .hover-card {
+    background-color: #1a202c;
+    border-color: #2d3748;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  }
+  
+  .hover-card-title {
+    color: #f7fafc;
+    border-bottom-color: #2d3748;
+  }
+  
+  .hover-card-content {
+    color: #e2e8f0;
+  }
+  
+  .hover-card-arrow {
+    background-color: #1a202c;
+    border-color: #2d3748;
+  }
+}
+
+/* 모바일 대응 */
+@media (max-width: 640px) {
+  .hover-card {
+    width: calc(100vw - 32px) !important;
+    max-width: calc(100vw - 32px);
+    position: fixed !important;
+    left: 16px !important;
+    right: 16px !important;
+    bottom: 16px !important;
+    top: auto !important;
+    transform: none !important;
+    border-radius: 12px;
+    animation: mobileSlideUp 0.3s ease-out;
+  }
+  
+  .hover-card-arrow {
+    display: none;
+  }
+  
+  @keyframes mobileSlideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 } 

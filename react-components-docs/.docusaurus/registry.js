@@ -18,6 +18,7 @@ export default {
   "5e95c892": [() => import(/* webpackChunkName: "5e95c892" */ "@theme/DocsRoot"), "@theme/DocsRoot", require.resolveWeak("@theme/DocsRoot")],
   "5e9f5e1a": [() => import(/* webpackChunkName: "5e9f5e1a" */ "@generated/docusaurus.config"), "@generated/docusaurus.config", require.resolveWeak("@generated/docusaurus.config")],
   "67ae37b9": [() => import(/* webpackChunkName: "67ae37b9" */ "@site/docs/components/progress.mdx"), "@site/docs/components/progress.mdx", require.resolveWeak("@site/docs/components/progress.mdx")],
+  "6bb41b40": [() => import(/* webpackChunkName: "6bb41b40" */ "@site/src/pages/404.js"), "@site/src/pages/404.js", require.resolveWeak("@site/src/pages/404.js")],
   "6d0dd831": [() => import(/* webpackChunkName: "6d0dd831" */ "@site/docs/components/label.mdx"), "@site/docs/components/label.mdx", require.resolveWeak("@site/docs/components/label.mdx")],
   "8469219d": [() => import(/* webpackChunkName: "8469219d" */ "@site/docs/components/textarea.mdx"), "@site/docs/components/textarea.mdx", require.resolveWeak("@site/docs/components/textarea.mdx")],
   "9e9c7a31": [() => import(/* webpackChunkName: "9e9c7a31" */ "@site/docs/components/accordion.mdx"), "@site/docs/components/accordion.mdx", require.resolveWeak("@site/docs/components/accordion.mdx")],
@@ -36,5 +37,4 @@ export default {
   "d53acd27": [() => import(/* webpackChunkName: "d53acd27" */ "@site/docs/components/command.mdx"), "@site/docs/components/command.mdx", require.resolveWeak("@site/docs/components/command.mdx")],
   "d7a5af78": [() => import(/* webpackChunkName: "d7a5af78" */ "@site/docs/components/dropdown-menu.mdx"), "@site/docs/components/dropdown-menu.mdx", require.resolveWeak("@site/docs/components/dropdown-menu.mdx")],
   "d9e1d16f": [() => import(/* webpackChunkName: "d9e1d16f" */ "@site/docs/components/radio-group.mdx"), "@site/docs/components/radio-group.mdx", require.resolveWeak("@site/docs/components/radio-group.mdx")],
-  "e97f9a74": [() => import(/* webpackChunkName: "e97f9a74" */ "@site/docs/components/slider.md"), "@site/docs/components/slider.md", require.resolveWeak("@site/docs/components/slider.md")],
   "ea51b127": [() => import(/* webpackChunkName: "ea51b127" */ "@site/docs/components/context-menu.mdx"), "@site/docs/components/context-menu.mdx", require.resolveWeak("@site/docs/components/context-menu.mdx")],};
