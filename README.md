@@ -86,7 +86,7 @@ function App() {
 | `contentStyle` | `CSSProperties` | - | 내용 스타일 |
 | `style` | `CSSProperties` | - | 컨테이너 스타일 |
 | `className` | `string` | '' | 아코디언 컨테이너에 적용할 추가 CSS 클래스 |
-| `titleClassName` | `string` | '' | 아코디언 제목에 적용할 추가 CSS 클래스 |
+| `titleClassName` | `string` | '' | 아코디언 제목에 적용할 추가 CSS 클래스 | 
 | `contentClassName` | `string` | '' | 아코디언 내용에 적용할 추가 CSS 클래스 |
 | `itemClassName` | `string` | '' | 아코디언 항목에 적용할 추가 CSS 클래스 |
 | `iconClassName` | `string` | '' | 아코디언 화살표 아이콘에 적용할 추가 CSS 클래스 |
