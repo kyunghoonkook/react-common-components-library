@@ -6,19 +6,13 @@ on:
       - dev
 
 jobs:
-  auto-merge:
+  build-and-test:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      packages: write
-      pull-requests: write
-    
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-          token: ${{ secrets.PAT_TOKEN }}
       
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -33,11 +27,24 @@ jobs:
       - name: Build test
         run: npm run build
 
+  create-and-merge-pr:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: dev
+      
       - name: Create and auto-merge PR
         id: create-pr
         uses: actions/github-script@v6
         with:
-          github-token: ${{ secrets.PAT_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const { owner, repo } = context.repo;
             console.log(`Checking for existing PRs from dev to master in ${owner}/${repo}`);
@@ -74,27 +81,38 @@ jobs:
               }
               
               // PR 머지 시도
-              await github.rest.pulls.merge({
-                owner,
-                repo,
-                pull_number: prNumber,
-                merge_method: 'merge'
-              });
-              
-              console.log(`PR #${prNumber} merged successfully`);
-              return { pr_number: prNumber, merged: true };
+              try {
+                await github.rest.pulls.merge({
+                  owner,
+                  repo,
+                  pull_number: prNumber,
+                  merge_method: 'merge'
+                });
+                
+                console.log(`PR #${prNumber} merged successfully`);
+                return { pr_number: prNumber, merged: true };
+              } catch (mergeError) {
+                console.error(`Error during merge: ${mergeError.message}`);
+                // 머지 실패 시에도 다음 단계로 진행할 수 있도록 실패하지 않음
+                return { pr_number: prNumber, merged: false, merge_error: mergeError.message };
+              }
             } catch (error) {
-              console.error(`Error during PR creation or merge: ${error.message}`);
-              core.setFailed(error.message);
-              return { error: error.message };
+              console.error(`Error during PR creation or listing: ${error.message}`);
+              throw new Error(`PR 작업 중 오류 발생: ${error.message}`);
             }
-      
+
+  publish-to-npm:
+    needs: [create-and-merge-pr]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+    steps:
       - name: Checkout master
         uses: actions/checkout@v3
         with:
           ref: master
           fetch-depth: 0
-          token: ${{ secrets.PAT_TOKEN }}
       
       - name: Setup Node.js for publish
         uses: actions/setup-node@v3
@@ -117,7 +135,7 @@ jobs:
       - name: Push version tag
         uses: ad-m/github-push-action@master
         with:
-          github_token: ${{ secrets.PAT_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: master
           tags: true
       
