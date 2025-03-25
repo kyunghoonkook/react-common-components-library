@@ -103,7 +103,7 @@ function App() {
 
 모달 형태의 경고 대화 상자를 제공하는 컴포넌트입니다.
 
-#### 사용법
+#### 사용법 
 
 ```jsx
 import { AlertDialog } from 'react-common-components-library';
