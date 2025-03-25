@@ -11,6 +11,7 @@ jobs:
     permissions:
       contents: write
       packages: write
+      pull-requests: write
     
     steps:
       - name: Checkout code
@@ -32,31 +33,77 @@ jobs:
       - name: Build test
         run: npm run build
 
+      - name: Create PR from dev to master
+        id: create-pr
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.PAT_TOKEN }}
+          script: |
+            const { owner, repo } = context.repo;
+            console.log(`Creating PR from dev to master in ${owner}/${repo}`);
+            
+            // PR 생성
+            const pr = await github.rest.pulls.create({
+              owner,
+              repo,
+              title: '🔄 개발 브랜치 변경사항 마스터 브랜치 자동 반영',
+              head: 'dev',
+              base: 'master',
+              body: '## 자동 생성된 PR\n\ndev 브랜치 변경사항을 master에 반영합니다.'
+            });
+            
+            console.log(`PR created: ${pr.data.number}`);
+            return { pr_number: pr.data.number };
+      
+      - name: Auto-merge PR
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.PAT_TOKEN }}
+          script: |
+            const { owner, repo } = context.repo;
+            const pr_number = ${{ steps.create-pr.outputs.result }}.pr_number;
+            
+            console.log(`Auto-merging PR #${pr_number}`);
+            
+            // PR 머지
+            await github.rest.pulls.merge({
+              owner,
+              repo,
+              pull_number: pr_number,
+              merge_method: 'merge'
+            });
+      
+      - name: Checkout master
+        uses: actions/checkout@v3
+        with:
+          ref: master
+          fetch-depth: 0
+          token: ${{ secrets.PAT_TOKEN }}
+      
+      - name: Setup Node.js for publish
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+          registry-url: 'https://registry.npmjs.org'
+          cache: 'npm'
+      
+      - name: Install dependencies on master
+        run: npm ci --legacy-peer-deps
+      
       - name: Git config
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git remote set-url origin https://${{ secrets.PAT_TOKEN }}@github.com/kyunghoonkook/react-common-components-library.git
-      
-      - name: Clean working directory
-        run: |
-          git status
-          git add .
-          git commit -m "🛠️ 빌드 자동 커밋" || echo "No changes to commit"
-          git reset --hard HEAD
-      
-      - name: Merge dev into master
-        run: |
-          git checkout master
-          git pull origin master
-          git merge --no-ff origin/dev -m "🔄 자동 머지: dev → master"
-          git push origin master
       
       - name: Bump version
         run: "npm version patch -m \"🔖 버전 업데이트: %s\""
       
       - name: Push version tag
-        run: git push --follow-tags
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.PAT_TOKEN }}
+          branch: master
+          tags: true
       
       - name: Publish to npm
         run: npm publish --access public
