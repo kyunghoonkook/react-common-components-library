@@ -36,6 +36,7 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
+          git remote set-url origin https://${{ secrets.PAT_TOKEN }}@github.com/kyunghoonkook/react-common-components-library.git
       
       - name: Clean working directory
         run: |
