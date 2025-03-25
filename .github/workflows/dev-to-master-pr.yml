@@ -37,6 +37,13 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
       
+      - name: Clean working directory
+        run: |
+          git status
+          git add .
+          git commit -m "🛠️ 빌드 자동 커밋" || echo "No changes to commit"
+          git reset --hard HEAD
+      
       - name: Merge dev into master
         run: |
           git checkout master
