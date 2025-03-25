@@ -1,0 +1,51 @@
+name: Create PR from Dev to Master
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  create-pr:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+      
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+      
+      - name: Build test
+        run: npm run build
+      
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "🔄 dev → master PR 자동 생성"
+          title: "🔄 개발 브랜치 변경사항 마스터 브랜치 반영"
+          body: |
+            ## 자동 생성된 PR
+
+            dev 브랜치에 푸시된 변경사항을 master에 반영하기 위한 PR입니다.
+            코드 리뷰 후 머지해주세요.
+
+            ### 변경사항:
+            - dev 브랜치에서 최신 커밋 포함
+          
+          branch: dev
+          base: master
+          labels: |
+            automated pr
+            dev-to-master 
