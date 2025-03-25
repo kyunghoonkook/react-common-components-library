@@ -1,0 +1,145 @@
+name: Auto Merge and Publish
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+          registry-url: 'https://registry.npmjs.org'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+      
+      - name: Build test
+        run: npm run build
+
+  create-and-merge-pr:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: dev
+      
+      - name: Create and auto-merge PR
+        id: create-pr
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { owner, repo } = context.repo;
+            console.log(`Checking for existing PRs from dev to master in ${owner}/${repo}`);
+            
+            try {
+              // 기존 PR 확인
+              const existingPRs = await github.rest.pulls.list({
+                owner,
+                repo,
+                state: 'open',
+                head: `${owner}:dev`,
+                base: 'master'
+              });
+              
+              let prNumber;
+              
+              if (existingPRs.data.length > 0) {
+                // 기존 PR이 있는 경우
+                prNumber = existingPRs.data[0].number;
+                console.log(`Found existing PR #${prNumber}, will try to merge it`);
+              } else {
+                // 새 PR 생성
+                console.log(`Creating new PR from dev to master`);
+                const newPR = await github.rest.pulls.create({
+                  owner,
+                  repo,
+                  title: '🔄 개발 브랜치 변경사항 마스터 브랜치 자동 반영',
+                  head: 'dev',
+                  base: 'master',
+                  body: '## 자동 생성된 PR\n\ndev 브랜치 변경사항을 master에 반영합니다.'
+                });
+                prNumber = newPR.data.number;
+                console.log(`Created new PR #${prNumber}`);
+              }
+              
+              // PR 머지 시도
+              try {
+                await github.rest.pulls.merge({
+                  owner,
+                  repo,
+                  pull_number: prNumber,
+                  merge_method: 'merge'
+                });
+                
+                console.log(`PR #${prNumber} merged successfully`);
+                return { pr_number: prNumber, merged: true };
+              } catch (mergeError) {
+                console.error(`Error during merge: ${mergeError.message}`);
+                // 머지 실패 시에도 다음 단계로 진행할 수 있도록 실패하지 않음
+                return { pr_number: prNumber, merged: false, merge_error: mergeError.message };
+              }
+            } catch (error) {
+              console.error(`Error during PR creation or listing: ${error.message}`);
+              throw new Error(`PR 작업 중 오류 발생: ${error.message}`);
+            }
+
+  publish-to-npm:
+    needs: [create-and-merge-pr]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+    steps:
+      - name: Checkout master
+        uses: actions/checkout@v3
+        with:
+          ref: master
+          fetch-depth: 0
+      
+      - name: Setup Node.js for publish
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+          registry-url: 'https://registry.npmjs.org'
+          cache: 'npm'
+      
+      - name: Install dependencies on master
+        run: npm ci --legacy-peer-deps
+      
+      - name: Git config
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+      
+      - name: Bump version
+        run: "npm version patch -m \"🔖 버전 업데이트: %s\""
+      
+      - name: Push version tag
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: master
+          tags: true
+      
+      - name: Publish to npm
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }} 

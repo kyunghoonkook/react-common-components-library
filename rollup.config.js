@@ -2,83 +2,104 @@ import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import typescript from '@rollup/plugin-typescript';
 import { terser } from 'rollup-plugin-terser';
-import peerDepsExternal from 'rollup-plugin-peer-deps-external';
+import external from 'rollup-plugin-peer-deps-external';
 import postcss from 'rollup-plugin-postcss';
+import dts from 'rollup-plugin-dts';
 import strip from '@rollup/plugin-strip';
 import { visualizer } from 'rollup-plugin-visualizer';
+import glob from 'glob';
+import path from 'path';
 
-// 개발 모드인지 확인
+const packageJson = require('./package.json');
 const isProduction = process.env.NODE_ENV === 'production';
 
-export default {
-  input: 'src/index.ts',
-  output: [
-    {
-      dir: 'dist/cjs',
-      format: 'cjs',
-      sourcemap: false, // 소스맵 비활성화
-      preserveModules: true,
-      preserveModulesRoot: 'src',
-      exports: 'named',
-    },
-    {
-      dir: 'dist/esm',
-      format: 'esm',
-      sourcemap: false, // 소스맵 비활성화
-      preserveModules: true,
-      preserveModulesRoot: 'src',
-    },
-  ],
-  plugins: [
-    peerDepsExternal(),
-    resolve({
-      browser: true, // 브라우저 환경 최적화
-    }),
-    commonjs(),
-    typescript({ 
-      tsconfig: './tsconfig.json',
-      exclude: ['**/*.stories.tsx', '**/*.stories.ts', 'src/stories/**/*'],
-    }),
-    postcss({
-      extensions: ['.css'],
-      minimize: true,
-      inject: {
-        insertAt: 'top',
+// 공통 플러그인 설정
+const plugins = [
+  external(),
+  resolve(),
+  commonjs(),
+  typescript({
+    tsconfig: './tsconfig.json',
+    declaration: true,
+    declarationDir: 'dist',
+  }),
+  postcss({
+    extensions: ['.css'],
+    minimize: isProduction,
+    inject: false,
+    extract: false,
+  }),
+  isProduction && strip({
+    include: ['**/*.js', '**/*.ts', '**/*.tsx'],
+    functions: ['console.log', 'console.warn', 'console.error'],
+  }),
+  isProduction && terser(),
+  isProduction && visualizer({
+    filename: 'stats.html',
+    title: 'React Components Library Bundle Analysis',
+  }),
+];
+
+// 메인 번들 구성
+const mainBundle = [
+  {
+    input: 'src/index.ts',
+    output: [
+      {
+        file: packageJson.main,
+        format: 'cjs',
+        sourcemap: true,
+        name: 'react-common-components-library',
+        exports: 'named',
       },
-      extract: false, // CSS를 JS에 인라인으로 삽입
-    }),
-    // 개발용 코드 제거 (console.log, debugger, assert 등)
-    isProduction && strip({
-      include: ['**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx'],
-      functions: ['console.log', 'assert.*', 'debug', 'alert'],
-      debugger: true,
-    }),
-    // 프로덕션 빌드시 코드 최적화
-    isProduction && terser({
-      format: {
-        comments: false, // 주석 제거
+      {
+        file: packageJson.module,
+        format: 'esm',
+        sourcemap: true,
       },
-      compress: {
-        drop_console: true, // console.log 제거
-        drop_debugger: true, // debugger 문 제거
-        pure_getters: true, // getter 최적화
-        unsafe: true, // 안전하지 않은 최적화 허용
-        unsafe_comps: true,
-        passes: 2, // 여러 번 압축 패스 실행
+    ],
+    plugins,
+    external: ['react', 'react-dom', '@radix-ui/react-id'],
+  },
+];
+
+// 개별 컴포넌트 진입점 생성
+const componentEntrypoints = glob.sync('src/components-index/*.ts').map(file => {
+  const name = path.basename(file, '.ts').toLowerCase();
+  return {
+    input: file,
+    output: [
+      {
+        file: `dist/cjs/components/${name}/index.js`,
+        format: 'cjs',
+        sourcemap: true,
+        exports: 'auto',
       },
-      mangle: {
-        properties: {
-          regex: /^_/,  // _로 시작하는 프로퍼티만 변경
-        }
-      }
-    }),
-    // 번들 분석 시각화 (stats.html 파일 생성)
-    visualizer({
-      filename: 'stats.html',
-      title: 'Bundle Visualizer',
-      gzipSize: true,
-      brotliSize: true,
-    }),
-  ],
-  external: ['react', 'react-dom', 'tslib'],
-}; 
+      {
+        file: `dist/esm/components/${name}/index.js`,
+        format: 'esm',
+        sourcemap: true,
+      },
+    ],
+    plugins,
+    external: ['react', 'react-dom', '@radix-ui/react-id'],
+  };
+});
+
+// 타입 수집 및 타입 정의 번들링
+const tscOutDir = path.resolve(__dirname, 'dist');
+const typeFiles = glob.sync(`${tscOutDir}/**/*.d.ts`);
+const typesBundle = typeFiles.length ? {
+  input: 'dist/index.d.ts',
+  output: [{ file: 'dist/index.d.ts', format: 'es' }],
+  plugins: [dts()],
+  external: [/\.css$/],
+} : [];
+
+// 타입 정의 파일 생성을 위한 TypeScript 컴파일 단계를 추가
+const config = [...mainBundle, ...componentEntrypoints];
+if (typeFiles.length) {
+  config.push(typesBundle);
+}
+
+export default config; 

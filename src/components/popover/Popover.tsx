@@ -1,27 +1,25 @@
-import React, { useState, useEffect, useRef, ReactNode, CSSProperties } from 'react';
+import React, { useState, useEffect, useRef, ReactNode, CSSProperties, createContext, useContext } from 'react';
 import './Popover.css';
 
-export interface PopoverProps {
-  /**
-   * Popover를 열기 위한 트리거 요소
-   */
-  trigger: ReactNode;
-  
-  /**
-   * Popover의 제목
-   */
-  title?: ReactNode;
-  
-  /**
-   * Popover의 설명
-   */
-  description?: ReactNode;
-  
-  /**
-   * Popover의 내용
-   */
-  children: ReactNode;
-  
+type PopoverContextType = {
+  open: boolean;
+  setOpen: (open: boolean) => void;
+  triggerRef: React.RefObject<HTMLDivElement>;
+  contentRef: React.RefObject<HTMLDivElement>;
+  position: 'top' | 'right' | 'bottom' | 'left';
+};
+
+const PopoverContext = createContext<PopoverContextType | undefined>(undefined);
+
+function usePopoverContext() {
+  const context = useContext(PopoverContext);
+  if (!context) {
+    throw new Error('Popover 컴포넌트는 Popover.Root 내부에서만 사용할 수 있습니다.');
+  }
+  return context;
+}
+
+export interface PopoverRootProps {
   /**
    * Popover가 기본적으로 열려있는지 여부
    * @default false
@@ -51,45 +49,69 @@ export interface PopoverProps {
   closeOnEscape?: boolean;
   
   /**
-   * Popover 컨텐츠의 너비
-   */
-  width?: string | number;
-  
-  /**
    * Popover가 열리는 위치
    * @default 'bottom'
    */
   position?: 'top' | 'right' | 'bottom' | 'left';
   
   /**
-   * Popover 트리거에 적용할 클래스
+   * 자식 요소
    */
-  triggerClassName?: string;
+  children: ReactNode;
+}
+
+export interface PopoverTriggerProps {
+  /**
+   * 트리거 요소의 자식
+   */
+  children: ReactNode;
   
   /**
-   * Popover 컨텐츠에 적용할 클래스
+   * 트리거에 적용할 클래스
    */
-  contentClassName?: string;
+  className?: string;
   
   /**
-   * Popover 제목에 적용할 클래스
+   * 트리거에 적용할 스타일
    */
-  titleClassName?: string;
+  style?: CSSProperties;
   
   /**
-   * Popover 설명에 적용할 클래스
+   * 트리거의 aria-label
    */
-  descriptionClassName?: string;
+  ariaLabel?: string;
+}
+
+export interface PopoverContentProps {
+  /**
+   * 컨텐츠 요소의 자식
+   */
+  children: ReactNode;
   
   /**
-   * Popover 트리거에 적용할 스타일
+   * 컨텐츠에 적용할 클래스
    */
-  triggerStyle?: CSSProperties;
+  className?: string;
   
   /**
-   * Popover 컨텐츠에 적용할 스타일
+   * 컨텐츠에 적용할 스타일
    */
-  contentStyle?: CSSProperties;
+  style?: CSSProperties;
+  
+  /**
+   * 컨텐츠의 너비
+   */
+  width?: string | number;
+  
+  /**
+   * 포지셔닝 오프셋(픽셀)
+   */
+  sideOffset?: number;
+  
+  /**
+   * 정렬 오프셋(픽셀)
+   */
+  alignOffset?: number;
 }
 
 export interface PopoverFieldProps {
@@ -125,7 +147,240 @@ export interface PopoverFieldProps {
   className?: string;
 }
 
-export const PopoverField: React.FC<PopoverFieldProps> = ({
+/**
+ * Popover 루트 컴포넌트
+ */
+const Root: React.FC<PopoverRootProps> = ({
+  defaultOpen = false,
+  open: controlledOpen,
+  onOpenChange,
+  closeOnOutsideClick = true,
+  closeOnEscape = true,
+  position = 'bottom',
+  children,
+}) => {
+  const [isOpen, setIsOpen] = useState(defaultOpen);
+  const triggerRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  
+  // 제어/비제어 모드 처리
+  const open = controlledOpen !== undefined ? controlledOpen : isOpen;
+  
+  const setOpen = (newOpen: boolean) => {
+    setIsOpen(newOpen);
+    if (onOpenChange) {
+      onOpenChange(newOpen);
+    }
+  };
+  
+  // 외부 클릭 감지
+  useEffect(() => {
+    if (!closeOnOutsideClick) return;
+    
+    const handleOutsideClick = (event: MouseEvent) => {
+      const target = event.target as Node;
+      const triggerEl = triggerRef.current;
+      const contentEl = contentRef.current;
+      
+      if (
+        open &&
+        contentEl &&
+        triggerEl &&
+        !contentEl.contains(target) &&
+        !triggerEl.contains(target)
+      ) {
+        setOpen(false);
+      }
+    };
+    
+    document.addEventListener('mousedown', handleOutsideClick);
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    };
+  }, [open, closeOnOutsideClick]);
+  
+  // ESC 키 감지
+  useEffect(() => {
+    if (!closeOnEscape) return;
+    
+    const handleEscapeKey = (event: KeyboardEvent) => {
+      if (open && event.key === 'Escape') {
+        setOpen(false);
+      }
+    };
+    
+    document.addEventListener('keydown', handleEscapeKey);
+    return () => {
+      document.removeEventListener('keydown', handleEscapeKey);
+    };
+  }, [open, closeOnEscape]);
+  
+  return (
+    <PopoverContext.Provider value={{ open, setOpen, triggerRef, contentRef, position }}>
+      {children}
+    </PopoverContext.Provider>
+  );
+};
+
+/**
+ * Popover 트리거 컴포넌트
+ */
+const Trigger: React.FC<PopoverTriggerProps> = ({
+  children,
+  className = '',
+  style,
+  ariaLabel,
+}) => {
+  const { open, setOpen, triggerRef } = usePopoverContext();
+  
+  const handleClick = () => {
+    setOpen(!open);
+  };
+  
+  return (
+    <div 
+      ref={triggerRef} 
+      className={`popover-trigger ${className || ''}`}
+      style={style}
+      onClick={handleClick}
+      aria-expanded={open}
+      aria-haspopup="dialog"
+      aria-label={ariaLabel}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handleClick();
+        }
+      }}
+    >
+      {children}
+    </div>
+  );
+};
+
+/**
+ * Popover 컨텐츠 컴포넌트
+ */
+const Content: React.FC<PopoverContentProps> = ({
+  children,
+  className = '',
+  style,
+  width,
+  sideOffset = 8,
+  alignOffset = 0,
+}) => {
+  const { open, contentRef, triggerRef, position } = usePopoverContext();
+  const [popoverStyle, setPopoverStyle] = useState<CSSProperties>({});
+  
+  // Popover 위치 계산
+  useEffect(() => {
+    if (!open || !triggerRef.current || !contentRef.current) return;
+    
+    const calculatePosition = () => {
+      const triggerRect = triggerRef.current?.getBoundingClientRect();
+      const popoverRect = contentRef.current?.getBoundingClientRect();
+      
+      if (!triggerRect || !popoverRect) return;
+      
+      const scrollY = window.scrollY;
+      const scrollX = window.scrollX;
+      
+      let top, left;
+      
+      switch (position) {
+        case 'top':
+          top = triggerRect.top + scrollY - popoverRect.height - sideOffset;
+          left = triggerRect.left + scrollX + (triggerRect.width / 2) - (popoverRect.width / 2) + alignOffset;
+          break;
+        case 'right':
+          top = triggerRect.top + scrollY + (triggerRect.height / 2) - (popoverRect.height / 2) + alignOffset;
+          left = triggerRect.right + scrollX + sideOffset;
+          break;
+        case 'left':
+          top = triggerRect.top + scrollY + (triggerRect.height / 2) - (popoverRect.height / 2) + alignOffset;
+          left = triggerRect.left + scrollX - popoverRect.width - sideOffset;
+          break;
+        default: // bottom
+          top = triggerRect.bottom + scrollY + sideOffset;
+          left = triggerRect.left + scrollX + (triggerRect.width / 2) - (popoverRect.width / 2) + alignOffset;
+      }
+      
+      // 화면 밖으로 나가지 않도록 조정
+      const maxLeft = window.innerWidth - popoverRect.width - 16;
+      const maxTop = window.innerHeight - popoverRect.height - 16;
+      
+      left = Math.max(16, Math.min(left, maxLeft + scrollX));
+      top = Math.max(16, Math.min(top, maxTop + scrollY));
+      
+      setPopoverStyle({
+        width: width,
+        top: `${top}px`,
+        left: `${left}px`,
+        position: 'absolute',
+        zIndex: 1000,
+      });
+    };
+    
+    calculatePosition();
+    window.addEventListener('resize', calculatePosition);
+    window.addEventListener('scroll', calculatePosition);
+    
+    return () => {
+      window.removeEventListener('resize', calculatePosition);
+      window.removeEventListener('scroll', calculatePosition);
+    };
+  }, [open, position, width, sideOffset, alignOffset]);
+  
+  if (!open) return null;
+  
+  return (
+    <div
+      ref={contentRef}
+      className={`popover-content ${className || ''}`}
+      style={{ ...popoverStyle, ...style }}
+      role="dialog"
+      aria-modal="true"
+      tabIndex={-1}
+    >
+      {children}
+    </div>
+  );
+};
+
+/**
+ * Popover 헤더 컴포넌트
+ */
+const Title: React.FC<{ children: ReactNode; className?: string }> = ({ 
+  children, 
+  className = '' 
+}) => {
+  return (
+    <h3 className={`popover-title ${className}`}>
+      {children}
+    </h3>
+  );
+};
+
+/**
+ * Popover 설명 컴포넌트
+ */
+const Description: React.FC<{ children: ReactNode; className?: string }> = ({ 
+  children, 
+  className = '' 
+}) => {
+  return (
+    <p className={`popover-description ${className}`}>
+      {children}
+    </p>
+  );
+};
+
+/**
+ * Popover 필드 컴포넌트
+ */
+const Field: React.FC<PopoverFieldProps> = ({
   label,
   type = 'text',
   value,
@@ -147,182 +402,39 @@ export const PopoverField: React.FC<PopoverFieldProps> = ({
   );
 };
 
-const Popover: React.FC<PopoverProps> = ({
-  trigger,
-  title,
-  description,
-  children,
-  defaultOpen = false,
-  open: controlledOpen,
-  onOpenChange,
-  closeOnOutsideClick = true,
-  closeOnEscape = true,
-  width,
-  position = 'bottom',
-  triggerClassName,
-  contentClassName,
-  titleClassName,
-  descriptionClassName,
-  triggerStyle,
-  contentStyle,
+/**
+ * Popover 닫기 버튼 컴포넌트
+ */
+const Close: React.FC<{ 
+  children?: ReactNode; 
+  className?: string;
+  ariaLabel?: string;
+}> = ({ 
+  children, 
+  className = '',
+  ariaLabel = '닫기' 
 }) => {
-  const [isOpen, setIsOpen] = useState(defaultOpen);
-  const popoverRef = useRef<HTMLDivElement>(null);
-  const triggerRef = useRef<HTMLDivElement>(null);
-  const [popoverStyle, setPopoverStyle] = useState<CSSProperties>({});
-  
-  // 제어/비제어 모드 처리
-  const open = controlledOpen !== undefined ? controlledOpen : isOpen;
-  
-  // 토글 함수
-  const toggle = () => {
-    const newOpen = !open;
-    setIsOpen(newOpen);
-    if (onOpenChange) {
-      onOpenChange(newOpen);
-    }
-  };
-  
-  // 닫기 함수
-  const close = () => {
-    setIsOpen(false);
-    if (onOpenChange) {
-      onOpenChange(false);
-    }
-  };
-  
-  // 외부 클릭 감지
-  useEffect(() => {
-    const handleOutsideClick = (event: MouseEvent) => {
-      if (!closeOnOutsideClick) return;
-      
-      const target = event.target as Node;
-      const triggerEl = triggerRef.current;
-      const popoverEl = popoverRef.current;
-      
-      if (
-        open &&
-        popoverEl &&
-        triggerEl &&
-        !popoverEl.contains(target) &&
-        !triggerEl.contains(target)
-      ) {
-        close();
-      }
-    };
-    
-    document.addEventListener('mousedown', handleOutsideClick);
-    return () => {
-      document.removeEventListener('mousedown', handleOutsideClick);
-    };
-  }, [open, closeOnOutsideClick]);
-  
-  // ESC 키 감지
-  useEffect(() => {
-    const handleEscapeKey = (event: KeyboardEvent) => {
-      if (closeOnEscape && open && event.key === 'Escape') {
-        close();
-      }
-    };
-    
-    document.addEventListener('keydown', handleEscapeKey);
-    return () => {
-      document.removeEventListener('keydown', handleEscapeKey);
-    };
-  }, [open, closeOnEscape]);
-  
-  // Popover 위치 계산
-  useEffect(() => {
-    if (!open || !triggerRef.current || !popoverRef.current) return;
-    
-    const calculatePosition = () => {
-      const triggerRect = triggerRef.current?.getBoundingClientRect();
-      const popoverRect = popoverRef.current?.getBoundingClientRect();
-      
-      if (!triggerRect || !popoverRect) return;
-      
-      const scrollY = window.scrollY;
-      const scrollX = window.scrollX;
-      
-      let top, left;
-      
-      switch (position) {
-        case 'top':
-          top = triggerRect.top + scrollY - popoverRect.height - 8;
-          left = triggerRect.left + scrollX + (triggerRect.width / 2) - (popoverRect.width / 2);
-          break;
-        case 'right':
-          top = triggerRect.top + scrollY + (triggerRect.height / 2) - (popoverRect.height / 2);
-          left = triggerRect.right + scrollX + 8;
-          break;
-        case 'left':
-          top = triggerRect.top + scrollY + (triggerRect.height / 2) - (popoverRect.height / 2);
-          left = triggerRect.left + scrollX - popoverRect.width - 8;
-          break;
-        default: // bottom
-          top = triggerRect.bottom + scrollY + 8;
-          left = triggerRect.left + scrollX + (triggerRect.width / 2) - (popoverRect.width / 2);
-      }
-      
-      // 화면 밖으로 나가지 않도록 조정
-      const maxLeft = window.innerWidth - popoverRect.width - 16;
-      const maxTop = window.innerHeight - popoverRect.height - 16;
-      
-      left = Math.max(16, Math.min(left, maxLeft + scrollX));
-      top = Math.max(16, Math.min(top, maxTop + scrollY));
-      
-      setPopoverStyle({
-        width: width,
-        top: `${top}px`,
-        left: `${left}px`
-      });
-    };
-    
-    calculatePosition();
-    window.addEventListener('resize', calculatePosition);
-    window.addEventListener('scroll', calculatePosition);
-    
-    return () => {
-      window.removeEventListener('resize', calculatePosition);
-      window.removeEventListener('scroll', calculatePosition);
-    };
-  }, [open, position, width]);
+  const { setOpen } = usePopoverContext();
   
   return (
-    <>
-      <div 
-        ref={triggerRef} 
-        className={`popover-trigger ${triggerClassName || ''}`}
-        style={triggerStyle}
-        onClick={toggle}
-      >
-        {trigger}
-      </div>
-      
-      {open && (
-        <div
-          ref={popoverRef}
-          className={`popover-content ${contentClassName || ''}`}
-          style={{ ...popoverStyle, ...contentStyle }}
-          role="dialog"
-        >
-          {title && (
-            <h3 className={`popover-title ${titleClassName || ''}`}>
-              {title}
-            </h3>
-          )}
-          
-          {description && (
-            <p className={`popover-description ${descriptionClassName || ''}`}>
-              {description}
-            </p>
-          )}
-          
-          {children}
-        </div>
-      )}
-    </>
+    <button 
+      className={`popover-close ${className}`}
+      onClick={() => setOpen(false)}
+      aria-label={ariaLabel}
+    >
+      {children || '×'}
+    </button>
   );
+};
+
+export const Popover = {
+  Root,
+  Trigger,
+  Content,
+  Title,
+  Description,
+  Field,
+  Close
 };
 
 export default Popover; 

@@ -1,4 +1,4 @@
-import Popover, { PopoverField } from './Popover';
+import { Popover } from './Popover';
 
-export { PopoverField };
+export { Popover };
 export default Popover;

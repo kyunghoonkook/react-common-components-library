@@ -24,12 +24,18 @@ const meta: Meta<typeof Tooltip> = {
       control: { type: 'select' },
       options: ['hover', 'click', 'focus'],
     },
-    delayShow: { control: 'number' },
-    delayHide: { control: 'number' },
-    arrow: { control: 'boolean' },
-    defaultVisible: { control: 'boolean' },
-    visible: { control: 'boolean' },
-    onVisibleChange: { action: 'visibleChanged' },
+    delayDuration: { control: 'number' },
+    showDuration: { control: 'number' },
+    showArrow: { control: 'boolean' },
+    open: { control: 'boolean' },
+    onOpenChange: { action: 'openChanged' },
+    disabled: { control: 'boolean' },
+    disableHoverableContent: { control: 'boolean' },
+    sideOffset: { control: 'number' },
+    theme: { 
+      control: { type: 'select' }, 
+      options: ['light', 'dark', 'auto'] 
+    },
   },
 };
 
@@ -42,7 +48,7 @@ const Template: Story = {
     content: '툴팁 내용입니다',
     placement: 'top',
     size: 'md',
-    arrow: true,
+    showArrow: true,
     children: <Button>마우스를 올려보세요</Button>,
   },
 };
@@ -122,10 +128,10 @@ export const Triggers: Story = {
 export const WithArrow: Story = {
   render: () => (
     <div style={{ display: 'flex', gap: '20px', padding: '20px' }}>
-      <Tooltip content="화살표 있음" arrow={true}>
+      <Tooltip content="화살표 있음" showArrow={true}>
         <Button>화살표 있음</Button>
       </Tooltip>
-      <Tooltip content="화살표 없음" arrow={false}>
+      <Tooltip content="화살표 없음" showArrow={false}>
         <Button>화살표 없음</Button>
       </Tooltip>
     </div>
@@ -135,7 +141,7 @@ export const WithArrow: Story = {
 export const WithDelay: Story = {
   render: () => (
     <div style={{ display: 'flex', gap: '20px', padding: '20px' }}>
-      <Tooltip content="표시 딜레이: 500ms / 숨김 딜레이: 200ms" delayShow={500} delayHide={200}>
+      <Tooltip content="표시 딜레이: 500ms / 숨김 시간: 200ms" delayDuration={500} showDuration={200}>
         <Button>딜레이 옵션</Button>
       </Tooltip>
     </div>
@@ -164,8 +170,8 @@ export const ControlledTooltip: Story = {
         <div style={{ marginTop: '20px' }}>
           <Tooltip
             content="controlled 모드 툴팁"
-            visible={visible}
-            onVisibleChange={setVisible}
+            open={visible}
+            onOpenChange={setVisible}
           >
             <Button>Controlled 툴팁</Button>
           </Tooltip>

@@ -13,8 +13,12 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
-    "importHelpers": true
+    "importHelpers": true,
+    "declaration": true,
+    "declarationDir": "dist",
+    "outDir": "dist",
+    "emitDeclarationOnly": true
   },
   "include": ["src"],
-  "exclude": ["**/*.stories.tsx", "**/*.stories.ts", "src/stories/**/*"]
+  "exclude": ["**/*.stories.tsx", "**/*.stories.ts", "src/stories/**/*", "node_modules"]
 }

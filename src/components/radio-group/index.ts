@@ -1,6 +1,4 @@
-import RadioGroup, { RadioItemProps, RadioGroupProps } from './RadioGroup';
-import { RadioItem } from './RadioGroup';
+import { RadioGroup } from './RadioGroup';
 
-export { RadioItem };
-export type { RadioGroupProps, RadioItemProps };
+export { RadioGroup };
 export default RadioGroup; 
