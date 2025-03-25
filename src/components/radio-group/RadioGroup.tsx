@@ -13,6 +13,15 @@ type RadioGroupContextType = {
 // RadioGroup Context
 const RadioGroupContext = createContext<RadioGroupContextType | undefined>(undefined);
 
+// Hook for using RadioGroup Context
+const useRadioGroupContext = () => {
+  const context = useContext(RadioGroupContext);
+  if (!context) {
+    throw new Error('RadioGroup 컴포넌트는 RadioGroup.Root 내부에서만 사용할 수 있습니다.');
+  }
+  return context;
+};
+
 // RadioGroup Props
 export interface RadioGroupProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> {
   /**
@@ -67,6 +76,16 @@ export interface RadioGroupProps extends Omit<HTMLAttributes<HTMLDivElement>, 'o
    * 라디오 그룹에 적용할 CSS 클래스
    */
   className?: string;
+  
+  /**
+   * 라디오 그룹의 ARIA 레이블
+   */
+  ariaLabel?: string;
+  
+  /**
+   * 라디오 그룹의 ARIA 레이블 ID
+   */
+  ariaLabelledBy?: string;
 }
 
 // RadioItem Props
@@ -96,10 +115,33 @@ export interface RadioItemProps extends Omit<HTMLAttributes<HTMLLabelElement>, '
    * 라벨에 적용할 CSS 클래스
    */
   labelClassName?: string;
+  
+  /**
+   * 라디오 아이템의 ID
+   */
+  id?: string;
+}
+
+// RadioLabel Props
+export interface RadioLabelProps {
+  /**
+   * 레이블 내용
+   */
+  children: ReactNode;
+  
+  /**
+   * 레이블에 적용할 CSS 클래스
+   */
+  className?: string;
+  
+  /**
+   * 연결할 라디오 아이템의 ID
+   */
+  htmlFor?: string;
 }
 
 // RadioGroup 컴포넌트
-export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
+const Root = forwardRef<HTMLDivElement, RadioGroupProps>(
   ({
     value: controlledValue,
     defaultValue,
@@ -110,6 +152,8 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
     size = 'md',
     orientation = 'vertical',
     className = '',
+    ariaLabel,
+    ariaLabelledBy,
     ...props
   }, ref) => {
     // 제어/비제어 상태 관리
@@ -128,6 +172,8 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
         <div 
           ref={ref}
           role="radiogroup"
+          aria-label={ariaLabel}
+          aria-labelledby={ariaLabelledBy}
           className={`radio-group ${orientation === 'horizontal' ? 'radio-horizontal' : ''} ${className}`}
           {...props}
         >
@@ -138,35 +184,33 @@ export const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>(
   }
 );
 
-RadioGroup.displayName = 'RadioGroup';
+Root.displayName = 'RadioGroup.Root';
 
 // RadioItem 컴포넌트
-export const RadioItem = forwardRef<HTMLLabelElement, RadioItemProps>(
+const Item = forwardRef<HTMLLabelElement, RadioItemProps>(
   ({
     value,
     children,
     disabled = false,
     className = '',
     labelClassName = '',
+    id,
     ...props
   }, ref) => {
-    const context = useContext(RadioGroupContext);
-    
-    if (!context) {
-      throw new Error('RadioItem must be used within a RadioGroup');
-    }
-    
-    const { value: selectedValue, onChange, name, disabled: groupDisabled, size } = context;
+    const { value: selectedValue, onChange, name, disabled: groupDisabled, size } = useRadioGroupContext();
     const isDisabled = disabled || groupDisabled;
     const isChecked = value === selectedValue;
+    const itemId = id || `radio-${name}-${value}`;
     
     return (
       <label
         ref={ref}
         className={`radio-item ${isDisabled ? 'disabled' : ''} radio-size-${size} ${className}`}
+        htmlFor={itemId}
         {...props}
       >
         <input
+          id={itemId}
           type="radio"
           className="radio-input"
           name={name}
@@ -174,22 +218,78 @@ export const RadioItem = forwardRef<HTMLLabelElement, RadioItemProps>(
           checked={isChecked}
           disabled={isDisabled}
           onChange={() => onChange(value)}
+          aria-checked={isChecked}
         />
         <span className="radio-control" />
-        <span className={`radio-label ${labelClassName}`}>{children}</span>
+        {typeof children === 'string' ? (
+          <span className={`radio-label ${labelClassName}`}>{children}</span>
+        ) : (
+          children
+        )}
       </label>
     );
   }
 );
 
-RadioItem.displayName = 'RadioItem';
+Item.displayName = 'RadioGroup.Item';
 
-// 타입 내보내기
+// RadioIndicator 컴포넌트
+interface RadioIndicatorProps {
+  /**
+   * 인디케이터 내용
+   */
+  children?: ReactNode;
+  
+  /**
+   * 인디케이터에 적용할 CSS 클래스
+   */
+  className?: string;
+}
+
+const Indicator = forwardRef<HTMLSpanElement, RadioIndicatorProps>(
+  ({
+    children,
+    className = '',
+  }, ref) => {
+    return (
+      <span ref={ref} className={`radio-indicator ${className}`}>
+        {children || <span className="radio-indicator-dot" />}
+      </span>
+    );
+  }
+);
+
+Indicator.displayName = 'RadioGroup.Indicator';
+
+// RadioLabel 컴포넌트
+const Label = forwardRef<HTMLSpanElement, RadioLabelProps>(
+  ({
+    children,
+    className = '',
+    htmlFor,
+  }, ref) => {
+    return (
+      <span
+        ref={ref}
+        className={`radio-label ${className}`}
+        id={htmlFor ? `label-${htmlFor}` : undefined}
+      >
+        {children}
+      </span>
+    );
+  }
+);
+
+Label.displayName = 'RadioGroup.Label';
+
+// RadioGroup 객체로 컴포넌트 묶기
+export const RadioGroup = {
+  Root,
+  Item,
+  Indicator,
+  Label
+};
+
 export type { RadioGroupContextType };
 
-// 기본 export
-const RadioGroupRoot = Object.assign(RadioGroup, {
-  Item: RadioItem,
-});
-
-export default RadioGroupRoot; 
+export default RadioGroup; 

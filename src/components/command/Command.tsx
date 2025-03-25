@@ -233,7 +233,9 @@ const Command = React.memo<CommandProps>(({
       next.add(item.id);
       if (next.size > recentItemsCount) {
         const firstItem = next.values().next().value;
-        next.delete(firstItem);
+        if (firstItem) {
+          next.delete(firstItem);
+        }
       }
       return next;
     });

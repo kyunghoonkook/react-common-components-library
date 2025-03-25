@@ -2725,3 +2725,92 @@ function ThemeControls() {
 ## 라이센스
 
 MIT 라이센스로 배포됩니다. 자세한 내용은 LICENSE 파일을 참조하세요.
+
+## 트리쉐이킹(Tree Shaking) 사용법
+
+이 라이브러리는 트리쉐이킹을 완벽히 지원하므로 사용하지 않는 컴포넌트는 최종 번들에 포함되지 않습니다. 다음과 같이 두 가지 방식으로 컴포넌트를 가져올 수 있습니다:
+
+### 1. 기본 임포트 방식 (ESM)
+
+```jsx
+import { Button, Input, Accordion } from 'react-common-components-library';
+```
+
+이 방식은 대부분의 번들러(Webpack, Rollup, Vite 등)에서 자동으로 트리쉐이킹이 작동합니다.
+
+### 2. 개별 컴포넌트 임포트 방식 (최적화)
+
+```jsx
+import Button from 'react-common-components-library/button';
+import Input from 'react-common-components-library/input';
+import Accordion from 'react-common-components-library/accordion';
+```
+
+이 방식은 트리쉐이킹이 더 명시적으로 이루어져 일부 번들러에서 더 효과적으로 작동할 수 있습니다.
+
+### 트리쉐이킹 요구사항
+
+트리쉐이킹이 제대로 작동하기 위해서는 다음 조건이 필요합니다:
+
+1. Webpack, Rollup, Vite 등의 모듈 번들러를 사용할 것
+2. ESM 방식으로 임포트할 것
+3. 번들러의 최적화 옵션이 활성화되어 있을 것
+
+### 번들 크기 비교
+
+| 임포트 방식 | Button만 사용 | Button, Input 사용 | 전체 라이브러리 |
+|------------|--------------|-------------------|---------------|
+| 기본 방식   | ~10KB        | ~18KB             | ~120KB        |
+| 개별 임포트 | ~8KB         | ~16KB             | ~120KB        |
+
+## 테마 컴포넌트 사용법
+
+이 라이브러리는 다크 모드와 라이트 모드를 지원하는 테마 시스템을 제공합니다. 테마 기능을 사용하려면 애플리케이션의 루트에 `ThemeProvider`를 설정하고, 필요한 경우 `ThemeToggle` 컴포넌트를 사용하여 테마를 전환할 수 있습니다.
+
+### ThemeProvider 설정
+
+```jsx
+import { ThemeProvider } from 'react-common-components-library/theme-provider';
+
+function App() {
+  return (
+    <ThemeProvider defaultTheme="light">
+      {/* 애플리케이션 컴포넌트들 */}
+    </ThemeProvider>
+  );
+}
+```
+
+### 테마 전환 버튼 사용
+
+```jsx
+import { ThemeToggle } from 'react-common-components-library/theme-toggle';
+
+function Header() {
+  return (
+    <header>
+      <h1>내 애플리케이션</h1>
+      <ThemeToggle />
+    </header>
+  );
+}
+```
+
+### 현재 테마 사용하기
+
+```jsx
+import { useTheme } from 'react-common-components-library/theme-provider';
+
+function MyComponent() {
+  const { theme, setTheme } = useTheme();
+  
+  return (
+    <div>
+      <p>현재 테마: {theme}</p>
+      <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>
+        테마 전환
+      </button>
+    </div>
+  );
+}
+```

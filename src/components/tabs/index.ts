@@ -1,5 +1,12 @@
-import Tabs, { TabsList, TabsTrigger, TabsContent, TabsProps, TabsListProps, TabsTriggerProps, TabsContentProps } from './Tabs';
+import Tabs, {
+  TabsContent,
+  TabsProps,
+  TabsRootProps,
+  TabsListProps,
+  TabsTriggerProps,
+  TabsContentProps,
+} from "./Tabs";
 
-export { TabsList, TabsTrigger, TabsContent };
-export type { TabsProps, TabsListProps, TabsTriggerProps, TabsContentProps };
-export default Tabs; 
+export default Tabs;
+export { TabsContent };
+export type { TabsProps, TabsRootProps, TabsListProps, TabsTriggerProps, TabsContentProps }; 
