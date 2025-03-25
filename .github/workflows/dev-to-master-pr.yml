@@ -1,4 +1,4 @@
-name: Create PR from Dev to Master
+name: Auto Merge and Publish
 
 on:
   push:
@@ -6,12 +6,11 @@ on:
       - dev
 
 jobs:
-  create-pr:
+  auto-merge:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      pull-requests: write
-      issues: write
+      packages: write
     
     steps:
       - name: Checkout code
@@ -24,6 +23,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18.x'
+          registry-url: 'https://registry.npmjs.org'
           cache: 'npm'
       
       - name: Install dependencies
@@ -31,24 +31,26 @@ jobs:
       
       - name: Build test
         run: npm run build
+
+      - name: Git config
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
       
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v5
-        with:
-          token: ${{ secrets.PAT_TOKEN }}
-          commit-message: "🔄 dev → master PR 자동 생성"
-          title: "🔄 개발 브랜치 변경사항 마스터 브랜치 반영"
-          body: |
-            ## 자동 생성된 PR
-
-            dev 브랜치에 푸시된 변경사항을 master에 반영하기 위한 PR입니다.
-            코드 리뷰 후 머지해주세요.
-
-            ### 변경사항:
-            - dev 브랜치에서 최신 커밋 포함
-          
-          branch: dev
-          base: master
-          labels: |
-            automated pr
-            dev-to-master 
+      - name: Merge dev into master
+        run: |
+          git checkout master
+          git pull origin master
+          git merge --no-ff origin/dev -m "🔄 자동 머지: dev → master"
+          git push origin master
+      
+      - name: Bump version
+        run: "npm version patch -m \"🔖 버전 업데이트: %s\""
+      
+      - name: Push version tag
+        run: git push --follow-tags
+      
+      - name: Publish to npm
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }} 
