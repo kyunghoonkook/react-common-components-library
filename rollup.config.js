@@ -50,6 +50,7 @@ const mainBundle = [
         format: 'cjs',
         sourcemap: true,
         name: 'react-common-components-library',
+        exports: 'named',
       },
       {
         file: packageJson.module,
@@ -72,6 +73,7 @@ const componentEntrypoints = glob.sync('src/components-index/*.ts').map(file => 
         file: `dist/cjs/components/${name}/index.js`,
         format: 'cjs',
         sourcemap: true,
+        exports: 'auto',
       },
       {
         file: `dist/esm/components/${name}/index.js`,
@@ -84,12 +86,20 @@ const componentEntrypoints = glob.sync('src/components-index/*.ts').map(file => 
   };
 });
 
-// 타입 정의 번들
-const typesBundle = {
+// 타입 수집 및 타입 정의 번들링
+const tscOutDir = path.resolve(__dirname, 'dist');
+const typeFiles = glob.sync(`${tscOutDir}/**/*.d.ts`);
+const typesBundle = typeFiles.length ? {
   input: 'dist/index.d.ts',
   output: [{ file: 'dist/index.d.ts', format: 'es' }],
   plugins: [dts()],
   external: [/\.css$/],
-};
+} : [];
 
-export default [...mainBundle, ...componentEntrypoints, typesBundle]; 
+// 타입 정의 파일 생성을 위한 TypeScript 컴파일 단계를 추가
+const config = [...mainBundle, ...componentEntrypoints];
+if (typeFiles.length) {
+  config.push(typesBundle);
+}
+
+export default config; 

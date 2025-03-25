@@ -165,8 +165,8 @@
     "dist"
   ],
   "scripts": {
-    "build": "NODE_ENV=production rollup -c",
-    "build:dev": "rollup -c",
+    "build": "tsc && NODE_ENV=production rollup -c",
+    "build:dev": "tsc && rollup -c",
     "analyze": "npm run build && npx source-map-explorer dist/esm/index.js",
     "analyze:cjs": "npm run build && npx source-map-explorer dist/cjs/index.js",
     "storybook": "storybook dev -p 6006",
