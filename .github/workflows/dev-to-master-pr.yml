@@ -40,31 +40,49 @@ jobs:
           github-token: ${{ secrets.PAT_TOKEN }}
           script: |
             const { owner, repo } = context.repo;
-            console.log(`Creating PR from dev to master in ${owner}/${repo}`);
+            console.log(`Checking for existing PRs from dev to master in ${owner}/${repo}`);
             
             try {
-              // PR 생성
-              const pr = await github.rest.pulls.create({
+              // 기존 PR 확인
+              const existingPRs = await github.rest.pulls.list({
                 owner,
                 repo,
-                title: '🔄 개발 브랜치 변경사항 마스터 브랜치 자동 반영',
-                head: 'dev',
-                base: 'master',
-                body: '## 자동 생성된 PR\n\ndev 브랜치 변경사항을 master에 반영합니다.'
+                state: 'open',
+                head: `${owner}:dev`,
+                base: 'master'
               });
               
-              console.log(`PR created: ${pr.data.number}`);
+              let prNumber;
               
-              // PR 머지
+              if (existingPRs.data.length > 0) {
+                // 기존 PR이 있는 경우
+                prNumber = existingPRs.data[0].number;
+                console.log(`Found existing PR #${prNumber}, will try to merge it`);
+              } else {
+                // 새 PR 생성
+                console.log(`Creating new PR from dev to master`);
+                const newPR = await github.rest.pulls.create({
+                  owner,
+                  repo,
+                  title: '🔄 개발 브랜치 변경사항 마스터 브랜치 자동 반영',
+                  head: 'dev',
+                  base: 'master',
+                  body: '## 자동 생성된 PR\n\ndev 브랜치 변경사항을 master에 반영합니다.'
+                });
+                prNumber = newPR.data.number;
+                console.log(`Created new PR #${prNumber}`);
+              }
+              
+              // PR 머지 시도
               await github.rest.pulls.merge({
                 owner,
                 repo,
-                pull_number: pr.data.number,
+                pull_number: prNumber,
                 merge_method: 'merge'
               });
               
-              console.log(`PR #${pr.data.number} merged successfully`);
-              return { pr_number: pr.data.number, merged: true };
+              console.log(`PR #${prNumber} merged successfully`);
+              return { pr_number: prNumber, merged: true };
             } catch (error) {
               console.error(`Error during PR creation or merge: ${error.message}`);
               core.setFailed(error.message);
